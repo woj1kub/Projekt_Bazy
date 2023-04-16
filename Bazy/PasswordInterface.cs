@@ -9,6 +9,7 @@ namespace Bazy
 {
     internal static class PasswordInterface
     {
+        // https://code-maze.com/csharp-hashing-salting-passwords-best-practices/
         const int keySize = 64;
         const int iterations = 350000;
         static private HashAlgorithmName hashAlgorithm = HashAlgorithmName.SHA512;
