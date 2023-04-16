@@ -22,7 +22,17 @@ namespace Bazy
     {
         public MainWindow()
         {
+            test_hasla();
             InitializeComponent();
+        }
+
+        void test_hasla()
+        {
+            string test_psd = "ZAQ!1qaz";
+            byte[] user_salt;
+            string hash = PasswordInterface.HashPasword(test_psd, out user_salt);
+
+            MessageBox.Show(PasswordInterface.VerifyPassword(test_psd, hash, user_salt).ToString());
         }
     }
 }
