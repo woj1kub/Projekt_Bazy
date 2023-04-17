@@ -23,7 +23,7 @@ namespace Bazy
     {
         public MainWindow()
         {
-            test_hasla();
+            //test_hasla();
             InitializeComponent();
         }
         void test_hasla()
@@ -71,6 +71,7 @@ namespace Bazy
 
         private void btnZaloguj_Click(object sender, RoutedEventArgs e)
         {
+            
             if(!string.IsNullOrEmpty(txtLogin.Text) && !string.IsNullOrEmpty(txtHaslo.Password))
             {
                 MessageBox.Show("Zalogowano");
@@ -79,11 +80,20 @@ namespace Bazy
             {
                 MessageBox.Show("Wypełnij dane");
             }
+
         }
 
         private void Image_MouseUp(object sender, MouseButtonEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void btnZarejestruj_Click(object sender, RoutedEventArgs e)
+        {
+            //temp stuff here
+            Registration.RegisterUser(txtLogin.Text, txtHaslo.Password);
+            Registration.AllUsersShow();
+
         }
     }
 }

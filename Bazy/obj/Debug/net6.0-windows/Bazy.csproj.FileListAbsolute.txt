@@ -22,3 +22,6 @@ C:\Users\Mikołaj\Desktop\Studia\pBazyDanych\AplikacjaFinansowa\Bazy\obj\Debug\n
 C:\Users\Mikołaj\Desktop\Studia\pBazyDanych\AplikacjaFinansowa\Bazy\bin\Debug\net6.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Users\Mikołaj\Desktop\Studia\pBazyDanych\AplikacjaFinansowa\Bazy\bin\Debug\net6.0-windows\Npgsql.dll
 C:\Users\Mikołaj\Desktop\Studia\pBazyDanych\AplikacjaFinansowa\Bazy\obj\Debug\net6.0-windows\Bazy.csproj.CopyComplete
+C:\Users\Mikołaj\Desktop\Studia\pBazyDanych\AplikacjaFinansowa\Bazy\obj\Debug\net6.0-windows\Bazy_Content.g.cs
+C:\Users\Mikołaj\Desktop\Studia\pBazyDanych\AplikacjaFinansowa\Bazy\bin\Debug\net6.0-windows\Obrazy\shutdown.png
+C:\Users\Mikołaj\Desktop\Studia\pBazyDanych\AplikacjaFinansowa\Bazy\obj\Debug\net6.0-windows\App.baml
