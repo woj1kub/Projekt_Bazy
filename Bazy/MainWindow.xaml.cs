@@ -34,5 +34,56 @@ namespace Bazy
 
             MessageBox.Show(PasswordInterface.VerifyPassword(test_psd, hash, user_salt).ToString());
         }
+
+        private void textLogin_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            textLogin.Visibility = Visibility.Collapsed;
+        }
+
+        private void txtLogin_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(string.IsNullOrEmpty(txtLogin.Text) && txtLogin.Text.Length>0)
+            {
+                txtLogin.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                txtLogin.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void textHaslo_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            textHaslo.Visibility = Visibility.Collapsed;
+        }
+
+        private void txtHaslo_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtHaslo.Password) && txtHaslo.Password.Length > 0)
+            {
+                txtHaslo.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                txtHaslo.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void btnZaloguj_Click(object sender, RoutedEventArgs e)
+        {
+            if(!string.IsNullOrEmpty(txtLogin.Text) && !string.IsNullOrEmpty(txtHaslo.Password))
+            {
+                MessageBox.Show("Zalogowano");
+            }
+            else
+            {
+                MessageBox.Show("Wypełnij dane");
+            }
+        }
+
+        private void Image_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }
