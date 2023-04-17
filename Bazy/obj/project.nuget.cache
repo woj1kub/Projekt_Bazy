@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "nS0mc/e027doNWO030Qw7ngW2itXLiSum56BHy5ufb4eMPc/BS1/gVmuvYLrUp8JWQuLi7mzn7Laiu5ei+Hx/g==",
+  "dgSpecHash": "Ok9yJExa8ONc53F3e334BNFBtyjK5NcAZTYNqDP3k7Vs96coferY968bIcu56UuyetC5BASOeiAZqrewPMQJtg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\xgnat\\Desktop\\Bazy danych projekt\\Projekt_Bazy\\Bazy\\Bazy.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\Mikołaj\\Desktop\\Studia\\pBazyDanych\\AplikacjaFinansowa\\Bazy\\Bazy.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Mikołaj\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\6.0.0\\microsoft.extensions.logging.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\Mikołaj\\.nuget\\packages\\npgsql\\7.0.2\\npgsql.7.0.2.nupkg.sha512",
+    "C:\\Users\\Mikołaj\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

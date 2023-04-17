@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Npgsql;
 
 namespace Bazy
 {
@@ -25,7 +26,6 @@ namespace Bazy
             test_hasla();
             InitializeComponent();
         }
-
         void test_hasla()
         {
             string test_psd = "ZAQ!1qaz";
