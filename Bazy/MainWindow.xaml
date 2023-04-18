@@ -32,7 +32,7 @@
 
                 <StackPanel VerticalAlignment="Center">
                     <TextBlock Text="Zarejestruj się" Style="{StaticResource tytulText}" Opacity="0.8" Margin="20 30"/>
-                    <Button Content="Sign Up" Style="{StaticResource buttonRejestracja}" Click="btnZarejestruj_Click"/>
+                    <Button Content="Zarejestruj" Style="{StaticResource buttonRejestracja}" Click="btnZarejestruj_Click"/>
                 </StackPanel>
             </Grid>
         </Border>
