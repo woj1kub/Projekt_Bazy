@@ -21,6 +21,7 @@ namespace Bazy
         /// <param name="password">Password given by user to be hashed</param>
         /// <param name="salt">Salt used to generate hash (needs to be safed with password)</param>
         /// <returns>Hash and Salt</returns>
+        
         static public string HashPasword(string password, out byte[] salt)
         {
             salt = RandomNumberGenerator.GetBytes(keySize);
@@ -67,14 +68,13 @@ namespace Bazy
             char[] special_chars = "!@#$%^&*()_+-=<>/\\".ToCharArray();
 
             if (password == null) { return false; }
-            if (password.Length >= 8) { return false; }
+            if (password.Length < 8) { return false; }
             if (!password.Any(char.IsLower) ) { return false; }
             if (!password.Any(char.IsUpper)) { return false; }
-            if (!password.Contains(" ")) { return false; }
-
+            if (password.Contains(" ")) { return false; }
             foreach ( char c in special_chars )
             {
-                if (!password.Contains(c)) { return true; }
+                if (password.Contains(c)) { return true; }
             }
             return false;
         }
