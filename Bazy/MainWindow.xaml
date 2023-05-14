@@ -14,7 +14,7 @@
 
         <Image Source="/Obrazy/shutdown.png" Grid.Column="1" Panel.ZIndex="1" MouseUp="Image_MouseUp" Style="{StaticResource imgClose}"/>
 
-        <Border>
+        <Border CornerRadius="10 0 0 10">
             <Border.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                     <GradientStop Color="#3AA9AD" Offset="0"/>
@@ -26,7 +26,7 @@
                 <Canvas>
                     <Polygon Points="0,20 230,140 0,270" Fill="#4EB1B6"/>
                     <Polygon Points="80,400 200,370 180,470" Fill="#4EB1B6"/>
-                    <Ellipse Margin="200 700 50 0" Width="40" Height="40" Fill="#4EB1B6"/>
+                    <Ellipse Width="40" Height="40" Fill="#4EB1B6" Canvas.Left="220" Canvas.Top="58"/>
                     <Ellipse Margin="220 450 0 0" Width="30" Height="30" Fill="#4EB1B6"/>
                 </Canvas>
 
@@ -37,7 +37,7 @@
             </Grid>
         </Border>
 
-        
+
         <Border Background="#ffffff" Grid.Column="1" CornerRadius="0 10 10 0">
             <StackPanel VerticalAlignment="Center">
                 <TextBlock Text="Zaloguj się" Style="{StaticResource tytulText}" Foreground="#3AB19B"/>
@@ -69,6 +69,6 @@
                 <Button Content="Zaloguj" Click="btnZaloguj_Click" Style="{StaticResource buttonZaloguj}"/>
             </StackPanel>
         </Border>
-        
+
     </Grid>
 </Window>

@@ -10,29 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Npgsql;
 
 namespace Bazy
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Logika interakcji dla klasy OknoRejestracji.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class OknoRejestracji : Window
     {
-        public MainWindow()
+        public OknoRejestracji()
         {
-            //test_hasla();
             InitializeComponent();
-        }
-        void test_hasla()
-        {
-            string test_psd = "ZAQ!1qaz";
-            byte[] user_salt;
-            string hash = PasswordInterface.HashPasword(test_psd, out user_salt);
-
-            MessageBox.Show(PasswordInterface.VerifyPassword(test_psd, hash, user_salt).ToString());
         }
 
         private void textLogin_MouseDown(object sender, MouseButtonEventArgs e)
@@ -42,7 +31,7 @@ namespace Bazy
 
         private void txtLogin_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if(string.IsNullOrEmpty(txtLogin.Text) && txtLogin.Text.Length>0)
+            if (string.IsNullOrEmpty(txtLogin.Text) && txtLogin.Text.Length > 0)
             {
                 txtLogin.Visibility = Visibility.Collapsed;
             }
@@ -69,12 +58,30 @@ namespace Bazy
             }
         }
 
-        private void btnZaloguj_Click(object sender, RoutedEventArgs e)
+        private void textPotwierdzHaslo_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            
-            if(!string.IsNullOrEmpty(txtLogin.Text) && !string.IsNullOrEmpty(txtHaslo.Password))
+            textPotwierdzHaslo.Visibility = Visibility.Collapsed;
+        }
+
+        private void txtPotwierdzHaslo_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtPotwierdzHaslo.Password) && txtPotwierdzHaslo.Password.Length > 0)
             {
-                MessageBox.Show("Zalogowano");
+                txtPotwierdzHaslo.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                txtPotwierdzHaslo.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void btnZarejestruj_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (!string.IsNullOrEmpty(txtLogin.Text) && !string.IsNullOrEmpty(txtHaslo.Password))
+            {
+                MessageBox.Show("Zarejestrowano pomyślnie.");
+                Close();
             }
             else
             {
@@ -85,20 +92,7 @@ namespace Bazy
 
         private void Image_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            Application.Current.Shutdown();
-        }
-
-        private void btnZarejestruj_Click(object sender, RoutedEventArgs e)
-        {
-            //temp stuff here
-            //Registration.RegisterUser(txtLogin.Text, txtHaslo.Password);
-            //Registration.AllUsersShow();
-
-            var okno = new OknoRejestracji();
-            okno.ShowDialog();
-            
-
-
+            Close();
         }
     }
 }
