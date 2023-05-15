@@ -28,5 +28,11 @@ namespace Bazy
         {
             Application.Current.Shutdown();
         }
+
+        private void btInwestycje_Click(object sender, RoutedEventArgs e)
+        {
+            Grid grid = new Grid();
+            grid.ColumnDefinitions.Add(new ColumnDefinition());
+        }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -71,13 +73,19 @@ namespace Bazy
 
         private void btnZaloguj_Click(object sender, RoutedEventArgs e)
         {
-            
-            if(!string.IsNullOrEmpty(txtLogin.Text) && !string.IsNullOrEmpty(txtHaslo.Password))
+
+            if (!string.IsNullOrEmpty(txtLogin.Text) && !string.IsNullOrEmpty(txtHaslo.Password))
             {
                 //MessageBox.Show("Zalogowano");
-                var okno = new OknoAplikacji();
-                this.Close();
-                okno.Show();
+                if (VerifyUserExist(txtLogin.Text, txtHaslo.Password))
+                {
+                    var okno = new OknoAplikacji();
+                    this.Close();
+                    okno.Show();
+                }
+                else
+                    MessageBox.Show("Złe hasło lub login");
+
             }
             else
             {
@@ -85,7 +93,23 @@ namespace Bazy
             }
 
         }
+        private bool VerifyUserExist(string login, string password)
+        {
+            using (var conn = new NpgsqlConnection(Registration.ConnString()))
+            {
+                NpgsqlCommand cmd = new NpgsqlCommand($"SELECT hash FROM \"Użytkownicy\"");
+                cmd.Connection = conn;
+                NpgsqlDataReader reader = cmd.ExecuteReader();
 
+                byte[] user_salt;
+
+                string hash = PasswordInterface.HashPasword(password, out user_salt);
+                return !Registration.VerifyLogin(login) && PasswordInterface.VerifyPassword(password, hash, user_salt);
+            }
+        }
+        
+                
+        
         private void Image_MouseUp(object sender, MouseButtonEventArgs e)
         {
             Application.Current.Shutdown();

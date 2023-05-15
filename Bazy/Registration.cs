@@ -1,10 +1,6 @@
 ﻿using Npgsql;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Bazy
@@ -24,10 +20,12 @@ namespace Bazy
             };
             return connStringBuilder.ConnectionString;
         }
-        static public void RegisterUser(string login,string pass)
+
+        static public void RegisterUser(string login,string pass, string apppass)
         {
-            if(VerifyLogin(login)) return;
+            if(VerifyLogin(login) || VerifyHaslo(pass,apppass)) return;
             string hashedPass = PasswordInterface.HashPasword(pass, out var salt);
+            
             using (var conn = new NpgsqlConnection(ConnString()))
             {
                 conn.Open();
@@ -37,6 +35,11 @@ namespace Bazy
                 conn.Close();
             }
 
+        }
+
+        static public bool VerifyHaslo(string pass, string apppass)
+        {
+            return pass.Equals(apppass) && PasswordInterface.VerifyIfpasswordIsSafe(pass);
         }
         static public bool VerifyLogin(string login) 
         {

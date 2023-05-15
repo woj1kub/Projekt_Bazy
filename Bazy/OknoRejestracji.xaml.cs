@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Bazy
 {
@@ -80,6 +72,7 @@ namespace Bazy
 
             if (!string.IsNullOrEmpty(txtLogin.Text) && !string.IsNullOrEmpty(txtHaslo.Password))
             {
+                Registration.RegisterUser(txtLogin.Text, txtHaslo.Password, txtPotwierdzHaslo.Password);
                 MessageBox.Show("Zarejestrowano pomyślnie.");
                 var okno = new MainWindow();
                 this.Close();

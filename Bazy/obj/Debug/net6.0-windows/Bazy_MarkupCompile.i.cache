@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\Mikołaj\Desktop\Studia\pBazyDanych\AplikacjaFinansowa\Bazy\obj\Debug\net6.0-windows\
+C:\Users\macie\Source\Repos\woj1kub\Projekt_Bazy\Bazy\obj\Debug\net6.0-windows\
 Bazy
 none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
-C:\Users\Mikołaj\Desktop\Studia\pBazyDanych\AplikacjaFinansowa\Bazy\App.xaml
-11407045341
+C:\Users\macie\Source\Repos\woj1kub\Projekt_Bazy\Bazy\App.xaml
+3402136257
 1-834518939
-7-626217488
-1961259147625
-MainWindow.xaml;
+91796410484
+1961663719189
+MainWindow.xaml;OknoAplikacji.xaml;OknoRejestracji.xaml;
 
-False
+True
 
