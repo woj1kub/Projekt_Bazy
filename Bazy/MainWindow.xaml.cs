@@ -74,7 +74,10 @@ namespace Bazy
             
             if(!string.IsNullOrEmpty(txtLogin.Text) && !string.IsNullOrEmpty(txtHaslo.Password))
             {
-                MessageBox.Show("Zalogowano");
+                //MessageBox.Show("Zalogowano");
+                var okno = new OknoAplikacji();
+                this.Close();
+                okno.Show();
             }
             else
             {
@@ -95,6 +98,7 @@ namespace Bazy
             //Registration.AllUsersShow();
 
             var okno = new OknoRejestracji();
+            this.Close();
             okno.ShowDialog();
             
 

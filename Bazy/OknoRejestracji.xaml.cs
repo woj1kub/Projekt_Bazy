@@ -81,13 +81,23 @@ namespace Bazy
             if (!string.IsNullOrEmpty(txtLogin.Text) && !string.IsNullOrEmpty(txtHaslo.Password))
             {
                 MessageBox.Show("Zarejestrowano pomyślnie.");
-                Close();
+                var okno = new MainWindow();
+                this.Close();
+                okno.Show();
             }
             else
             {
                 MessageBox.Show("Wypełnij dane");
             }
 
+        }
+
+        private void btnZaloguj_Click(object sender, RoutedEventArgs e)
+        {
+            var okno = new MainWindow();
+            this.Close();
+            okno.Show();
+            
         }
 
         private void Image_MouseUp(object sender, MouseButtonEventArgs e)
