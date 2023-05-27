@@ -26,6 +26,8 @@ namespace Bazy
         public MainWindow()
         {
             //test_hasla();
+            //Registration.AllUsersShow();
+            //Registration.DeleteAllUsers();
             InitializeComponent();
         }
         void test_hasla()
@@ -76,16 +78,16 @@ namespace Bazy
 
             if (!string.IsNullOrEmpty(txtLogin.Text) && !string.IsNullOrEmpty(txtHaslo.Password))
             {
-                //MessageBox.Show("Zalogowano");
+                
                 if (VerifyUserExist(txtLogin.Text, txtHaslo.Password))
                 {
-                    var okno = new OknoAplikacji();
-                    this.Close();
-                    okno.Show();
+                MessageBox.Show("Zalogowano");
+                var okno = new OknoAplikacji();
+                this.Close();
+                okno.Show();
                 }
                 else
                     MessageBox.Show("Złe hasło lub login");
-
             }
             else
             {
@@ -95,21 +97,31 @@ namespace Bazy
         }
         private bool VerifyUserExist(string login, string password)
         {
+            byte[] Salt=null;
+            String Password_base=null;
             using (var conn = new NpgsqlConnection(Registration.ConnString()))
             {
-                NpgsqlCommand cmd = new NpgsqlCommand($"SELECT hash FROM \"Użytkownicy\"");
+                conn.Open();
+                NpgsqlCommand cmd = new NpgsqlCommand($"SELECT * FROM \"Użytkownicy\" WHERE \"Login\"=@loginBase ");
+                cmd.Parameters.AddWithValue("@loginBase", login);
+                
                 cmd.Connection = conn;
                 NpgsqlDataReader reader = cmd.ExecuteReader();
-
-                byte[] user_salt;
-
-                string hash = PasswordInterface.HashPasword(password, out user_salt);
-                return !Registration.VerifyLogin(login) && PasswordInterface.VerifyPassword(password, hash, user_salt);
+                while (reader.Read())
+                {
+                    Password_base = reader.GetString(1);
+                    Salt = (byte[]?) reader.GetValue(2);
+                }
             }
+            if (Password_base == null || Salt==null)
+                return false;
+
+            return PasswordInterface.VerifyPassword(password, Password_base, Salt);
+
         }
-        
-                
-        
+
+
+
         private void Image_MouseUp(object sender, MouseButtonEventArgs e)
         {
             Application.Current.Shutdown();

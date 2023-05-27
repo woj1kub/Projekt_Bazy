@@ -47,6 +47,7 @@ namespace Bazy
         static public bool VerifyPassword(string password, string hash, byte[] salt)
         {
             var hashToCompare = Rfc2898DeriveBytes.Pbkdf2(password, salt, iterations, hashAlgorithm, keySize);
+            byte[] bytes = Convert.FromBase64String(hash);
             return hashToCompare.SequenceEqual(Convert.FromHexString(hash));
         }
 

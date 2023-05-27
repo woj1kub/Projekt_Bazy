@@ -70,9 +70,9 @@ namespace Bazy
         private void btnZarejestruj_Click(object sender, RoutedEventArgs e)
         {
 
-            if (!string.IsNullOrEmpty(txtLogin.Text) && !string.IsNullOrEmpty(txtHaslo.Password))
+            if (!string.IsNullOrEmpty(txtLogin.Text) && !string.IsNullOrEmpty(txtHaslo.Password) &&
+                Registration.RegisterUser(txtLogin.Text, txtHaslo.Password, txtPotwierdzHaslo.Password))
             {
-                Registration.RegisterUser(txtLogin.Text, txtHaslo.Password, txtPotwierdzHaslo.Password);
                 MessageBox.Show("Zarejestrowano pomyślnie.");
                 var okno = new MainWindow();
                 this.Close();

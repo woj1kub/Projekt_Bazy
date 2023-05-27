@@ -21,26 +21,34 @@ namespace Bazy
             return connStringBuilder.ConnectionString;
         }
 
-        static public void RegisterUser(string login,string pass, string apppass)
+        static public bool RegisterUser(string login,string pass, string apppass)
         {
-            if(VerifyLogin(login) || VerifyHaslo(pass,apppass)) return;
-            string hashedPass = PasswordInterface.HashPasword(pass, out var salt);
+            bool VerLogin = !VerifyLogin(login);
+            bool VerPass = VerifyHaslo(pass, apppass);
+            if ( !(VerLogin && VerPass))
+                return false;
+            byte[] salt;
+            string hashedPass = PasswordInterface.HashPasword(pass, out salt);
             
             using (var conn = new NpgsqlConnection(ConnString()))
             {
                 conn.Open();
-                NpgsqlCommand cmd = new NpgsqlCommand($"INSERT INTO \"Użytkownicy\" VALUES ('{login}' , '{hashedPass}' , '{Convert.ToHexString(salt)}')");
+                NpgsqlCommand cmd = new NpgsqlCommand($"INSERT INTO \"Użytkownicy\" VALUES ('{login}' , '{hashedPass}' , '{salt}')");
                 cmd.Connection = conn;
                 cmd.ExecuteNonQuery();
                 conn.Close();
             }
-
+            return true;
         }
 
         static public bool VerifyHaslo(string pass, string apppass)
         {
-            return pass.Equals(apppass) && PasswordInterface.VerifyIfpasswordIsSafe(pass);
+            bool SamePass = pass == apppass;
+            bool SafePass = PasswordInterface.VerifyIfpasswordIsSafe(pass);
+
+            return (SamePass && SafePass);
         }
+
         static public bool VerifyLogin(string login) 
         {
             using (var conn = new NpgsqlConnection(ConnString()))
@@ -54,6 +62,7 @@ namespace Bazy
                 {
                     listUsers.Add(reader.GetString(0));
                 }
+
                 if (listUsers.Contains(login))
                 {
                     conn.Close();
@@ -64,6 +73,7 @@ namespace Bazy
                     conn.Close();
                     return false;
                 }
+
             }
         }
         static public void AllUsersShow()
@@ -71,7 +81,7 @@ namespace Bazy
             using (var conn = new NpgsqlConnection(ConnString()))
             {
                 conn.Open();
-                NpgsqlCommand cmd = new NpgsqlCommand("SELECT* FROM \"Użytkownicy\"");
+                NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM \"Użytkownicy\"");
                 cmd.Connection = conn;
                 NpgsqlDataReader reader = cmd.ExecuteReader();
                 List<String> listUsers = new List<string>();
