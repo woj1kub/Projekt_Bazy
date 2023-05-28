@@ -23,7 +23,7 @@ namespace Bazy
 
         static public bool RegisterUser(string login,string pass, string apppass)
         {
-            bool VerLogin = !VerifyLogin(login);
+            bool VerLogin = VerifyLogin(login);
             bool VerPass = VerifyHaslo(pass, apppass);
             if ( !(VerLogin && VerPass))
                 return false;
@@ -33,7 +33,10 @@ namespace Bazy
             using (var conn = new NpgsqlConnection(ConnString()))
             {
                 conn.Open();
-                NpgsqlCommand cmd = new NpgsqlCommand($"INSERT INTO \"Użytkownicy\" VALUES ('{login}' , '{hashedPass}' , '{salt}')");
+                NpgsqlCommand cmd = new NpgsqlCommand($"INSERT INTO \"Użytkownicy\" VALUES (@login , @hashPass , @salt )");
+                cmd.Parameters.AddWithValue("@login", login);
+                cmd.Parameters.AddWithValue("@hashPass", hashedPass);
+                cmd.Parameters.AddWithValue("@salt", salt);
                 cmd.Connection = conn;
                 cmd.ExecuteNonQuery();
                 conn.Close();
@@ -46,7 +49,7 @@ namespace Bazy
             bool SamePass = pass == apppass;
             bool SafePass = PasswordInterface.VerifyIfpasswordIsSafe(pass);
 
-            return (SamePass && SafePass);
+            return SamePass && SafePass;
         }
 
         static public bool VerifyLogin(string login) 
@@ -54,28 +57,23 @@ namespace Bazy
             using (var conn = new NpgsqlConnection(ConnString()))
             {
                 conn.Open();
-                NpgsqlCommand cmd = new NpgsqlCommand($"SELECT* FROM \"Użytkownicy\"");
+                NpgsqlCommand cmd = new NpgsqlCommand($"SELECT COUNT(*) FROM \"Użytkownicy\" WHERE \"Login\" = @login");
+                cmd.Parameters.AddWithValue("@login", login);
                 cmd.Connection = conn;
                 NpgsqlDataReader reader = cmd.ExecuteReader();
-                List<String> listUsers = new List<string>();
-                while (reader.Read())
-                {
-                    listUsers.Add(reader.GetString(0));
-                }
-
-                if (listUsers.Contains(login))
-                {
-                    conn.Close();
+                reader.Read();
+                var NumberOfLogin = reader.GetInt64(0);
+                if (NumberOfLogin==0)
                     return true;
-                }
                 else
-                {
-                    conn.Close();
                     return false;
-                }
-
             }
+
         }
+
+
+
+        //Testowanie
         static public void AllUsersShow()
         {
             using (var conn = new NpgsqlConnection(ConnString()))

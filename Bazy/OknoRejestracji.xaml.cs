@@ -16,54 +16,73 @@ namespace Bazy
             InitializeComponent();
         }
 
-        private void textLogin_MouseDown(object sender, MouseButtonEventArgs e)
+        private void brHaslo_MouseEnter(object sender, MouseEventArgs e)
         {
-            textLogin.Visibility = Visibility.Collapsed;
+            textHaslo.Visibility = Visibility.Hidden;
+        }
+
+        private void brHaslo_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtHaslo.Password))
+                textHaslo.Visibility = Visibility.Visible;
+        }
+
+        private void brLogin_MouseEnter(object sender, MouseEventArgs e)
+        {
+            textLogin.Visibility = Visibility.Hidden;
+        }
+
+        private void brLogin_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtLogin.Text))
+                textLogin.Visibility = Visibility.Visible;
+        }
+
+        private void Border_MouseEnter(object sender, MouseEventArgs e)
+        {
+            textPotwierdzHaslo.Visibility = Visibility.Hidden;
+        }
+
+        private void Border_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtPotwierdzHaslo.Password))
+                textPotwierdzHaslo.Visibility = Visibility.Visible;
         }
 
         private void txtLogin_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (string.IsNullOrEmpty(txtLogin.Text) && txtLogin.Text.Length > 0)
+            if (string.IsNullOrEmpty(txtLogin.Text) || txtLogin.Text.Length > 0)
             {
-                txtLogin.Visibility = Visibility.Collapsed;
+                textLogin.Visibility = Visibility.Collapsed;
             }
             else
             {
-                txtLogin.Visibility = Visibility.Visible;
+                textLogin.Visibility = Visibility.Visible;
             }
         }
 
-        private void textHaslo_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            textHaslo.Visibility = Visibility.Collapsed;
-        }
 
         private void txtHaslo_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(txtHaslo.Password) && txtHaslo.Password.Length > 0)
+            if (string.IsNullOrEmpty(txtHaslo.Password) || txtHaslo.Password.Length > 0)
             {
-                txtHaslo.Visibility = Visibility.Collapsed;
+                textHaslo.Visibility = Visibility.Collapsed;
             }
             else
             {
-                txtHaslo.Visibility = Visibility.Visible;
+                textHaslo.Visibility = Visibility.Visible;
             }
-        }
-
-        private void textPotwierdzHaslo_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            textPotwierdzHaslo.Visibility = Visibility.Collapsed;
         }
 
         private void txtPotwierdzHaslo_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(txtPotwierdzHaslo.Password) && txtPotwierdzHaslo.Password.Length > 0)
+            if (string.IsNullOrEmpty(txtPotwierdzHaslo.Password) || txtPotwierdzHaslo.Password.Length > 0)
             {
-                txtPotwierdzHaslo.Visibility = Visibility.Collapsed;
+                textPotwierdzHaslo.Visibility = Visibility.Collapsed;
             }
             else
             {
-                txtPotwierdzHaslo.Visibility = Visibility.Visible;
+                textPotwierdzHaslo.Visibility = Visibility.Visible;
             }
         }
 
@@ -97,5 +116,6 @@ namespace Bazy
         {
             Close();
         }
+
     }
 }
