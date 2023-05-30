@@ -10,8 +10,10 @@ namespace Bazy
     /// </summary>
     public partial class OknoAplikacji : Window
     {
-        public OknoAplikacji()
+        protected string ActiveUser;
+        public OknoAplikacji(string ActiveUser)
         {
+            this.ActiveUser = ActiveUser;
             InitializeComponent();
         }
 
@@ -22,8 +24,11 @@ namespace Bazy
 
         private void btInwestycje_Click(object sender, RoutedEventArgs e)
         {
-            Grid grid = new Grid();
-            grid.ColumnDefinitions.Add(new ColumnDefinition());
+            //Grid grid = new Grid();
+            //grid.ColumnDefinitions.Add(new ColumnDefinition());
+
+            UserControl1 aaa =  new UserControl1();
+            contentControl.Content = aaa;
         }
     }
 }

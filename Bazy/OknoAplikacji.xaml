@@ -45,10 +45,15 @@
 
 
         <Border Background="#ffffff" Grid.Column="2" CornerRadius="0 10 10 0">
-            <StackPanel VerticalAlignment="Center">
-                <!-- Tutaj np pola tekstowe do dodoawania inwestycji itd-->
-                
-            </StackPanel>
+            <!--   <StackPanel VerticalAlignment="Center"> -->
+            <!-- Tutaj np pola tekstowe do dodoawania inwestycji itd-->
+            
+
+            <!-- 
+            </StackPanel>-->
+            <Grid>
+                <ContentControl x:Name="contentControl" />
+            </Grid>
         </Border>
 
     </Grid>
