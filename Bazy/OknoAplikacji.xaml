@@ -37,7 +37,7 @@
                     <Button x:Name="btPortfele" Content="Moje porfele" Style="{StaticResource buttonRejestracja}"  Margin="10"/>
                     <Button x:Name="btHistoria" Content="Historie" Style="{StaticResource buttonRejestracja}"  Margin="10"/>
                     <Button x:Name="btWykres" Content="Wykres" Style="{StaticResource buttonRejestracja}"  Margin="10"/>
-                    <Button x:Name="btWyloguj" Content="Wyloguj" Style="{StaticResource buttonRejestracja}" VerticalAlignment="Top" Margin="10"/>
+                    <Button x:Name="btWyloguj" Content="Wyloguj" Style="{StaticResource buttonRejestracja}" VerticalAlignment="Top" Margin="10" Click="btWyloguj_Click"/>
 
                 </StackPanel>
             </Grid>
