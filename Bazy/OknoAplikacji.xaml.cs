@@ -10,14 +10,12 @@ namespace Bazy
     /// </summary>
     public partial class OknoAplikacji : Window
     {
-        protected string ActiveUser;
-        public OknoAplikacji(string ActiveUser)
+        public OknoAplikacji()
         {
-            this.ActiveUser = ActiveUser;
             InitializeComponent();
         }
 
-        private void Image_MouseUp(object sender, MouseButtonEventArgs e)
+        private void Image_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Application.Current.Shutdown();
         }
@@ -27,8 +25,13 @@ namespace Bazy
             //Grid grid = new Grid();
             //grid.ColumnDefinitions.Add(new ColumnDefinition());
 
-            UserControl1 aaa =  new UserControl1();
-            contentControl.Content = aaa;
+            Inwestycje inwestycje =  new Inwestycje();
+            contentControl.Content = inwestycje;
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
         }
     }
 }

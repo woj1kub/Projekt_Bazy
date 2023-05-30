@@ -2,24 +2,48 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
+    <Compile Update="KontoOszczednosciowe.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Lokaty.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="OknoAplikacji.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="OknoRejestracji.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="UserControl1.xaml.cs">
+    <Compile Update="Inwestycje.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Portfele.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Ustawienia.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="KontoOszczednosciowe.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Lokaty.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="OknoAplikacji.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="OknoRejestracji.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="UserControl1.xaml">
+    <Page Update="Inwestycje.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Portfele.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Ustawienia.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
