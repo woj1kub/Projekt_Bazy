@@ -37,7 +37,7 @@
                     <Button x:Name="btPortfele" Content="Moje porfele" Style="{StaticResource buttonRejestracja}"  Margin="10"/>
                     <Button x:Name="btHistoria" Content="Historie" Style="{StaticResource buttonRejestracja}"  Margin="10"/>
                     <Button x:Name="btWykres" Content="Wykres" Style="{StaticResource buttonRejestracja}"  Margin="10"/>
-                    <Button x:Name="btWyloguj" Content="Wyloguj" Style="{StaticResource buttonRejestracja}" VerticalAlignment="Top" Margin="10" Click="btWyloguj_Click"/>
+                    <Button x:Name="btWyloguj" Content="Wyloguj" Style="{StaticResource buttonRejestracja}" VerticalAlignment="Top" Margin="10"/>
 
                 </StackPanel>
             </Grid>
@@ -45,10 +45,15 @@
 
 
         <Border Background="#ffffff" Grid.Column="2" CornerRadius="0 10 10 0">
-            <StackPanel VerticalAlignment="Center">
-                <!-- Tutaj np pola tekstowe do dodoawania inwestycji itd-->
-                
-            </StackPanel>
+            <!--   <StackPanel VerticalAlignment="Center"> -->
+            <!-- Tutaj np pola tekstowe do dodoawania inwestycji itd-->
+            
+
+            <!-- 
+            </StackPanel>-->
+            <Grid>
+                <ContentControl x:Name="contentControl" />
+            </Grid>
         </Border>
 
     </Grid>

@@ -8,12 +8,18 @@
     <Compile Update="OknoRejestracji.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="UserControl1.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="OknoAplikacji.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="OknoRejestracji.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControl1.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
