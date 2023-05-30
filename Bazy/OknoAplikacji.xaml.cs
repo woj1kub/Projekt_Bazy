@@ -10,8 +10,10 @@ namespace Bazy
     /// </summary>
     public partial class OknoAplikacji : Window
     {
-        public OknoAplikacji()
+        protected string ActiveUser;
+        public OknoAplikacji(string ActiveUser)
         {
+            this.ActiveUser = ActiveUser;
             InitializeComponent();
         }
 

@@ -54,7 +54,7 @@ namespace Bazy
                 if (VerifyUserExist(txtLogin.Text, txtHaslo.Password))
                 {
                 MessageBox.Show("Zalogowano");
-                var okno = new OknoAplikacji();
+                var okno = new OknoAplikacji(txtLogin.Text);
                 this.Close();
                 okno.Show();
                 }
