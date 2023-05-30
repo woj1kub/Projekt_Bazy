@@ -27,6 +27,7 @@ namespace Bazy
             bool VerPass = VerifyHaslo(pass, apppass);
             if ( !(VerLogin && VerPass))
                 return false;
+
             byte[] salt;
             string hashedPass = PasswordInterface.HashPasword(pass, out salt);
             
@@ -68,7 +69,6 @@ namespace Bazy
                 else
                     return false;
             }
-
         }
 
 

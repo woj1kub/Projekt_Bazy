@@ -10,9 +10,13 @@ namespace Bazy
     /// </summary>
     public partial class OknoAplikacji : Window
     {
-        public OknoAplikacji()
+        protected string ActiveUser;
+       
+        public OknoAplikacji(string ActiveUser)
         {
             InitializeComponent();
+            this.ActiveUser = ActiveUser;
+
         }
 
         private void Image_MouseUp(object sender, MouseButtonEventArgs e)
