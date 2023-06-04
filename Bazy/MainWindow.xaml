@@ -67,6 +67,7 @@
                 </Border>
 
                 <Button Content="Zaloguj" Click="btnZaloguj_Click" Style="{StaticResource buttonZaloguj}"/>
+                <Label Name="lbLoginMsg" Margin="0,20,0,20" FontWeight="Bold" Foreground="Red" FontSize="12" HorizontalContentAlignment="Center"/>
             </StackPanel>
         </Border>
 
