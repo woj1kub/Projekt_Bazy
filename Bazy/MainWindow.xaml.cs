@@ -56,17 +56,19 @@ namespace Bazy
                 
                 if (VerifyUserExist(txtLogin.Text, txtHaslo.Password))
                 {
-                MessageBox.Show("Zalogowano");
+                //MessageBox.Show("Zalogowano");
                 var okno = new OknoAplikacji( txtLogin.Text);
                 this.Close();
                 okno.Show();
                 }
                 else
-                    MessageBox.Show("Złe hasło lub login");
+                    //MessageBox.Show("Złe hasło lub login");
+                    showLoginMsg("Złe hasło lub login");
             }
             else
             {
-                MessageBox.Show("Wypełnij dane");
+                //MessageBox.Show("Wypełnij dane");
+                showLoginMsg("Wypełnij dane");
             }
 
         }
@@ -127,6 +129,11 @@ namespace Bazy
         {
             if (string.IsNullOrEmpty(txtLogin.Text))
                 textLogin.Visibility = Visibility.Visible;
+        }
+
+        private void showLoginMsg(string msg)
+        {
+            lbLoginMsg.Content = msg;
         }
     }
 }
