@@ -13,13 +13,16 @@ namespace Bazy
     {
         public MainWindow()
         {
-            //test_hasla();
-            //Registration.AllUsersShow();
-            //Registration.DeleteAllUsers();
-            InitializeComponent();
             
+            InitializeComponent();
+            testConnect();
         }
-
+        private void testConnect()
+        {
+            var conn = new NpgsqlConnection(Registration.ConnString());
+            conn.Open();
+            conn.Close();
+        }
         
         private void txtLogin_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -54,7 +57,7 @@ namespace Bazy
                 if (VerifyUserExist(txtLogin.Text, txtHaslo.Password))
                 {
                 MessageBox.Show("Zalogowano");
-                var okno = new OknoAplikacji();
+                var okno = new OknoAplikacji( txtLogin.Text);
                 this.Close();
                 okno.Show();
                 }
@@ -99,16 +102,9 @@ namespace Bazy
 
         private void btnZarejestruj_Click(object sender, RoutedEventArgs e)
         {
-            //temp stuff here
-            //Registration.RegisterUser(txtLogin.Text, txtHaslo.Password);
-            //Registration.AllUsersShow();
-
             var okno = new OknoRejestracji();
             this.Close();
             okno.ShowDialog();
-            
-
-
         }
 
         private void brHaslo_MouseEnter(object sender, MouseEventArgs e)

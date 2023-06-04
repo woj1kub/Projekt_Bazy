@@ -5,7 +5,7 @@
     <Compile Update="KontoOszczednosciowe.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Lokaty.xaml.cs">
+    <Compile Update="PanelLokaty.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="OknoAplikacji.xaml.cs">
@@ -28,7 +28,7 @@
     <Page Update="KontoOszczednosciowe.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Lokaty.xaml">
+    <Page Update="PanelLokaty.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="OknoAplikacji.xaml">

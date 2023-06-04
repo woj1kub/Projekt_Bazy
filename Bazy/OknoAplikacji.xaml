@@ -32,12 +32,16 @@
                     
                 <StackPanel VerticalAlignment="Center" >
                     <!-- Tutaj dodać przyciski np. dodaj inwestycje itd-->
-                    
+                    <Label x:Name="lbUser">
+                    </Label>
+                    <Label x:Name="lbFundusze">
+                    </Label>
+
                     <Button x:Name="btInwestycje" Content="Inwestycje" Style="{StaticResource buttonRejestracja}"  Margin="10" Click="btInwestycje_Click"/>
                     <Button x:Name="btPortfele" Content="Moje porfele" Style="{StaticResource buttonRejestracja}"  Margin="10"/>
                     <Button x:Name="btHistoria" Content="Historie" Style="{StaticResource buttonRejestracja}"  Margin="10"/>
                     <Button x:Name="btUstawienia" Content="Ustawienia" Style="{StaticResource buttonRejestracja}"  Margin="10"/>
-                    <Button x:Name="btWyloguj" Content="Wyloguj" Style="{StaticResource buttonRejestracja}" VerticalAlignment="Top" Margin="10"/>
+                    <Button x:Name="btWyloguj" Content="Wyloguj" Style="{StaticResource buttonRejestracja}" VerticalAlignment="Top" Margin="10" Click="btWyloguj_Click"/>
 
                 </StackPanel>
             </Grid>

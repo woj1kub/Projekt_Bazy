@@ -27,7 +27,7 @@ namespace Bazy
 
         private void btnLokaty_Click(object sender, RoutedEventArgs e)
         {
-            Lokaty lokaty = new Lokaty();
+            PanelLokaty lokaty = new PanelLokaty();
             oknoInwestycje.Content = lokaty;
         }
 
