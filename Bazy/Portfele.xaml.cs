@@ -24,5 +24,10 @@ namespace Bazy
         {
             InitializeComponent();
         }
+
+        private void lbiPortfele_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

@@ -7,6 +7,53 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600">
     <Grid>
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Column="0" Grid.Row="0" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <ListBox Grid.Column="0" x:Name="lbiPortfele" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="lbiPortfele_SelectionChanged" Margin="25,25,0,25"/>
+
+            <StackPanel Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,25,0,0" Height="200" Width="50">
+                <Button Background="AliceBlue" x:Name="btDodaj" Content="+" Width="50" Height="50" FontSize="30" FontWeight="Bold" Margin="0,0,0,25"/>
+                <Button Background="AliceBlue" x:Name="btUsuń" Content="-" Width="50" Height="50" FontSize="30" FontWeight="Bold" Margin="0,0,0,25"/>
+                <Button Background="AliceBlue" x:Name="btSort" Content="V" Width="50" Height="50" FontSize="30" FontWeight="Bold"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="AAA" VerticalAlignment="Top" HorizontalAlignment="Center" ></Label>
+
+            <ListBox Grid.Column="0" x:Name="lbiPosiadane1" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="lbiPortfele_SelectionChanged" Margin="25,25,0,25"/>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="25,0,0,0">
+                <Button Content=">" Height="25" Margin="5"></Button>
+                <Button Content=">>" Height="25"></Button>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="1" Content="AAA" VerticalAlignment="Top" HorizontalAlignment="Center" ></Label>
+            <ListBox Grid.Column="1" x:Name="lbiPosiadane2" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="lbiPortfele_SelectionChanged" Margin="0,25,25,25"/>
+            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                <Button Content="&lt;&lt;" Height="25" Margin="5"/>
+                <Button Content="&lt;" Height="25"/>
+            </StackPanel>
+        </Grid>
     </Grid>
+
 </UserControl>

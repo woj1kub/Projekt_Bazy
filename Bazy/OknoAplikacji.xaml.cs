@@ -17,7 +17,7 @@ namespace Bazy
             this.ActiveUser = ActiveUser;
             InitializeComponent();
             lbUser.Content = "Witaj, "+this.ActiveUser+"!";
-            var conn = new NpgsqlConnection(Registration.ConnString());
+            
         }
 
         private void Image_MouseDown(object sender, MouseButtonEventArgs e)
@@ -42,5 +42,10 @@ namespace Bazy
             main.Show();
         }
 
+        private void btPortfele_Click(object sender, RoutedEventArgs e)
+        {
+            Portfele portfele = new Portfele();
+            contentControl.Content=portfele;
+        }
     }
 }
