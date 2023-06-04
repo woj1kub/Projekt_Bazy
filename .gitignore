@@ -345,7 +345,9 @@ ASALocalRun/
 Network Trash Folder
 Temporary Items
 .apdisk
+/.vs/VSWorkspaceState.json
 
 # Foldery - wojkub
 Bazy/obj/
 Bazy/bin/
+Bazy/.vs/
