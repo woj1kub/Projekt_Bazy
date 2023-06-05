@@ -2,7 +2,16 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
+    <Compile Update="Akcje.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Historie.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="KontoOszczednosciowe.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Obligacje.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="PanelLokaty.xaml.cs">
@@ -25,7 +34,16 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Akcje.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Historie.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="KontoOszczednosciowe.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Obligacje.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="PanelLokaty.xaml">

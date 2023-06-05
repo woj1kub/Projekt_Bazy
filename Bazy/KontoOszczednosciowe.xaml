@@ -7,7 +7,12 @@
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="500">
     <Grid>
-        <Button Content="konto" HorizontalAlignment="Left" Margin="158,143,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btDodajKonto" Content="Dodaj lokate" HorizontalAlignment="Left" Margin="48,62,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cbWybierzKonto" HorizontalAlignment="Left" Margin="130,60,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Tutaj ma być piechart pokazujący poszczególne wartości z danego konta" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="260" Width="273" BorderBrush="Black" BorderThickness="1,1,1,1"/>
+        <Label Content="Kwota konta" HorizontalAlignment="Left" Margin="375,184,0,0" VerticalAlignment="Top" Width="86"/>
+        <Label Content="Data zakończenia konta" HorizontalAlignment="Left" Margin="343,250,0,0" VerticalAlignment="Top"/>
+        <Button Content="Zamknij konto" HorizontalAlignment="Left" Margin="95,468,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </UserControl>
