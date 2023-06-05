@@ -14,4 +14,5 @@ namespace Bazy
     public partial class App : Application
     {
     }
+
 }

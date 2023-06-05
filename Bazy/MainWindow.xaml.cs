@@ -74,8 +74,8 @@ namespace Bazy
         }
         private bool VerifyUserExist(string login, string password)
         {
-            byte[] Salt=null;
-            String Password_base=null;
+            byte[]? Salt=null;
+            String? Password_base=null;
             using (var conn = new NpgsqlConnection(Registration.ConnString()))
             {
                 conn.Open();

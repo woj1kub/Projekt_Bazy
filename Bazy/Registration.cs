@@ -82,7 +82,7 @@ namespace Bazy
                 NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM \"Użytkownicy\"");
                 cmd.Connection = conn;
                 NpgsqlDataReader reader = cmd.ExecuteReader();
-                List<String> listUsers = new List<string>();
+                List<String> listUsers = new();
                 while (reader.Read()) 
                 {
                     listUsers.Add(reader.GetString(0));

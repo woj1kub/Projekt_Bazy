@@ -12,6 +12,7 @@ namespace Bazy
     public partial class OknoAplikacji : Window
     {
         private readonly string ActiveUser;
+        public string ActivePortfef=string.Empty;
         public OknoAplikacji(string ActiveUser)
         {
             this.ActiveUser = ActiveUser;
@@ -44,8 +45,10 @@ namespace Bazy
 
         private void btPortfele_Click(object sender, RoutedEventArgs e)
         {
-            Portfele portfele = new Portfele();
+            Portfele portfele = new Portfele(ActiveUser);
             contentControl.Content=portfele;
+            ActivePortfef = portfele.ActivePortfef;
+            lbFundusze.Content = ActivePortfef;
         }
     }
 }
