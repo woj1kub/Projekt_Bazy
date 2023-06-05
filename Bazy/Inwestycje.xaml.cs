@@ -36,5 +36,17 @@ namespace Bazy
             KontoOszczednosciowe kontoOszczednosciowe = new KontoOszczednosciowe();
             oknoInwestycje.Content = kontoOszczednosciowe;
         }
+
+        private void btnObligacje_Click(object sender, RoutedEventArgs e)
+        {
+            Obligacje obligacje = new Obligacje();
+            oknoInwestycje.Content = obligacje;
+        }
+
+        private void btnAkcje_Click(object sender, RoutedEventArgs e)
+        {
+            Akcje akcje = new Akcje();
+            oknoInwestycje.Content = akcje;
+        }
     }
 }

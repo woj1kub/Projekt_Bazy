@@ -32,16 +32,16 @@
                     
                 <StackPanel VerticalAlignment="Center" >
                     <!-- Tutaj dodać przyciski np. dodaj inwestycje itd-->
-                    <Label x:Name="lbUser">
+                    <Label x:Name="lbUser" Margin="0 0 0 160" HorizontalAlignment="Left" Foreground="White" FontSize="16">
                     </Label>
-                    <Label x:Name="lbFundusze">
+                    <Label x:Name="lbFundusze" Margin="0 -145 0 150" HorizontalAlignment="Left" Foreground="White" FontSize="16">
                     </Label>
 
-                    <Button x:Name="btInwestycje" Content="Inwestycje" Style="{StaticResource buttonRejestracja}"  Margin="10" Click="btInwestycje_Click"/>
+                    <Button x:Name="btInwestycje" Content="Inwestycje" Style="{StaticResource buttonRejestracja}"  Margin="10 -30 10 10" Click="btInwestycje_Click"/>
                     <Button x:Name="btPortfele" Content="Moje porfele" Style="{StaticResource buttonRejestracja}"  Margin="10" Click="btPortfele_Click"/>
-                    <Button x:Name="btHistoria" Content="Historie" Style="{StaticResource buttonRejestracja}"  Margin="10"/>
-                    <Button x:Name="btUstawienia" Content="Ustawienia" Style="{StaticResource buttonRejestracja}"  Margin="10"/>
-                    <Button x:Name="btWyloguj" Content="Wyloguj" Style="{StaticResource buttonRejestracja}" VerticalAlignment="Top" Margin="10" Click="btWyloguj_Click"/>
+                    <Button x:Name="btHistoria" Content="Historie" Style="{StaticResource buttonRejestracja}"  Margin="10" Click="btHistoria_Click"/>
+                    <Button x:Name="btUstawienia" Content="Ustawienia" Style="{StaticResource buttonRejestracja}"  Margin="10" Click="btUstawienia_Click"/>
+                    <Button x:Name="btWyloguj" Content="Wyloguj" Style="{StaticResource buttonRejestracja}" VerticalAlignment="Top" Margin="10 10 10 100" Click="btWyloguj_Click"/>
 
                 </StackPanel>
             </Grid>

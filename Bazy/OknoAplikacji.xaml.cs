@@ -47,5 +47,17 @@ namespace Bazy
             Portfele portfele = new Portfele();
             contentControl.Content=portfele;
         }
+
+        private void btUstawienia_Click(object sender, RoutedEventArgs e)
+        {
+            Ustawienia ustawienia = new Ustawienia();
+            contentControl.Content = ustawienia;
+        }
+
+        private void btHistoria_Click(object sender, RoutedEventArgs e)
+        {
+            Historie historie = new Historie();
+            contentControl.Content = historie;
+        }
     }
 }

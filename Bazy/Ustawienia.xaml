@@ -7,7 +7,12 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600">
     <Grid>
-        <Label Content="Zmiana hasła" HorizontalAlignment="Left" Margin="240,52,0,0" VerticalAlignment="Top" Width="83"/>
+        <Label Content="Zmiana hasła" HorizontalAlignment="Left" Margin="222,52,0,0" VerticalAlignment="Top" Width="82"/>
+        <PasswordBox x:Name="txtStareHaslo" HorizontalAlignment="Left" Margin="203,83,0,0" VerticalAlignment="Top" Width="120" BorderBrush="#3AB19B"/>
+        <PasswordBox x:Name="txtNoweHaslo" HorizontalAlignment="Left" Margin="203,120,0,0" VerticalAlignment="Top" Width="120" BorderBrush="#3AB19B"/>
+        <Button Content="Zmień hasło" HorizontalAlignment="Left" Margin="194,163,0,0" VerticalAlignment="Top" Style="{StaticResource buttonZaloguj}" Width="138"/>
+        <Label Content="Nowe hasło:" HorizontalAlignment="Left" Margin="123,116,0,0" VerticalAlignment="Top"/>
+        <Label Content="Stare hasło:" HorizontalAlignment="Left" Margin="123,79,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </UserControl>
