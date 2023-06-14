@@ -28,8 +28,7 @@ namespace Bazy
             };
 
             DataContext = this;
-            Portfele portfele = new(ActiveUser);
-            portfele.ActivePortfel += ChildWindow_VariableChanged;
+            Portfele portfele = new(ActiveUser, ChildWindow_VariableChanged);
             contentControl.Content = portfele;
             lbFundusze.Visibility = Visibility.Visible;
 
@@ -59,8 +58,7 @@ namespace Bazy
 
         private void btPortfele_Click(object sender, RoutedEventArgs e)
         {
-            Portfele portfele = new Portfele(ActiveUser);
-            portfele.ActivePortfel += ChildWindow_VariableChanged;
+            Portfele portfele = new Portfele(ActiveUser,ChildWindow_VariableChanged);
             contentControl.Content=portfele;
             
         }

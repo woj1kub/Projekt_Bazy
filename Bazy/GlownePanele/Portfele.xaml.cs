@@ -3,8 +3,11 @@ using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Bazy
 {
@@ -14,38 +17,39 @@ namespace Bazy
     public partial class Portfele : UserControl
     {
         private readonly string ActiveUser;
-
         ObservableCollection<Portfel> portfele_dane = new();
-        public Portfele(string ActiveUser)
+        public event Action<Portfel> ActivePortfel;
+        Portfel portfel_wew;
+
+        public Portfele(string ActiveUser, Action<Portfel> ActivePortfel)
         {
-           
-            portfel_wew=new();
+            portfel_wew = new();
             InitializeComponent();
             this.ActiveUser = ActiveUser;
+            this.ActivePortfel += ActivePortfel;
             ListyPortfeli();
         }
 
-        public event Action<Portfel> ActivePortfel;
-        Portfel portfel_wew;
-        
+
         private void lbiPortfele_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int chosen=lbiPortfele.SelectedIndex;
+            int chosen = lbiPortfele.SelectedIndex;
             if (chosen < 0)
             {
-                if (ActivePortfel==null)
+                if (ActivePortfel == null)
                 {
                     return;
                 }
                 chosen = portfele_dane.IndexOf(portfel_wew);
-                if (chosen < 0) 
+                if (chosen < 0)
                 {
-                    return; 
+                    return;
                 }
-            
             }
+
             ActivePortfel.Invoke(portfele_dane[chosen]);
             portfel_wew = portfele_dane[chosen];
+            lbiPortfele.SelectedIndex = chosen;
         }
         private void ListyPortfeli()
         {
@@ -58,8 +62,8 @@ namespace Bazy
              "GROUP BY \"Id_Portfelu\", \"Nazwa_Portfelu\"");
             cmd.Parameters.AddWithValue("@login", ActiveUser);
 
-            cmd.Connection=conn;
-            NpgsqlDataReader reader= cmd.ExecuteReader();
+            cmd.Connection = conn;
+            NpgsqlDataReader reader = cmd.ExecuteReader();
             Portfel portfel;
 
             while (reader.Read())
@@ -80,7 +84,7 @@ namespace Bazy
 
         private void btDodaj_Click(object sender, RoutedEventArgs e)
         {
-            if(NewPortfelName.Text==string.Empty) 
+            if (NewPortfelName.Text == string.Empty)
                 return;
             var conn = new NpgsqlConnection(Registration.ConnString());
             conn.Open();
@@ -88,10 +92,10 @@ namespace Bazy
             //Dodanie nowego portfelu i pobranie jego id
             cmd = new("INSERT INTO \"Portfele\" (\"Użykownik\", \"Nazwa_Portfelu\") " +
                 "VALUES ( (SELECT \"Login\" FROM \"Użytkownicy\" WHERE \"Login\" = @user) , @name )" +
-                "RETURNING \"Id_Portfelu\"" );
+                "RETURNING \"Id_Portfelu\"");
             cmd.Parameters.AddWithValue("@user", ActiveUser);
             cmd.Parameters.AddWithValue("@name", NewPortfelName.Text);
-            cmd.Connection=conn;
+            cmd.Connection = conn;
             var id_portfelea = cmd.ExecuteScalar();
 
             if (id_portfelea == null)
@@ -105,10 +109,10 @@ namespace Bazy
                 Wartosc = 0
             };
             portfele_dane.Add(portfel);
-            
+
             //Czyszczenie
             NewPortfelName.Clear();
-            
+
         }
         //Do dodania procedura do usuwanie rzeczy
         private void btUsuń_Click(object sender, RoutedEventArgs e)
@@ -118,17 +122,18 @@ namespace Bazy
             var conn = new NpgsqlConnection(Registration.ConnString());
             conn.Open();
             NpgsqlCommand cmd;
-            
+
             cmd = new("DELETE FROM \"Portfel Gotówkowy\" WHERE \"Id_Porfelu\"= @Id_portfel");
             cmd.Parameters.AddWithValue("Id_portfel", portfel_wew.PortfeleId);
             cmd.Connection = conn;
             cmd.ExecuteNonQuery();
             conn.Close();
             portfele_dane.RemoveAt(portfele_dane.IndexOf(portfel_wew));
+            ActivePortfel.Invoke(new Portfel());
         }
         private void btDodajFundusze_Click(object sender, RoutedEventArgs e)
         {
-            if (portfel_wew.PortfeleId ==null) return;
+            if (portfel_wew.PortfeleId == null) return;
             var conn = new NpgsqlConnection(Registration.ConnString());
             conn.Open();
             NpgsqlCommand cmd;
@@ -140,7 +145,7 @@ namespace Bazy
             cmd.Parameters.AddWithValue("Id_portfel", portfel_wew.PortfeleId);
             cmd.Connection = conn;
             var id_portfel_gotowkowy = cmd.ExecuteScalar();
-            
+
             if (id_portfel_gotowkowy != null)
             {
                 //Dodanie w histroii transakcji informacje o stworzeniu nowej histrorii
@@ -157,7 +162,7 @@ namespace Bazy
             var selectedIndex = portfele_dane.IndexOf(portfel_wew);
             var selectedPortfel = portfele_dane[selectedIndex];
             selectedPortfel.Wartosc += decimal.Parse(Fundusze.Text);
-            lbiPortfele.ItemsSource=new List<Portfel>();
+            lbiPortfele.ItemsSource = new List<Portfel>();
             lbiPortfele.ItemsSource = portfele_dane;
             Fundusze.Clear();
             conn.Close();
@@ -166,5 +171,23 @@ namespace Bazy
         {
 
         }
+
+        private void Fundusze_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            // Sprawdzenie, czy wprowadzony znak jest cyfrą lub przecinkiem
+            if (!char.IsDigit(e.Text, e.Text.Length - 1) && e.Text != ",")
+            {
+                e.Handled = true; // Zatrzymaj zdarzenie, aby znak nie został wprowadzony do TextBox
+            }
+
+            // Sprawdzenie, czy tekst w TextBox ma poprawny format
+            string newText = Fundusze.Text + e.Text;
+            Regex regex = new Regex(@"^\d+(,\d{0,2})?$");
+            if (!regex.IsMatch(newText))
+            {
+                e.Handled = true; // Zatrzymaj zdarzenie, aby znak nie został wprowadzony do TextBox
+            }
+        }
+
     }
 }

@@ -37,7 +37,7 @@
 
                 <Button Background="AliceBlue" x:Name="btDodaj" Content="Dodaj"  Width="75" Height="30" FontSize="15" FontWeight="Bold" Click="btDodaj_Click"/>
                 <Label Content="Fundusze" HorizontalAlignment="Center"/>
-                <TextBox Margin="25,10" x:Name="Fundusze"/>
+                <TextBox Margin="25,10" x:Name="Fundusze" PreviewTextInput="Fundusze_PreviewTextInput"/>
                 <Button Background="AliceBlue" x:Name="btDodajFundusze" Content="Dodaj"  Width="75" Height="30" FontSize="15" FontWeight="Bold" Click="btDodajFundusze_Click"/>
 
             </StackPanel>
