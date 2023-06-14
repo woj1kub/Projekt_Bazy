@@ -16,6 +16,7 @@ namespace Bazy
             
             InitializeComponent();
             testConnect();
+            //AltersTable();
         }
         private void testConnect()
         {
@@ -134,6 +135,25 @@ namespace Bazy
         private void showLoginMsg(string msg)
         {
             lbLoginMsg.Content = msg;
+        }
+
+        //AlterTable
+        void AltersTable()
+        {
+            using (var conn = new NpgsqlConnection(Registration.ConnString()))
+            {
+                conn.Open();
+                NpgsqlCommand cmd = new("ALTER TABLE \"Historia Konta Oszczędnościowego\" DROP CONSTRAINT \"Historia Konta Oszczędnościowego_fk0\" ," +
+                    "ADD CONSTRAINT \"Historia Konta Oszczędnościowego_fk0\" FOREIGN KEY (\"Id_Konta_Oszczędnościowego\") REFERENCES public.\"Konto oszczędnościowe\"(\"Id_Konta_Oszczędnościowego\") ON DELETE CASCADE NOT VALID  ");
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+                //cmd = new("ALTER TABLE IF EXISTS \"Portfele\" " +
+                //    "ADD CONSTRAINT \"Portfele_pk\" PRIMARY KEY (\"Id_Portfelu\" ASC) " +
+                //    "ON DELETE CASCADE");
+                //cmd.Connection = conn;
+                //cmd.ExecuteNonQuery();
+                conn.Close();
+            }
         }
     }
 }

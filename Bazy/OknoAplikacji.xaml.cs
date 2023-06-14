@@ -12,14 +12,29 @@ namespace Bazy
     public partial class OknoAplikacji : Window
     {
         private readonly string ActiveUser;
+        private Portfel ActivePortfel { get; set; }
+
         public OknoAplikacji(string ActiveUser)
-        {
+        {  
+            
             this.ActiveUser = ActiveUser;
             InitializeComponent();
             lbUser.Content = "Witaj, "+this.ActiveUser+"!";
-            
-        }
+            ActivePortfel = new Portfel
+            {
+                Wartosc = 0,
+                Nazwa = "",
+                PortfeleId = 0
+            };
 
+            DataContext = this;
+            Portfele portfele = new(ActiveUser);
+            portfele.ActivePortfel += ChildWindow_VariableChanged;
+            contentControl.Content = portfele;
+            lbFundusze.Visibility = Visibility.Visible;
+
+
+        }
         private void Image_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Application.Current.Shutdown();
@@ -45,7 +60,15 @@ namespace Bazy
         private void btPortfele_Click(object sender, RoutedEventArgs e)
         {
             Portfele portfele = new Portfele(ActiveUser);
+            portfele.ActivePortfel += ChildWindow_VariableChanged;
             contentControl.Content=portfele;
+            
+        }
+        private void ChildWindow_VariableChanged(Portfel newValue)
+        {
+            ActivePortfel = newValue;
+            lbFundusze.Content = ActivePortfel.Wartosc;
+            lbFundusze.DataContext = ActivePortfel;
         }
 
         private void btUstawienia_Click(object sender, RoutedEventArgs e)

@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Bazy"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Background="Transparent"
         Title="OknoAplikacji" Height="700" Width="1100" MouseDown="Window_MouseDown">
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200*"/>
@@ -30,18 +31,24 @@
                     <Ellipse Margin="220 450 0 0" Width="30" Height="30" Fill="#4EB1B6"/>
                 </Canvas>
                     
-                <StackPanel VerticalAlignment="Center" >
+                <StackPanel VerticalAlignment="Center">
                     <!-- Tutaj dodać przyciski np. dodaj inwestycje itd-->
-                    <Label x:Name="lbUser" Margin="0 0 0 160" HorizontalAlignment="Left" Foreground="White" FontSize="16">
+                    <Label x:Name="lbUser" Margin="0 0 0 160" HorizontalAlignment="Center" Foreground="White" FontSize="16"
+                           VerticalAlignment="Top">
                     </Label>
-                    <Label x:Name="lbFundusze" Margin="0 -145 0 150" HorizontalAlignment="Left" Foreground="White" FontSize="16">
+                    <DockPanel   Margin="15 0 0 0 ">
+                        <Label x:Name="lbTextFundusze" Margin="0 -145 0 150" HorizontalAlignment="Center" Foreground="White" FontSize="16"
+                           VerticalAlignment="Top" Content="Fundusze: ">
+                        </Label>
+                        <Label x:Name="lbFundusze" Margin="0 -145 0 150" HorizontalAlignment="Center" Foreground="White" FontSize="16"
+                           VerticalAlignment="Top" >
                     </Label>
-
+                    </DockPanel>
                     <Button x:Name="btInwestycje" Content="Inwestycje" Style="{StaticResource buttonRejestracja}"  Margin="10 -30 10 10" Click="btInwestycje_Click"/>
                     <Button x:Name="btPortfele" Content="Moje porfele" Style="{StaticResource buttonRejestracja}"  Margin="10" Click="btPortfele_Click"/>
                     <Button x:Name="btHistoria" Content="Historie" Style="{StaticResource buttonRejestracja}"  Margin="10" Click="btHistoria_Click"/>
                     <Button x:Name="btUstawienia" Content="Ustawienia" Style="{StaticResource buttonRejestracja}"  Margin="10" Click="btUstawienia_Click"/>
-                    <Button x:Name="btWyloguj" Content="Wyloguj" Style="{StaticResource buttonRejestracja}" VerticalAlignment="Top" Margin="10 10 10 100" Click="btWyloguj_Click"/>
+                    <Button x:Name="btWyloguj" Content="Wyloguj" Style="{StaticResource buttonRejestracja}" VerticalAlignment="Bottom" Margin="10 10 10 100" Click="btWyloguj_Click"/>
 
                 </StackPanel>
             </Grid>

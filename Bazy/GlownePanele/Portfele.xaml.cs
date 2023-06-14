@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualBasic;
 using Npgsql;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,39 +14,44 @@ namespace Bazy
     public partial class Portfele : UserControl
     {
         private readonly string ActiveUser;
-        //tymczasowa struktura portfelu póki nie zostanie zrobiona klasa dla całego porjektu
-        struct Portfele_info
-        {
-            public Int64? PortfeleId;
-            public string nazwa;
-            public decimal wartosc;
 
-            public override string ToString()
-            {
-                return nazwa +" " +wartosc.ToString();
-            }
-        }
-        ObservableCollection<Portfele_info> portfele_dane=new();
+        ObservableCollection<Portfel> portfele_dane = new();
         public Portfele(string ActiveUser)
         {
+           
+            portfel_wew=new();
             InitializeComponent();
             this.ActiveUser = ActiveUser;
             ListyPortfeli();
         }
-        Portfele_info Info { get; set; }
 
-
+        public event Action<Portfel> ActivePortfel;
+        Portfel portfel_wew;
+        
         private void lbiPortfele_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(portfele_dane.Count > 0) 
-                Info = portfele_dane[0];
+            int chosen=lbiPortfele.SelectedIndex;
+            if (chosen < 0)
+            {
+                if (ActivePortfel==null)
+                {
+                    return;
+                }
+                chosen = portfele_dane.IndexOf(portfel_wew);
+                if (chosen < 0) 
+                {
+                    return; 
+                }
             
+            }
+            ActivePortfel.Invoke(portfele_dane[chosen]);
+            portfel_wew = portfele_dane[chosen];
         }
         private void ListyPortfeli()
         {
             var conn = new NpgsqlConnection(Registration.ConnString());
             conn.Open();
-            NpgsqlCommand cmd = new NpgsqlCommand("SELECT \"Id_Portfelu\", \"Nazwa_Portfelu\", SUM(\"Kwota\") " +
+            NpgsqlCommand cmd = new("SELECT \"Id_Portfelu\", \"Nazwa_Portfelu\", SUM(\"Kwota\") " +
             "FROM \"Portfele\" " +
             "INNER JOIN \"Portfel Gotówkowy\" ON \"Id_Porfelu\" = \"Id_Portfelu\" " +
             "WHERE \"Użykownik\" = @login " +
@@ -54,19 +60,24 @@ namespace Bazy
 
             cmd.Connection=conn;
             NpgsqlDataReader reader= cmd.ExecuteReader();
-            Portfele_info portfel;
+            Portfel portfel;
 
             while (reader.Read())
             {
-                portfel.PortfeleId = reader.GetInt64(0);
-                portfel.nazwa = reader.GetString(1);
-                portfel.wartosc = reader.GetDecimal(2);
+                portfel = new Portfel
+                {
+                    PortfeleId = reader.GetInt64(0),
+                    Nazwa = reader.GetString(1),
+                    Wartosc = reader.GetDecimal(2)
+                };
                 portfele_dane.Add(portfel);
             }
+
             conn.Close();
             lbiPortfele.ItemsSource = portfele_dane;
         }
-       
+
+
         private void btDodaj_Click(object sender, RoutedEventArgs e)
         {
             if(NewPortfelName.Text==string.Empty) 
@@ -82,62 +93,42 @@ namespace Bazy
             cmd.Parameters.AddWithValue("@name", NewPortfelName.Text);
             cmd.Connection=conn;
             var id_portfelea = cmd.ExecuteScalar();
+
             if (id_portfelea == null)
                 return;
-
+            conn.Close();
             //uzupełnienie danych w tablicy portfeli
-            Portfele_info portfel;
-            portfel.PortfeleId =(Int64) id_portfelea;
-            portfel.nazwa = NewPortfelName.Text;
-            portfel.wartosc =0;
+            Portfel portfel = new()
+            {
+                PortfeleId = (Int64)id_portfelea,
+                Nazwa = NewPortfelName.Text,
+                Wartosc = 0
+            };
             portfele_dane.Add(portfel);
             
             //Czyszczenie
-            Fundusze.Clear();
             NewPortfelName.Clear();
             
         }
         //Do dodania procedura do usuwanie rzeczy
         private void btUsuń_Click(object sender, RoutedEventArgs e)
         {
-            if(Info.PortfeleId==null) return;
+            //return;
+            if (portfel_wew == null) return;
             var conn = new NpgsqlConnection(Registration.ConnString());
             conn.Open();
             NpgsqlCommand cmd;
             
             cmd = new("DELETE FROM \"Portfel Gotówkowy\" WHERE \"Id_Porfelu\"= @Id_portfel");
-            cmd.Parameters.AddWithValue("Id_portfel", Info.PortfeleId);
+            cmd.Parameters.AddWithValue("Id_portfel", portfel_wew.PortfeleId);
             cmd.Connection = conn;
             cmd.ExecuteNonQuery();
-            //Stworzyć trigger do usuwania rzeczy z bazy danych 
-            //if (id_portfelea != null)
-            //{
-            //    cmd = new("DELETE FROM \"Historia Transakcji Portfelu\" " +
-            //        "WHERE \"Id_Portfela_Gotówkowego\"= " +
-            //        "(SELECT \"Id_Porfelu\" FROM \"Portfel Gotówkowy\" WHERE \"Id_Porfelu\" = @Id_portfel ) ");
-            //    cmd.Parameters.AddWithValue("Id_portfel", id_portfelea);
-            //    cmd.Connection = conn;
-            //    cmd.ExecuteNonQuery();
-            //}
-
-            //cmd = new("DELETE FROM \"Portfele\" WHERE \"Id_Portfelu\"= @Id_portfel ");
-            //cmd.Parameters.AddWithValue("Id_portfel", Info.PortfeleId);
-            //cmd.Connection = conn;
-            //cmd.ExecuteNonQuery();
-
-            portfele_dane.RemoveAt(portfele_dane.IndexOf(Info));
-
             conn.Close();
+            portfele_dane.RemoveAt(portfele_dane.IndexOf(portfel_wew));
         }
-
-        private ObservableCollection<Portfele_info> GetPortfele_dane()
-        {
-            return portfele_dane;
-        }
-
         private void btDodajFundusze_Click(object sender, RoutedEventArgs e)
         {
-            if (Info.PortfeleId==null) return;
+            if (portfel_wew.PortfeleId ==null) return;
             var conn = new NpgsqlConnection(Registration.ConnString());
             conn.Open();
             NpgsqlCommand cmd;
@@ -146,7 +137,7 @@ namespace Bazy
                 "VALUES ((SELECT \"Id_Portfelu\" FROM \"Portfele\" WHERE \"Id_Portfelu\" = @Id_portfel ) , @kwotaPortfela)" +
                 "RETURNING \"Id_Portfela_Gotówkowego\" ");
             cmd.Parameters.AddWithValue("@kwotaPortfela", decimal.Parse(Fundusze.Text));
-            cmd.Parameters.AddWithValue("Id_portfel", Info.PortfeleId);
+            cmd.Parameters.AddWithValue("Id_portfel", portfel_wew.PortfeleId);
             cmd.Connection = conn;
             var id_portfel_gotowkowy = cmd.ExecuteScalar();
             
@@ -163,11 +154,11 @@ namespace Bazy
                 cmd.Connection = conn;
                 cmd.ExecuteNonQuery();
             }
-
-            var selectedPortfel = portfele_dane[lbiPortfele.SelectedIndex];
-            selectedPortfel.wartosc += decimal.Parse(Fundusze.Text);
-            portfele_dane[lbiPortfele.SelectedIndex] = selectedPortfel;
-
+            var selectedIndex = portfele_dane.IndexOf(portfel_wew);
+            var selectedPortfel = portfele_dane[selectedIndex];
+            selectedPortfel.Wartosc += decimal.Parse(Fundusze.Text);
+            lbiPortfele.ItemsSource=new List<Portfel>();
+            lbiPortfele.ItemsSource = portfele_dane;
             Fundusze.Clear();
             conn.Close();
         }
