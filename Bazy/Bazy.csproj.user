@@ -2,19 +2,19 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
-    <Compile Update="InwestycjePanele\Akcje.xaml.cs">
+    <Compile Update="InwestycjePanele\AkcjePanel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="GlownePanele\Historie.xaml.cs">
+    <Compile Update="GlownePanele\HistoriePanel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="InwestycjePanele\KontoOszczednosciowe.xaml.cs">
+    <Compile Update="InwestycjePanele\KontoOszczednosciowePanel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="InwestycjePanele\Obligacje.xaml.cs">
+    <Compile Update="InwestycjePanele\ObligacjePanel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="InwestycjePanele\PanelLokaty.xaml.cs">
+    <Compile Update="InwestycjePanele\LokatyPanel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="OknoAplikacji.xaml.cs">
@@ -23,30 +23,30 @@
     <Compile Update="OknoRejestracji.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="GlownePanele\Inwestycje.xaml.cs">
+    <Compile Update="GlownePanele\InwestycjePanel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="GlownePanele\Portfele.xaml.cs">
+    <Compile Update="GlownePanele\PortfelePanel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="GlownePanele\Ustawienia.xaml.cs">
+    <Compile Update="GlownePanele\UstawieniaPanel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="InwestycjePanele\Akcje.xaml">
+    <Page Update="InwestycjePanele\AkcjePanel.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="GlownePanele\Historie.xaml">
+    <Page Update="GlownePanele\HistoriePanel.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="InwestycjePanele\KontoOszczednosciowe.xaml">
+    <Page Update="InwestycjePanele\KontoOszczednosciowePanel.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="InwestycjePanele\Obligacje.xaml">
+    <Page Update="InwestycjePanele\ObligacjePanel.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="InwestycjePanele\PanelLokaty.xaml">
+    <Page Update="InwestycjePanele\LokatyPanel.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="OknoAplikacji.xaml">
@@ -55,13 +55,13 @@
     <Page Update="OknoRejestracji.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="GlownePanele\Inwestycje.xaml">
+    <Page Update="GlownePanele\InwestycjePanel.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="GlownePanele\Portfele.xaml">
+    <Page Update="GlownePanele\PortfelePanel.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="GlownePanele\Ustawienia.xaml">
+    <Page Update="GlownePanele\UstawieniaPanel.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

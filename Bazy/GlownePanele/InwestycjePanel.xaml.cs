@@ -18,34 +18,34 @@ namespace Bazy
     /// <summary>
     /// Logika interakcji dla klasy UserControl1.xaml
     /// </summary>
-    public partial class Inwestycje : UserControl
+    public partial class InwestycjePanel : UserControl
     {
-        public Inwestycje()
+        public InwestycjePanel()
         {
             InitializeComponent();
         }
 
         private void btnLokaty_Click(object sender, RoutedEventArgs e)
         {
-            PanelLokaty lokaty = new PanelLokaty();
+            LokatyPanel lokaty = new();
             oknoInwestycje.Content = lokaty;
         }
 
         private void btnKontoOszczednosciowe_Click(object sender, RoutedEventArgs e)
         {
-            KontoOszczednosciowe kontoOszczednosciowe = new KontoOszczednosciowe();
+            KontoOszczednosciowePanel kontoOszczednosciowe = new();
             oknoInwestycje.Content = kontoOszczednosciowe;
         }
 
         private void btnObligacje_Click(object sender, RoutedEventArgs e)
         {
-            Obligacje obligacje = new Obligacje();
+            ObligacjePanel obligacje = new();
             oknoInwestycje.Content = obligacje;
         }
 
         private void btnAkcje_Click(object sender, RoutedEventArgs e)
         {
-            Akcje akcje = new Akcje();
+            AkcjePanel akcje = new();
             oknoInwestycje.Content = akcje;
         }
     }

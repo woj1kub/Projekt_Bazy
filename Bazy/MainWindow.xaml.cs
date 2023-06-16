@@ -80,7 +80,7 @@ namespace Bazy
             using (var conn = new NpgsqlConnection(Registration.ConnString()))
             {
                 conn.Open();
-                NpgsqlCommand cmd = new NpgsqlCommand($"SELECT * FROM \"Użytkownicy\" WHERE \"Login\"=@loginBase");
+                NpgsqlCommand cmd = new($"SELECT * FROM \"Użytkownicy\" WHERE \"Login\"=@loginBase");
                 cmd.Parameters.AddWithValue("@loginBase", login);
                 
                 cmd.Connection = conn;
@@ -140,20 +140,20 @@ namespace Bazy
         //AlterTable
         void AltersTable()
         {
-            using (var conn = new NpgsqlConnection(Registration.ConnString()))
+            using var conn = new NpgsqlConnection(Registration.ConnString());
+            conn.Open();
+            NpgsqlCommand cmd = new("ALTER TABLE \"Historia Konta Oszczędnościowego\" DROP CONSTRAINT \"Historia Konta Oszczędnościowego_fk0\" ," +
+                "ADD CONSTRAINT \"Historia Konta Oszczędnościowego_fk0\" FOREIGN KEY (\"Id_Konta_Oszczędnościowego\") REFERENCES public.\"Konto oszczędnościowe\"(\"Id_Konta_Oszczędnościowego\") ON DELETE CASCADE NOT VALID  ")
             {
-                conn.Open();
-                NpgsqlCommand cmd = new("ALTER TABLE \"Historia Konta Oszczędnościowego\" DROP CONSTRAINT \"Historia Konta Oszczędnościowego_fk0\" ," +
-                    "ADD CONSTRAINT \"Historia Konta Oszczędnościowego_fk0\" FOREIGN KEY (\"Id_Konta_Oszczędnościowego\") REFERENCES public.\"Konto oszczędnościowe\"(\"Id_Konta_Oszczędnościowego\") ON DELETE CASCADE NOT VALID  ");
-                cmd.Connection = conn;
-                cmd.ExecuteNonQuery();
-                //cmd = new("ALTER TABLE IF EXISTS \"Portfele\" " +
-                //    "ADD CONSTRAINT \"Portfele_pk\" PRIMARY KEY (\"Id_Portfelu\" ASC) " +
-                //    "ON DELETE CASCADE");
-                //cmd.Connection = conn;
-                //cmd.ExecuteNonQuery();
-                conn.Close();
-            }
+                Connection = conn
+            };
+            cmd.ExecuteNonQuery();
+            //cmd = new("ALTER TABLE IF EXISTS \"Portfele\" " +
+            //    "ADD CONSTRAINT \"Portfele_pk\" PRIMARY KEY (\"Id_Portfelu\" ASC) " +
+            //    "ON DELETE CASCADE");
+            //cmd.Connection = conn;
+            //cmd.ExecuteNonQuery();
+            conn.Close();
         }
     }
 }

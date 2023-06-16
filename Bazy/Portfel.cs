@@ -13,7 +13,13 @@ namespace Bazy
         private Int64? portfeleId;
         private string? nazwa;
         private decimal wartosc;
-
+        public Portfel(Int64? portfelId, string? nazwa, decimal wartość)
+        {
+            this.Nazwa = nazwa;
+            this.Wartosc = wartość;
+            this.PortfeleId = portfelId;
+        }
+        public Portfel() { }
         public Int64? PortfeleId
         {
             get { return portfeleId; }

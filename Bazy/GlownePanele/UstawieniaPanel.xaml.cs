@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Bazy
 {
     /// <summary>
-    /// Logika interakcji dla klasy KontoOszczednosciowe.xaml
+    /// Logika interakcji dla klasy Ustawienia.xaml
     /// </summary>
-    public partial class KontoOszczednosciowe : UserControl
+    public partial class UstawieniaPanel : UserControl
     {
-        public KontoOszczednosciowe()
+        public UstawieniaPanel()
         {
             InitializeComponent();
         }

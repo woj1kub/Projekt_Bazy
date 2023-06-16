@@ -42,8 +42,8 @@
             <StackPanel VerticalAlignment="Center">
                 <TextBlock Text="Zaloguj się" Style="{StaticResource tytulText}" Foreground="#3AB19B"/>
 
-                <Border x:Name="brLogin" BorderThickness="1" BorderBrush="#acb0af" Margin="70 7" CornerRadius="5" MouseEnter="brLogin_MouseEnter" MouseLeave="brLogin_MouseLeave">
-                    <Grid Margin="7 9">
+                <Border x:Name="brLogin" BorderThickness="1" BorderBrush="#acb0af" Margin="70 7" CornerRadius="5" >
+                    <Grid Margin="7 9" MouseEnter="brLogin_MouseEnter" MouseLeave="brLogin_MouseLeave" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="*"/>
@@ -54,8 +54,8 @@
                     </Grid>
                 </Border>
 
-                <Border x:Name="brHaslo" BorderThickness="1" BorderBrush="#acb0af" Margin="70 7" CornerRadius="5" MouseEnter="brHaslo_MouseEnter" MouseLeave="brHaslo_MouseLeave">
-                    <Grid Margin="7 9">
+                <Border x:Name="brHaslo" BorderThickness="1" BorderBrush="#acb0af" Margin="70 7" CornerRadius="5">
+                    <Grid Margin="7 9"  MouseEnter="brHaslo_MouseEnter" MouseLeave="brHaslo_MouseLeave">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="*"/>

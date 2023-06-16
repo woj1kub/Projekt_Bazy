@@ -1,27 +1,21 @@
-﻿using Microsoft.VisualBasic;
-using Npgsql;
+﻿using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace Bazy
 {
-    /// <summary>
-    /// Logika interakcji dla klasy Portfele.xaml
-    /// </summary>
-    public partial class Portfele : UserControl
+    public partial class PortfelePanel : UserControl
     {
         private readonly string ActiveUser;
         ObservableCollection<Portfel> portfele_dane = new();
         public event Action<Portfel> ActivePortfel;
         Portfel portfel_wew;
 
-        public Portfele(string ActiveUser, Action<Portfel> ActivePortfel)
+        public PortfelePanel(string ActiveUser, Action<Portfel> ActivePortfel)
         {
             portfel_wew = new();
             InitializeComponent();
@@ -68,12 +62,7 @@ namespace Bazy
 
             while (reader.Read())
             {
-                portfel = new Portfel
-                {
-                    PortfeleId = reader.GetInt64(0),
-                    Nazwa = reader.GetString(1),
-                    Wartosc = reader.GetDecimal(2)
-                };
+                portfel = new Portfel(reader.GetInt64(0), reader.GetString(1), reader.GetDecimal(2));
                 portfele_dane.Add(portfel);
             }
 
@@ -133,7 +122,7 @@ namespace Bazy
         }
         private void btDodajFundusze_Click(object sender, RoutedEventArgs e)
         {
-            if (portfel_wew.PortfeleId == null) return;
+            if (portfel_wew.PortfeleId == null || Fundusze.Text==string.Empty) return;
             var conn = new NpgsqlConnection(Registration.ConnString());
             conn.Open();
             NpgsqlCommand cmd;
@@ -162,8 +151,9 @@ namespace Bazy
             var selectedIndex = portfele_dane.IndexOf(portfel_wew);
             var selectedPortfel = portfele_dane[selectedIndex];
             selectedPortfel.Wartosc += decimal.Parse(Fundusze.Text);
-            lbiPortfele.ItemsSource = new List<Portfel>();
-            lbiPortfele.ItemsSource = portfele_dane;
+            portfele_dane[selectedIndex] =new(selectedPortfel.PortfeleId,selectedPortfel.Nazwa, selectedPortfel.Wartosc);
+            lbiPortfele.SelectedIndex =selectedIndex;
+
             Fundusze.Clear();
             conn.Close();
         }
@@ -182,7 +172,7 @@ namespace Bazy
 
             // Sprawdzenie, czy tekst w TextBox ma poprawny format
             string newText = Fundusze.Text + e.Text;
-            Regex regex = new Regex(@"^\d+(,\d{0,2})?$");
+            Regex regex = new(@"^\d+(,\d{0,2})?$");
             if (!regex.IsMatch(newText))
             {
                 e.Handled = true; // Zatrzymaj zdarzenie, aby znak nie został wprowadzony do TextBox

@@ -28,7 +28,7 @@ namespace Bazy
             };
 
             DataContext = this;
-            Portfele portfele = new(ActiveUser, ChildWindow_VariableChanged);
+            PortfelePanel portfele = new(ActiveUser, ChildWindow_VariableChanged);
             contentControl.Content = portfele;
             lbFundusze.Visibility = Visibility.Visible;
 
@@ -46,19 +46,19 @@ namespace Bazy
 
         private void btInwestycje_Click(object sender, RoutedEventArgs e)
         {
-            Inwestycje inwestycje = new Inwestycje();
+            InwestycjePanel inwestycje = new();
             contentControl.Content = inwestycje;
         }
         private void btWyloguj_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow main = new MainWindow();
+            MainWindow main = new();
             this.Close();
             main.Show();
         }
 
         private void btPortfele_Click(object sender, RoutedEventArgs e)
         {
-            Portfele portfele = new Portfele(ActiveUser,ChildWindow_VariableChanged);
+            PortfelePanel portfele = new(ActiveUser,ChildWindow_VariableChanged);
             contentControl.Content=portfele;
             
         }
@@ -71,13 +71,13 @@ namespace Bazy
 
         private void btUstawienia_Click(object sender, RoutedEventArgs e)
         {
-            Ustawienia ustawienia = new Ustawienia();
+            UstawieniaPanel ustawienia = new();
             contentControl.Content = ustawienia;
         }
 
         private void btHistoria_Click(object sender, RoutedEventArgs e)
         {
-            Historie historie = new Historie();
+            HistoriePanel historie = new();
             contentControl.Content = historie;
         }
     }

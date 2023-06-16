@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Bazy
 {
     /// <summary>
-    /// Logika interakcji dla klasy Obligacje.xaml
+    /// Logika interakcji dla klasy Historie.xaml
     /// </summary>
-    public partial class Obligacje : UserControl
+    public partial class HistoriePanel : UserControl
     {
-        public Obligacje()
+        public HistoriePanel()
         {
             InitializeComponent();
         }
