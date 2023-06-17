@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -51,7 +52,7 @@ namespace Bazy
             conn.Open();
             NpgsqlCommand cmd = new("SELECT \"Id_Portfelu\", \"Nazwa_Portfelu\", SUM(\"Kwota\") " +
             "FROM \"Portfele\" " +
-            "INNER JOIN \"Portfel Gotówkowy\" ON \"Id_Porfelu\" = \"Id_Portfelu\" " +
+            "LEFT JOIN \"Portfel Gotówkowy\" ON \"Id_Porfelu\" = \"Id_Portfelu\" " +
             "WHERE \"Użykownik\" = @login " +
              "GROUP BY \"Id_Portfelu\", \"Nazwa_Portfelu\"");
             cmd.Parameters.AddWithValue("@login", ActiveUser);
@@ -62,12 +63,19 @@ namespace Bazy
 
             while (reader.Read())
             {
+                if (reader.IsDBNull(2))
+                {
+                    portfel = new Portfel(reader.GetInt64(0), reader.GetString(1), 0);
+                    portfele_dane.Add(portfel);
+                    continue;
+                }
                 portfel = new Portfel(reader.GetInt64(0), reader.GetString(1), reader.GetDecimal(2));
                 portfele_dane.Add(portfel);
             }
 
             conn.Close();
             lbiPortfele.ItemsSource = portfele_dane;
+            portfele_dane.OrderBy(x => x.Wartosc);
         }
 
 
@@ -157,25 +165,18 @@ namespace Bazy
             Fundusze.Clear();
             conn.Close();
         }
-        private void btSort_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
 
         private void Fundusze_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
-            // Sprawdzenie, czy wprowadzony znak jest cyfrą lub przecinkiem
             if (!char.IsDigit(e.Text, e.Text.Length - 1) && e.Text != ",")
             {
-                e.Handled = true; // Zatrzymaj zdarzenie, aby znak nie został wprowadzony do TextBox
+                e.Handled = true; 
             }
-
-            // Sprawdzenie, czy tekst w TextBox ma poprawny format
             string newText = Fundusze.Text + e.Text;
             Regex regex = new(@"^\d+(,\d{0,2})?$");
             if (!regex.IsMatch(newText))
             {
-                e.Handled = true; // Zatrzymaj zdarzenie, aby znak nie został wprowadzony do TextBox
+                e.Handled = true;
             }
         }
 

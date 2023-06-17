@@ -7,41 +7,35 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid Grid.Column="0" Grid.Row="0" >
+        <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-
-            <ListBox Grid.Column="0" x:Name="lbiPortfele" SelectionChanged="lbiPortfele_SelectionChanged" Margin="25,25,0,25">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <DockPanel Width="auto">
-                            <TextBlock Text="{Binding Nazwa}" HorizontalAlignment="Left"/>
-                            <TextBlock Text="{Binding Wartosc}" HorizontalAlignment="Right"/>
-                        </DockPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-
-            <StackPanel Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,25,0,0" Height="200" Width="50">
-                
-                <Button Background="AliceBlue" x:Name="btUsuń" Content="-" Width="50" Height="50" FontSize="30" FontWeight="Bold" Margin="0,0,0,25" Click="btUsuń_Click"/>
-                <Button Background="AliceBlue" x:Name="btSort" Content="V" Width="50" Height="50" FontSize="30" FontWeight="Bold" Click="btSort_Click"/>
-            </StackPanel>
-        </Grid>
-        <Grid Grid.Row="0" Grid.Column="1">
-            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+            <Grid Grid.Column="0" Grid.Row="0" Margin="0 ,0 ,0 , 75">
+                <ListView x:Name="lbiPortfele" SelectionChanged="lbiPortfele_SelectionChanged" Margin="25" 
+                          Height="auto" VerticalAlignment="Top" SelectionMode="Single">
+                    <ListView.View>
+                        <GridView>
+                            <GridView.ColumnHeaderContainerStyle>
+                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                </Style>
+                            </GridView.ColumnHeaderContainerStyle>
+                            <GridViewColumn Header="Nazwa" DisplayMemberBinding="{Binding Nazwa}"/>
+                            <GridViewColumn Header="Fundusze" DisplayMemberBinding="{Binding Wartosc}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+            <Button Background="AliceBlue" HorizontalAlignment="Center" VerticalAlignment="Bottom" x:Name="btUsuń" Content="Usuń" Width="75" Height="30" FontSize="15" FontWeight="Bold" Margin="0,0,0,25" Click="btUsuń_Click"/>
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1">
                 <Label Content="Nazwa nowego portfelu" HorizontalAlignment="Center"/>
-               
+       
                 <TextBox Margin="25,10" x:Name="NewPortfelName"/>
 
                 <Button Background="AliceBlue" x:Name="btDodaj" Content="Dodaj"  Width="75" Height="30" FontSize="15" FontWeight="Bold" Click="btDodaj_Click"/>
@@ -51,6 +45,7 @@
 
             </StackPanel>
         </Grid>
+        
     </Grid>
 
 </UserControl>
