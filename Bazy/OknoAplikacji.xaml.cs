@@ -20,18 +20,17 @@ namespace Bazy
             this.ActiveUser = ActiveUser;
             InitializeComponent();
             lbUser.Content = "Witaj, "+this.ActiveUser+"!";
+            DataContext = this;
+            lbFundusze.DataContext = ActivePortfel;
+            lbPortfel.DataContext = ActivePortfel;
             ActivePortfel = new Portfel
             {
                 Wartosc = 0,
-                Nazwa = "",
+                Nazwa = "Brak portfela",
                 PortfeleId = 0
             };
-
-            DataContext = this;
             PortfelePanel portfele = new(ActiveUser, ChildWindow_VariableChanged);
             contentControl.Content = portfele;
-            lbFundusze.Visibility = Visibility.Visible;
-
 
         }
         private void Image_MouseDown(object sender, MouseButtonEventArgs e)
@@ -66,7 +65,9 @@ namespace Bazy
         {
             ActivePortfel = newValue;
             lbFundusze.Content = ActivePortfel.Wartosc;
-            lbFundusze.DataContext = ActivePortfel;
+            lbPortfel.Content = ActivePortfel.Nazwa;
+            //lbFundusze.DataContext = ActivePortfel;
+            //lbPortfel.DataContext= ActivePortfel;
         }
 
         private void btUstawienia_Click(object sender, RoutedEventArgs e)

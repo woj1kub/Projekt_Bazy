@@ -24,26 +24,27 @@
             </Border.Background>
             
             <Grid>
+                
                 <Canvas Margin="0,0,10,0">
                     <Polygon Points="0,20 230,140 0,270" Fill="#4EB1B6"/>
                     <Polygon Points="80,400 200,370 180,470" Fill="#4EB1B6"/>
                     <Ellipse Width="40" Height="40" Fill="#4EB1B6" Canvas.Left="220" Canvas.Top="58"/>
                     <Ellipse Margin="220 450 0 0" Width="30" Height="30" Fill="#4EB1B6"/>
                 </Canvas>
+                <StackPanel VerticalAlignment="Bottom">
                     
-                <StackPanel VerticalAlignment="Center">
-                    <!-- Tutaj dodać przyciski np. dodaj inwestycje itd-->
-                    <Label x:Name="lbUser" Margin="0 0 0 160" HorizontalAlignment="Center" Foreground="White" FontSize="16"
-                           VerticalAlignment="Top">
-                    </Label>
-                    <DockPanel   Margin="15 0 0 0 ">
-                        <Label x:Name="lbTextFundusze" Margin="0 -145 0 150" HorizontalAlignment="Center" Foreground="White" FontSize="16"
+                    <Label x:Name="lbUser" HorizontalAlignment="Center" Foreground="White" FontSize="16" Margin="0 0 0 80"
+                           VerticalAlignment="Top"/>
+                    <Label x:Name="lbPortfel" HorizontalAlignment="Center" Foreground="White" FontSize="16" Margin="0 0 0 20"
+                           VerticalAlignment="Top"/>
+                    <DockPanel   Margin="15 0 0 75 " VerticalAlignment="Top">
+                        <Label x:Name="lbTextFundusze" HorizontalAlignment="Center" Foreground="White" FontSize="16"
                            VerticalAlignment="Top" Content="Fundusze: ">
                         </Label>
-                        <Label x:Name="lbFundusze" Margin="0 -145 0 150" HorizontalAlignment="Center" Foreground="White" FontSize="16"
-                           VerticalAlignment="Top" >
-                    </Label>
+                        <Label x:Name="lbFundusze" HorizontalAlignment="Center" Foreground="White" FontSize="16" Margin="0 0 0 0"
+                           VerticalAlignment="Top" />
                     </DockPanel>
+                    <!-- Tutaj dodać przyciski np. dodaj inwestycje itd-->
                     <Button x:Name="btInwestycje" Content="Inwestycje" Style="{StaticResource buttonRejestracja}"  Margin="10 -30 10 10" Click="btInwestycje_Click"/>
                     <Button x:Name="btPortfele" Content="Moje porfele" Style="{StaticResource buttonRejestracja}"  Margin="10" Click="btPortfele_Click"/>
                     <Button x:Name="btHistoria" Content="Historie" Style="{StaticResource buttonRejestracja}"  Margin="10" Click="btHistoria_Click"/>

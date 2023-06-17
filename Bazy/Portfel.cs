@@ -45,12 +45,7 @@ namespace Bazy
             }
         }
         public event PropertyChangedEventHandler? PropertyChanged;
-        
-        public override string ToString()
-        {
-            return nazwa + " " + wartosc.ToString();
-        }
-
+       
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

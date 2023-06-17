@@ -46,6 +46,7 @@ namespace Bazy
             portfel_wew = portfele_dane[chosen];
             lbiPortfele.SelectedIndex = chosen;
         }
+
         private void ListyPortfeli()
         {
             var conn = new NpgsqlConnection(Registration.ConnString());
