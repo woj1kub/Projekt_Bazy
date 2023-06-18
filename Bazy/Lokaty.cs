@@ -8,6 +8,7 @@ namespace Bazy
 {
     internal class Lokaty
     {
+        long Id_Lokaty { get; set; }
         double Kwota { get; set; }
         double Oprocentowanie { get; set; }
         int CzasTrwania { get; set; }
