@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -13,6 +14,7 @@ namespace Bazy
         private Int64? portfeleId;
         private string? nazwa;
         private decimal wartosc;
+
         public Portfel(Int64? portfelId, string? nazwa, decimal wartość)
         {
             this.Nazwa = nazwa;

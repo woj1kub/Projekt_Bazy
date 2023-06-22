@@ -71,13 +71,30 @@ namespace Bazy
                 }
                 portfel = new Portfel(reader.GetInt64(0), reader.GetString(1), reader.GetDecimal(2));
                 portfele_dane.Add(portfel);
-            }
+                }
 
             conn.Close();
+            portfele_dane = new ObservableCollection<Portfel>(portfele_dane.OrderByDescending(item => item.Wartosc));
             lbiPortfele.ItemsSource = portfele_dane;
-            portfele_dane.OrderBy(x => x.Wartosc);
-        }
 
+        }
+        private void FindData(ref Portfel portfel) 
+        {
+            var conn = new NpgsqlConnection(Registration.ConnString());
+            conn.Open();
+            NpgsqlCommand cmd = new("SELECT \"Nazwa\" \"Id_Lokaty\", \"Oprocentowanie\", \"Czas\", " +
+                " \"Skala\", \"Kwota\", \"Podatek\", \"Data_Zakupu\" " +
+           "FROM \"Lokaty\" " +
+           "WHERE \"Id_Portfelu\" = @id_port",conn);
+            cmd.Parameters.AddWithValue("@id_port", portfel.PortfeleId);
+
+            NpgsqlDataReader reader = cmd.ExecuteReader();
+            ObservableCollection<Lokaty> lokaty = new();
+            while (reader.Read())
+            {
+                //lokaty.Add(new Lokaty(reader.GetString(0),reader.GetInt64(1),);
+            }
+        }
 
         private void btDodaj_Click(object sender, RoutedEventArgs e)
         {
@@ -97,6 +114,7 @@ namespace Bazy
 
             if (id_portfelea == null)
                 return;
+
             conn.Close();
             //uzupełnienie danych w tablicy portfeli
             Portfel portfel = new()
@@ -109,9 +127,11 @@ namespace Bazy
 
             //Czyszczenie
             NewPortfelName.Clear();
-
+            portfele_dane = new ObservableCollection<Portfel>(portfele_dane.OrderByDescending(item => item.Wartosc));
+            lbiPortfele.ItemsSource = portfele_dane;
         }
-        //Do dodania procedura do usuwanie rzeczy
+
+
         private void btUsuń_Click(object sender, RoutedEventArgs e)
         {
             if (portfel_wew == null || !portfele_dane.Contains(portfel_wew)) return;
@@ -119,17 +139,18 @@ namespace Bazy
             conn.Open();
             NpgsqlCommand cmd;
 
-            cmd = new("DELETE FROM \"Portfel Gotówkowy\" WHERE \"Id_Porfelu\"= @Id_portfel");
+            cmd = new("DELETE FROM \"Portfele\" WHERE \"Id_Portfelu\"= @Id_portfel");
             cmd.Parameters.AddWithValue("Id_portfel", portfel_wew.PortfeleId);
             cmd.Connection = conn;
             cmd.ExecuteNonQuery();
             conn.Close();
             portfele_dane.RemoveAt(portfele_dane.IndexOf(portfel_wew));
             ActivePortfel.Invoke(new Portfel());
+            lbiPortfele.SelectedIndex = 0;
         }
         private void btDodajFundusze_Click(object sender, RoutedEventArgs e)
         {
-            if (portfel_wew.PortfeleId == null || Fundusze.Text==string.Empty) return;
+            if (portfel_wew.PortfeleId == null || Fundusze.Text==string.Empty || !portfele_dane.Contains(portfel_wew)) return;
             var conn = new NpgsqlConnection(Registration.ConnString());
             conn.Open();
             NpgsqlCommand cmd;
@@ -163,6 +184,8 @@ namespace Bazy
 
             Fundusze.Clear();
             conn.Close();
+            portfele_dane = new ObservableCollection<Portfel>(portfele_dane.OrderByDescending(item => item.Wartosc));
+            lbiPortfele.ItemsSource = portfele_dane;
         }
 
         private void Fundusze_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)

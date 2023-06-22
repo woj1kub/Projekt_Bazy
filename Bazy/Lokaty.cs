@@ -17,8 +17,9 @@ namespace Bazy
         string Nazwa { get; set; }
         double PodatekBelki = 19;
 
-        public Lokaty(string nazwa ,double kwota, double oprocentowanie, int okres, int kapitalizacja, DateTime czasZalozenia)
+        public Lokaty(string nazwa,long id_lokaty ,double kwota, double oprocentowanie, int okres, int kapitalizacja, DateTime czasZalozenia)
         {
+            Id_Lokaty = id_lokaty;
             Nazwa= nazwa;
             Kwota = kwota;
             Oprocentowanie = oprocentowanie;

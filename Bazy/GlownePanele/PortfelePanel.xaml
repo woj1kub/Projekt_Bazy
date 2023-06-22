@@ -19,7 +19,7 @@
             <Grid Grid.Column="0" Grid.Row="0" Margin="0 ,0 ,0 , 75">
 
                 <ListView x:Name="lbiPortfele" SelectionChanged="lbiPortfele_SelectionChanged" Margin="25,25,25,0" 
-                          Height="auto" VerticalAlignment="Top" SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=5}">
+                          VerticalAlignment="Top" SelectionMode="Single" d:ItemsSource="{d:SampleData ItemCount=5}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Nazwa" DisplayMemberBinding="{Binding Nazwa}"/>
