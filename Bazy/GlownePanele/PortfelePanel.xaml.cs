@@ -25,7 +25,6 @@ namespace Bazy
             ListyPortfeli();
         }
 
-
         private void lbiPortfele_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int chosen = lbiPortfele.SelectedIndex;
@@ -115,8 +114,7 @@ namespace Bazy
         //Do dodania procedura do usuwanie rzeczy
         private void btUsuń_Click(object sender, RoutedEventArgs e)
         {
-            //return;
-            if (portfel_wew == null) return;
+            if (portfel_wew == null || !portfele_dane.Contains(portfel_wew)) return;
             var conn = new NpgsqlConnection(Registration.ConnString());
             conn.Open();
             NpgsqlCommand cmd;

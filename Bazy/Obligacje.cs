@@ -8,6 +8,7 @@ namespace Bazy
 {
     class Obligacje
     {
+        string Nazwa { get; set; }
         long Id_Obligacji { get; set; }
         long Oprecentowanie { get; set; }
         long Długość_Inwestycji { get; set; }
@@ -17,8 +18,9 @@ namespace Bazy
         DateTime Data_zakupu { get; set; }
         double Podatek { get; set; }
 
-        Obligacje(long Oprecentowanie, long Długość_Inwestycji, long Liczba_Jednostek, decimal Kwota_Jednostki, long Skala, DateTime Data_zakupu, double Podatek) 
+        Obligacje(string nazwa,long Oprecentowanie, long Długość_Inwestycji, long Liczba_Jednostek, decimal Kwota_Jednostki, long Skala, DateTime Data_zakupu, double Podatek) 
         {
+            this.Nazwa = nazwa;
             this.Data_zakupu = Data_zakupu;
             this.Podatek = Podatek;
             this.Skala = Skala;

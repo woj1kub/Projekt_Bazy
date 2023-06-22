@@ -12,5 +12,6 @@ namespace Bazy
         string Walor { get; set; }
         DateTime Data_Zakupu { get; set; }
         short Liczba_Jednestek { get; set; }
+        string Nazwa { get; set; }
     }
 }

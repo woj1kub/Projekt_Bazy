@@ -14,11 +14,12 @@ namespace Bazy
         int CzasTrwania { get; set; }
         int Kapitalizacja { get; set; }
         DateTime CzasZalozenia { get; set; }
-
+        string Nazwa { get; set; }
         double PodatekBelki = 19;
 
-        public Lokaty(double kwota, double oprocentowanie, int okres, int kapitalizacja, DateTime czasZalozenia)
+        public Lokaty(string nazwa ,double kwota, double oprocentowanie, int okres, int kapitalizacja, DateTime czasZalozenia)
         {
+            Nazwa= nazwa;
             Kwota = kwota;
             Oprocentowanie = oprocentowanie;
             CzasTrwania = okres;
