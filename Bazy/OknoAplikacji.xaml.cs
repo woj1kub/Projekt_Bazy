@@ -1,5 +1,7 @@
 ﻿
 using Npgsql;
+using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -31,7 +33,6 @@ namespace Bazy
             };
             PortfelePanel portfele = new(ActiveUser, ChildWindow_VariableChanged);
             contentControl.Content = portfele;
-
         }
         private void Image_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -42,7 +43,7 @@ namespace Bazy
         {
             this.DragMove();
         }
-
+      
         private void btInwestycje_Click(object sender, RoutedEventArgs e)
         {
             InwestycjePanel inwestycje = new();

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -16,7 +17,8 @@ namespace Bazy
             
             InitializeComponent();
             testConnect();
-            //AltersTable();
+            //alterTable();
+            //checker();
         }
         private void testConnect()
         {
@@ -138,21 +140,27 @@ namespace Bazy
         }
 
         //AlterTable
-        void AltersTable()
+        void alterTable()
         {
-            using var conn = new NpgsqlConnection(Registration.ConnString());
+            var conn = new NpgsqlConnection(Registration.ConnString());
             conn.Open();
-            NpgsqlCommand cmd = new("ALTER TABLE \"Historia Konta Oszczędnościowego\" DROP CONSTRAINT \"Historia Konta Oszczędnościowego_fk0\" ," +
-                "ADD CONSTRAINT \"Historia Konta Oszczędnościowego_fk0\" FOREIGN KEY (\"Id_Konta_Oszczędnościowego\") REFERENCES public.\"Konto oszczędnościowe\"(\"Id_Konta_Oszczędnościowego\") ON DELETE CASCADE NOT VALID  ")
+            NpgsqlCommand cmd = new("ALTER TABLE \"Akcje\" ADD COLUMN IF NOT EXISTS " +
+                "\"Nazwa\" STRING ", conn);
+            int ss= cmd.ExecuteNonQuery();
+            conn.Close();
+            MessageBox.Show(ss.ToString());
+        }
+        void checker()
+        {
+            var conn = new NpgsqlConnection(Registration.ConnString());
+            conn.Open();
+            NpgsqlCommand cmd = new("SHOW COLUMNS FROM \"Lokaty\"", conn);
+            NpgsqlDataReader reader = cmd.ExecuteReader();
+            List<string> list = new List<string>();
+            while (reader.Read())
             {
-                Connection = conn
-            };
-            cmd.ExecuteNonQuery();
-            //cmd = new("ALTER TABLE IF EXISTS \"Portfele\" " +
-            //    "ADD CONSTRAINT \"Portfele_pk\" PRIMARY KEY (\"Id_Portfelu\" ASC) " +
-            //    "ON DELETE CASCADE");
-            //cmd.Connection = conn;
-            //cmd.ExecuteNonQuery();
+                list.Add(reader.GetString(0));
+            }
             conn.Close();
         }
     }
