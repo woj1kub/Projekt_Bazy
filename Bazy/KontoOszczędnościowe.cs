@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Bazy
 {
-    class KontoOszczędnościowe
+    public class KontoOszczędnościowe
     {
-        long Id_KontaOszczędnościowego { get; set; }
-        DateOnly Data_Założenia { get; set; }
-        decimal Kwota { get; set; }
-        double Oprecentowanie { get; set; }
-        DateOnly Data_Wypłaty_Odsetek { get; set; }
-        double Podatek { get; set; }
-        string Nazwa { get; set; }
+        public long Id_KontaOszczędnościowego { get; set; }
+        public DateTime Data_Założenia { get; set; }
+        public decimal Kwota { get; set; }
+        public double Oprecentowanie { get; set; }
+        public DateTime Data_Wypłaty_Odsetek { get; set; }
+        public double Podatek { get; set; }
+        public string Nazwa { get; set; }
     }
 }

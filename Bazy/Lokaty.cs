@@ -6,31 +6,21 @@ using System.Threading.Tasks;
 
 namespace Bazy
 {
-    internal class Lokaty
+    public class Lokaty
     {
-        long Id_Lokaty { get; set; }
-        double Kwota { get; set; }
-        double Oprocentowanie { get; set; }
-        int CzasTrwania { get; set; }
-        int Kapitalizacja { get; set; }
-        DateTime CzasZalozenia { get; set; }
-        string Nazwa { get; set; }
-        double PodatekBelki = 19;
+        public Int64? Id_Lokaty { get; set; }
+        public double Oprocentowanie { get; set; }
+        public int Czas { get; set; }
+        public int Skala { get; set; }
+        public decimal Kwota { get; set; }
+        public DateTime Data_zakupu { get; set; }
+        public string Nazwa { get; set; }
+        public double Podatek { get; set; }
 
-        public Lokaty(string nazwa,long id_lokaty ,double kwota, double oprocentowanie, int okres, int kapitalizacja, DateTime czasZalozenia)
-        {
-            Id_Lokaty = id_lokaty;
-            Nazwa= nazwa;
-            Kwota = kwota;
-            Oprocentowanie = oprocentowanie;
-            CzasTrwania = okres;
-            Kapitalizacja = kapitalizacja;
-            CzasZalozenia = czasZalozenia;
-        }
-
-        public double ObliczZyskKoncowy()
-        {
-            return Kwota * Math.Pow(1 + (Oprocentowanie / (Kapitalizacja * 100) * (1 - PodatekBelki / 100)), CzasTrwania * Kapitalizacja);
-        }
+        
+        //public double ObliczZyskKoncowy()
+        //{
+        //    return Kwota * Math.Pow(1 + (Oprocentowanie / (Kapitalizacja * 100) * (1 - (PodatekBelki / 100))), CzasTrwania * Kapitalizacja);
+        //}
     }
 }

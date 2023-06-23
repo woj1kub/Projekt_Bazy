@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Bazy
 {
-    class Akcje
+    public class Akcje
     {
-        long Id_akcji {  get; set; }
-        string Walor { get; set; }
-        DateTime Data_Zakupu { get; set; }
-        short Liczba_Jednestek { get; set; }
-        string Nazwa { get; set; }
+        public long Id_akcji {  get; set; }
+        public string Walor { get; set; }
+        public DateTime Data_Zakupu { get; set; }
+        public long Liczba_Jednestek { get; set; }
+        public string Nazwa { get; set; }
     }
 }

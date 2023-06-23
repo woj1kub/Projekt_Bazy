@@ -44,6 +44,11 @@ namespace Bazy
             ActivePortfel.Invoke(portfele_dane[chosen]);
             portfel_wew = portfele_dane[chosen];
             lbiPortfele.SelectedIndex = chosen;
+            lvLokaty.ItemsSource = portfele_dane[chosen].Lokaties;
+            lvKontoO.ItemsSource = portfele_dane[chosen].KontoOszczędnościowes;
+            lvObligacje.ItemsSource = portfele_dane[chosen].Obligacjes;
+            lvAkcje.ItemsSource = portfele_dane[chosen].Akcjes;
+            
         }
 
         private void ListyPortfeli()
@@ -63,39 +68,29 @@ namespace Bazy
 
             while (reader.Read())
             {
+                portfel = new();
+                portfel.Nazwa = reader.GetString(1);
+                portfel.PortfeleId=reader.GetInt64(0);
+                portfel.DataLokaty();
+                portfel.DataObligacje();
+                portfel.DataAkcje();
+                portfel.DataKontoOszczednosciowe();
                 if (reader.IsDBNull(2))
                 {
-                    portfel = new Portfel(reader.GetInt64(0), reader.GetString(1), 0);
+                    portfel.Wartosc = 0;
                     portfele_dane.Add(portfel);
                     continue;
                 }
-                portfel = new Portfel(reader.GetInt64(0), reader.GetString(1), reader.GetDecimal(2));
+                portfel.Wartosc=reader.GetDecimal(2);
                 portfele_dane.Add(portfel);
-                }
+            }
 
             conn.Close();
             portfele_dane = new ObservableCollection<Portfel>(portfele_dane.OrderByDescending(item => item.Wartosc));
             lbiPortfele.ItemsSource = portfele_dane;
 
         }
-        private void FindData(ref Portfel portfel) 
-        {
-            var conn = new NpgsqlConnection(Registration.ConnString());
-            conn.Open();
-            NpgsqlCommand cmd = new("SELECT \"Nazwa\" \"Id_Lokaty\", \"Oprocentowanie\", \"Czas\", " +
-                " \"Skala\", \"Kwota\", \"Podatek\", \"Data_Zakupu\" " +
-           "FROM \"Lokaty\" " +
-           "WHERE \"Id_Portfelu\" = @id_port",conn);
-            cmd.Parameters.AddWithValue("@id_port", portfel.PortfeleId);
-
-            NpgsqlDataReader reader = cmd.ExecuteReader();
-            ObservableCollection<Lokaty> lokaty = new();
-            while (reader.Read())
-            {
-                //lokaty.Add(new Lokaty(reader.GetString(0),reader.GetInt64(1),);
-            }
-        }
-
+        
         private void btDodaj_Click(object sender, RoutedEventArgs e)
         {
             if (NewPortfelName.Text == string.Empty)
