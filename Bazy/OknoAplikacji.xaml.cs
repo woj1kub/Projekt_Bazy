@@ -73,7 +73,7 @@ namespace Bazy
 
         private void btUstawienia_Click(object sender, RoutedEventArgs e)
         {
-            UstawieniaPanel ustawienia = new();
+            UstawieniaPanel ustawienia = new(ActiveUser);
             contentControl.Content = ustawienia;
         }
 

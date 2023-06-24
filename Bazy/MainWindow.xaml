@@ -39,36 +39,44 @@
 
 
         <Border Background="#ffffff" Grid.Column="1" CornerRadius="0 10 10 0">
-            <StackPanel VerticalAlignment="Center">
-                <TextBlock Text="Zaloguj się" Style="{StaticResource tytulText}" Foreground="#3AB19B"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="167*"/>
+                    <RowDefinition Height="212*"/>
+                    <RowDefinition Height="121*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Zaloguj się" VerticalAlignment="Bottom" Style="{StaticResource tytulText}" Foreground="#3AB19B" Grid.Row="0" Margin="0,69,0,20" Height="48"/>
+                <StackPanel Grid.Row="1" Margin="0,0,0,50" Grid.RowSpan="2">
+                    <Border x:Name="brLogin" BorderThickness="1" BorderBrush="#acb0af" Margin="70 7" CornerRadius="5" >
+                        <Grid Margin="7 9" MouseEnter="brLogin_MouseEnter" MouseLeave="brLogin_MouseLeave" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-                <Border x:Name="brLogin" BorderThickness="1" BorderBrush="#acb0af" Margin="70 7" CornerRadius="5" >
-                    <Grid Margin="7 9" MouseEnter="brLogin_MouseEnter" MouseLeave="brLogin_MouseLeave" >
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                            <TextBlock x:Name="textLogin" Text="Login" Style="{StaticResource podpowiedzText}" />
+                            <TextBox x:Name="txtLogin" TextChanged="txtLogin_TextChanged" Style="{StaticResource textLogowanie}"/>
+                        </Grid>
+                    </Border>
 
-                        <TextBlock x:Name="textLogin" Text="Login" Style="{StaticResource podpowiedzText}" />
-                        <TextBox x:Name="txtLogin" TextChanged="txtLogin_TextChanged" Style="{StaticResource textLogowanie}"/>
-                    </Grid>
-                </Border>
+                    <Border x:Name="brHaslo" BorderThickness="1" BorderBrush="#acb0af" Margin="70 7" CornerRadius="5">
+                        <Grid Margin="7 9"  MouseEnter="brHaslo_MouseEnter" MouseLeave="brHaslo_MouseLeave">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-                <Border x:Name="brHaslo" BorderThickness="1" BorderBrush="#acb0af" Margin="70 7" CornerRadius="5">
-                    <Grid Margin="7 9"  MouseEnter="brHaslo_MouseEnter" MouseLeave="brHaslo_MouseLeave">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                            <TextBlock x:Name="textHaslo" Text="Hasło" Style="{StaticResource podpowiedzText}"  />
+                            <PasswordBox x:Name="txtHaslo" PasswordChanged="txtHaslo_PasswordChanged" Style="{StaticResource passLogowanie}" />
+                        </Grid>
+                    </Border>
 
-                        <TextBlock x:Name="textHaslo" Text="Hasło" Style="{StaticResource podpowiedzText}"  />
-                        <PasswordBox x:Name="txtHaslo" PasswordChanged="txtHaslo_PasswordChanged" Style="{StaticResource passLogowanie}" />
-                    </Grid>
-                </Border>
+                    <Button Content="Zaloguj" Click="btnZaloguj_Click" Style="{StaticResource buttonZaloguj}"/>
+                </StackPanel>
 
-                <Button Content="Zaloguj" Click="btnZaloguj_Click" Style="{StaticResource buttonZaloguj}"/>
-                <Label Name="lbLoginMsg" Margin="0,20,0,20" FontWeight="Bold" Foreground="Red" FontSize="12" HorizontalContentAlignment="Center"/>
-            </StackPanel>
+                <Label Name="lbLoginMsg" Margin="0,20,0,20" FontWeight="Bold" Foreground="Red" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" Grid.Row="2"/>
+
+            </Grid>
         </Border>
 
     </Grid>

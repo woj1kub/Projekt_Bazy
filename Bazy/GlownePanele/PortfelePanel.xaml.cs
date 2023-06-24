@@ -126,7 +126,6 @@ namespace Bazy
             lbiPortfele.ItemsSource = portfele_dane;
         }
 
-
         private void btUsuń_Click(object sender, RoutedEventArgs e)
         {
             if (portfel_wew == null || !portfele_dane.Contains(portfel_wew)) return;
@@ -143,6 +142,7 @@ namespace Bazy
             ActivePortfel.Invoke(new Portfel());
             lbiPortfele.SelectedIndex = 0;
         }
+
         private void btDodajFundusze_Click(object sender, RoutedEventArgs e)
         {
             if (portfel_wew.PortfeleId == null || Fundusze.Text==string.Empty || !portfele_dane.Contains(portfel_wew)) return;

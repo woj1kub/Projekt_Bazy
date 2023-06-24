@@ -40,46 +40,53 @@
 
 
         <Border Background="#ffffff" Grid.Column="1" CornerRadius="0 10 10 0">
-            <StackPanel VerticalAlignment="Center">
-                <TextBlock Text="Zarejestruj się" Style="{StaticResource tytulText}" Foreground="#3AB19B"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="371*"/>
+                    <RowDefinition Height="129*"/>
+                </Grid.RowDefinitions>
+                <StackPanel VerticalAlignment="Top" Height="296" Margin="0,70,0,0" Grid.Row="0">
+                    <TextBlock Text="Zarejestruj się" Style="{StaticResource tytulText}" Foreground="#3AB19B"/>
 
-                <Border x:Name="brLogin" BorderThickness="1" BorderBrush="#acb0af" Margin="70 10" CornerRadius="5" MouseEnter="brLogin_MouseEnter" MouseLeave="brLogin_MouseLeave">
-                    <Grid Margin="7 9">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                    <Border x:Name="brLogin" BorderThickness="1" BorderBrush="#acb0af" Margin="70 10" CornerRadius="5">
+                        <Grid Margin="7 9"  MouseEnter="brLogin_MouseEnter" MouseLeave="brLogin_MouseLeave">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-                        <TextBlock x:Name="textLogin" Text="Login" Style="{StaticResource podpowiedzText}" />
-                        <TextBox x:Name="txtLogin" TextChanged="txtLogin_TextChanged" Style="{StaticResource textLogowanie}"/>
-                    </Grid>
-                </Border>
+                            <TextBlock x:Name="textLogin" Text="Login" Style="{StaticResource podpowiedzText}" />
+                            <TextBox x:Name="txtLogin" TextChanged="txtLogin_TextChanged" Style="{StaticResource textLogowanie}"/>
+                        </Grid>
+                    </Border>
 
-                <Border x:Name="brHaslo" BorderThickness="1" BorderBrush="#acb0af" Margin="70 10" CornerRadius="5" MouseEnter="brHaslo_MouseEnter" MouseLeave="brHaslo_MouseLeave">
-                    <Grid Margin="7 9">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                    <Border x:Name="brHaslo" BorderThickness="1" BorderBrush="#acb0af" Margin="70 10" CornerRadius="5" >
+                        <Grid Margin="7 9" MouseEnter="brHaslo_MouseEnter" MouseLeave="brHaslo_MouseLeave">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-                        <TextBlock x:Name="textHaslo" Text="Hasło" Style="{StaticResource podpowiedzText}" />
-                        <PasswordBox x:Name="txtHaslo" PasswordChanged="txtHaslo_PasswordChanged" Style="{StaticResource passLogowanie}" />
-                    </Grid>
-                </Border>
-                <Border BorderThickness="1" BorderBrush="#acb0af" Margin="70 10" CornerRadius="5" MouseEnter="Border_MouseEnter" MouseLeave="Border_MouseLeave">
-                    <Grid Margin="7 9">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                            <TextBlock x:Name="textHaslo" Text="Hasło" Style="{StaticResource podpowiedzText}" />
+                            <PasswordBox x:Name="txtHaslo" PasswordChanged="txtHaslo_PasswordChanged" Style="{StaticResource passLogowanie}" />
+                        </Grid>
+                    </Border>
+                    <Border BorderThickness="1" BorderBrush="#acb0af" Margin="70 10" CornerRadius="5" >
+                        <Grid Margin="7 9" MouseEnter="Border_MouseEnter" MouseLeave="Border_MouseLeave">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-                        <TextBlock x:Name="textPotwierdzHaslo" Text="Potwierdź hasło" Style="{StaticResource podpowiedzText}" />
-                        <PasswordBox x:Name="txtPotwierdzHaslo" PasswordChanged="txtPotwierdzHaslo_PasswordChanged" Style="{StaticResource passLogowanie}" />
-                    </Grid>
-                </Border>
+                            <TextBlock x:Name="textPotwierdzHaslo" Text="Potwierdź hasło" Style="{StaticResource podpowiedzText}" />
+                            <PasswordBox x:Name="txtPotwierdzHaslo" PasswordChanged="txtPotwierdzHaslo_PasswordChanged" Style="{StaticResource passLogowanie}" />
+                        </Grid>
+                    </Border>
 
-                <Button Content="Rejestracja" Click="btnZarejestruj_Click" Style="{StaticResource buttonZaloguj}"/>
-            </StackPanel>
+                    <Button Content="Rejestracja" Click="btnZarejestruj_Click" Style="{StaticResource buttonZaloguj}"/>
+                </StackPanel>
+                <Label Margin="25" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Red" x:Name="lbErrorRejestraji" Grid.Row="1"/>
+            </Grid>
         </Border>
     </Grid>
 </Window>

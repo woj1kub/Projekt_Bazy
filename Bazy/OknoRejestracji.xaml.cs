@@ -18,6 +18,7 @@ namespace Bazy
 
         private void brHaslo_MouseEnter(object sender, MouseEventArgs e)
         {
+
             textHaslo.Visibility = Visibility.Hidden;
         }
 
@@ -99,7 +100,8 @@ namespace Bazy
             }
             else
             {
-                MessageBox.Show("Wypełnij dane");
+                lbErrorRejestraji.Visibility = Visibility.Visible;
+                lbErrorRejestraji.Content = "Błąd wprowadzonych danych";
             }
 
         }
