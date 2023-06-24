@@ -10,6 +10,32 @@ using System.Threading.Tasks;
 
 namespace Bazy
 {
+    public class PortfelGotówkowy : INotifyPropertyChanged
+    {
+        private Int64? idPorfelGotowkowy;
+        private decimal wartosc;
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        public Int64? IdPortfelGotowkowy { 
+            get {  return idPorfelGotowkowy; } 
+            set
+            {
+                idPorfelGotowkowy = value;
+                OnPropertyChanged(nameof(idPorfelGotowkowy));
+            }
+        }
+        public decimal Wartosc { get {return wartosc ; }
+            set
+            {
+                wartosc = value;
+                OnPropertyChanged(nameof(wartosc));
+            }        
+        }
+    }
+
     public class Portfel : INotifyPropertyChanged
     {
         private Int64? portfeleId;
@@ -19,7 +45,8 @@ namespace Bazy
         public ObservableCollection<Obligacje>? Obligacjes { get; set; }
         public ObservableCollection<KontoOszczędnościowe>? KontoOszczędnościowes { get; set; }
         public ObservableCollection<Akcje>? Akcjes { get; set; }
-        
+        public ObservableCollection<PortfelGotówkowy>? PortfeleGotówkowe { get; set; }
+
         public Portfel(Int64? portfelId, string? nazwa, decimal wartość)
         {
             this.Nazwa = nazwa;
@@ -27,6 +54,7 @@ namespace Bazy
             this.PortfeleId = portfelId;
         }
         public Portfel() { }
+
         public Int64? PortfeleId
         {
             get { return portfeleId; }
@@ -58,7 +86,7 @@ namespace Bazy
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public void DataLokaty()
+        void DataLokaty()
         {
             if (this.PortfeleId != null)
                 return;
@@ -91,7 +119,7 @@ namespace Bazy
             }
 
         }
-        public void DataObligacje()
+        void DataObligacje()
         {
             if (this.PortfeleId != null)
                 return;
@@ -125,7 +153,7 @@ namespace Bazy
             }
 
         }
-        public void DataKontoOszczednosciowe()
+        void DataKontoOszczednosciowe()
         {
             if (this.PortfeleId != null)
                 return;
@@ -157,7 +185,7 @@ namespace Bazy
             }
 
         }
-        public void DataAkcje()
+        void DataAkcje()
         {
             if (this.PortfeleId != null)
                 return;
@@ -185,9 +213,43 @@ namespace Bazy
                 }
                 conn.Close();
             }
+        }
+        void DataPortfelGotówkowy()
+        {
+            if (this.PortfeleId != null)
+                return;
+
+            using (var conn = new NpgsqlConnection(Registration.ConnString()))
+            {
+                conn.Open();
+                NpgsqlCommand cmd = new($"SELECT * FROM \"Akcje\" WHERE \"Id_Portelefu\" = @idportfel");
+                cmd.Parameters.AddWithValue("@idportfel", this.portfeleId);
+                cmd.Connection = conn;
+                PortfeleGotówkowe = new();
+                NpgsqlDataReader reader = cmd.ExecuteReader();
+                PortfelGotówkowy portfelGotówkowy= new();
+                while (reader.Read())
+                {
+                    portfelGotówkowy = new()
+                    {
+                        IdPortfelGotowkowy=reader.GetInt32(0),
+                        Wartosc=reader.GetDecimal(2)
+                    };
+                    PortfeleGotówkowe.Add(portfelGotówkowy);
+                }
+                conn.Close();
+            }
 
         }
 
+        public void DanePortfela()
+        {
+            DataPortfelGotówkowy();
+            DataObligacje();
+            DataAkcje();
+            DataKontoOszczednosciowe();
+            DataLokaty();
+        }
     }
 
 }

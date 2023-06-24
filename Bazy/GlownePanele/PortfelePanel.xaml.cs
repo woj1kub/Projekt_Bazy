@@ -71,10 +71,7 @@ namespace Bazy
                 portfel = new();
                 portfel.Nazwa = reader.GetString(1);
                 portfel.PortfeleId=reader.GetInt64(0);
-                portfel.DataLokaty();
-                portfel.DataObligacje();
-                portfel.DataAkcje();
-                portfel.DataKontoOszczednosciowe();
+                portfel.DanePortfela();
                 if (reader.IsDBNull(2))
                 {
                     portfel.Wartosc = 0;
