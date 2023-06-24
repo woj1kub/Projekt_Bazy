@@ -55,7 +55,7 @@ namespace Bazy
         {
             var conn = new NpgsqlConnection(Registration.ConnString());
             conn.Open();
-            NpgsqlCommand cmd = new("SELECT \"Id_Portfelu\", \"Nazwa_Portfelu\", SUM(\"Kwota\") " +
+            NpgsqlCommand cmd = new("SELECT \"Id_Portfelu\", \"Nazwa_Portfelu\" " +
             "FROM \"Portfele\" " +
             "LEFT JOIN \"Portfel Gotówkowy\" ON \"Id_Porfelu\" = \"Id_Portfelu\" " +
             "WHERE \"Użykownik\" = @login " +
@@ -68,17 +68,13 @@ namespace Bazy
 
             while (reader.Read())
             {
-                portfel = new();
-                portfel.Nazwa = reader.GetString(1);
-                portfel.PortfeleId=reader.GetInt64(0);
-                portfel.DanePortfela();
-                if (reader.IsDBNull(2))
+                portfel = new()
                 {
-                    portfel.Wartosc = 0;
-                    portfele_dane.Add(portfel);
-                    continue;
-                }
-                portfel.Wartosc=reader.GetDecimal(2);
+                    Nazwa = reader.GetString(1),
+                    PortfeleId = reader.GetInt64(0)
+                };
+                portfel.DanePortfela();
+
                 portfele_dane.Add(portfel);
             }
 
@@ -171,8 +167,8 @@ namespace Bazy
             var selectedIndex = portfele_dane.IndexOf(portfel_wew);
             var selectedPortfel = portfele_dane[selectedIndex];
             selectedPortfel.Wartosc += decimal.Parse(Fundusze.Text);
-            portfele_dane[selectedIndex] =new(selectedPortfel.PortfeleId,selectedPortfel.Nazwa, selectedPortfel.Wartosc);
-            lbiPortfele.SelectedIndex =selectedIndex;
+            portfele_dane[selectedIndex] =new(selectedPortfel);
+            lbiPortfele.SelectedIndex = selectedIndex;
 
             Fundusze.Clear();
             conn.Close();

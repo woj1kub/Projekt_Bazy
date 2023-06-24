@@ -14,6 +14,14 @@ namespace Bazy
     {
         private Int64? idPorfelGotowkowy;
         private decimal wartosc;
+
+        public PortfelGotówkowy() { }
+        public PortfelGotówkowy(int idPorfelGotowkowy, decimal wartosc)
+        {
+            this.idPorfelGotowkowy = idPorfelGotowkowy;
+            this.wartosc = wartosc;
+        }
+
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
         {
@@ -47,11 +55,16 @@ namespace Bazy
         public ObservableCollection<Akcje>? Akcjes { get; set; }
         public ObservableCollection<PortfelGotówkowy>? PortfeleGotówkowe { get; set; }
 
-        public Portfel(Int64? portfelId, string? nazwa, decimal wartość)
+        public Portfel(Portfel portfel)
         {
-            this.Nazwa = nazwa;
-            this.Wartosc = wartość;
-            this.PortfeleId = portfelId;
+            this.portfeleId = portfel.portfeleId;
+            this.nazwa = portfel.nazwa;
+            this.wartosc= portfel.wartosc;
+            this.Lokaties= portfel.Lokaties;
+            this.Obligacjes = portfel.Obligacjes;
+            this.KontoOszczędnościowes = portfel.KontoOszczędnościowes;
+            this.Akcjes = portfel.Akcjes;
+            this.PortfeleGotówkowe = portfel.PortfeleGotówkowe;
         }
         public Portfel() { }
 
@@ -88,13 +101,13 @@ namespace Bazy
 
         void DataLokaty()
         {
-            if (this.PortfeleId != null)
+            if (this.PortfeleId == null)
                 return;
 
             using (var conn = new NpgsqlConnection(Registration.ConnString()))
             {
                 conn.Open();
-                NpgsqlCommand cmd = new($"SELECT * FROM \"LOKATY\" WHERE \"Id_Portelefu\" = @idportfel");
+                NpgsqlCommand cmd = new($"SELECT * FROM \"Lokaty\" WHERE \"Id_Portefelu\" = @idportfel");
                 cmd.Parameters.AddWithValue("@idportfel", this.PortfeleId);
                 Lokaties = new();
                 cmd.Connection = conn;
@@ -121,13 +134,13 @@ namespace Bazy
         }
         void DataObligacje()
         {
-            if (this.PortfeleId != null)
+            if (this.PortfeleId == null)
                 return;
 
             using (var conn = new NpgsqlConnection(Registration.ConnString()))
             {
                 conn.Open();
-                NpgsqlCommand cmd = new($"SELECT * FROM \"Obligacje z Stałym Oprocentowaniem\" WHERE \"Id_Portelefu\" = @idportfel");
+                NpgsqlCommand cmd = new($"SELECT * FROM \"Obligacje z Stałym Oprocentowaniem\" WHERE \"Id_Portefelu\" = @idportfel");
                 cmd.Parameters.AddWithValue("@idportfel", this.PortfeleId);
                 Obligacjes= new();
                 cmd.Connection = conn;
@@ -155,13 +168,13 @@ namespace Bazy
         }
         void DataKontoOszczednosciowe()
         {
-            if (this.PortfeleId != null)
+            if (this.PortfeleId == null)
                 return;
 
             using (var conn = new NpgsqlConnection(Registration.ConnString()))
             {
                 conn.Open();
-                NpgsqlCommand cmd = new($"SELECT * FROM \"Konto oszczędnościowe\" WHERE \"Id_Portelefu\" = @idportfel");
+                NpgsqlCommand cmd = new($"SELECT * FROM \"Konto oszczędnościowe\" WHERE \"Id_Portfelu\" = @idportfel");
                 cmd.Parameters.AddWithValue("@idportfel", this.PortfeleId);
                 cmd.Connection = conn;
                 KontoOszczędnościowes = new();
@@ -187,13 +200,13 @@ namespace Bazy
         }
         void DataAkcje()
         {
-            if (this.PortfeleId != null)
+            if (this.PortfeleId == null)
                 return;
 
             using (var conn = new NpgsqlConnection(Registration.ConnString()))
             {
                 conn.Open();
-                NpgsqlCommand cmd = new($"SELECT * FROM \"Akcje\" WHERE \"Id_Portelefu\" = @idportfel");
+                NpgsqlCommand cmd = new($"SELECT * FROM \"Akcje\" WHERE \"Id_Portfelu\" = @idportfel");
                 cmd.Parameters.AddWithValue("@idportfel", this.PortfeleId);
                 cmd.Connection = conn;
                 Akcjes = new();
@@ -216,30 +229,29 @@ namespace Bazy
         }
         void DataPortfelGotówkowy()
         {
-            if (this.PortfeleId != null)
+            if (this.PortfeleId == null)
                 return;
 
             using (var conn = new NpgsqlConnection(Registration.ConnString()))
             {
                 conn.Open();
-                NpgsqlCommand cmd = new($"SELECT * FROM \"Akcje\" WHERE \"Id_Portelefu\" = @idportfel");
+                NpgsqlCommand cmd = new($"SELECT * FROM \"Portfel Gotówkowy\" WHERE \"Id_Porfelu\" = @idportfel");
                 cmd.Parameters.AddWithValue("@idportfel", this.portfeleId);
                 cmd.Connection = conn;
                 PortfeleGotówkowe = new();
                 NpgsqlDataReader reader = cmd.ExecuteReader();
-                PortfelGotówkowy portfelGotówkowy= new();
+                PortfelGotówkowy portfelGotówkowy;
                 while (reader.Read())
                 {
-                    portfelGotówkowy = new()
-                    {
-                        IdPortfelGotowkowy=reader.GetInt32(0),
-                        Wartosc=reader.GetDecimal(2)
-                    };
+                    portfelGotówkowy = new();
+                    portfelGotówkowy.IdPortfelGotowkowy= reader.GetInt64(0);
+                    portfelGotówkowy.Wartosc = reader.GetDecimal(2);
+                        
                     PortfeleGotówkowe.Add(portfelGotówkowy);
                 }
                 conn.Close();
             }
-
+            wartosc = PortfeleGotówkowe?.Sum(portfel => portfel.Wartosc) ?? 0;
         }
 
         public void DanePortfela()
