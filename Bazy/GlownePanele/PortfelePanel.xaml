@@ -53,11 +53,11 @@
             <StackPanel Grid.Column="1" VerticalAlignment="Center">
                
                 <Label Content="Dodanie funduszy" HorizontalAlignment="Center" Margin="0 0 0 0"/>
-                <TextBox Margin="25,10" x:Name="DodFundusze" PreviewTextInput="Fundusze_PreviewTextInput"/>
+                <TextBox Margin="25,10" x:Name="DodFundusze"/>
                 <Button Background="AliceBlue" x:Name="btDodajFundusze" Content="Wpłać"  Width="75" Height="30" FontSize="15" FontWeight="Bold" Click="btDodajFundusze_Click"/>
                 
                 <Label Content="Usuwanie funduszy" HorizontalAlignment="Center" Margin="0 15 0 0"/>
-                <TextBox Margin="25,10" x:Name="UsuFundusze" PreviewTextInput="Fundusze_PreviewTextInput"/>
+                <TextBox Margin="25,10" x:Name="UsuFundusze"/>
                 <Button Background="AliceBlue" x:Name="btUsunFundusze" Content="Pobierz"  Width="75" Height="30" FontSize="15" FontWeight="Bold" Click="btDodajFundusze_Click"/>
 
             </StackPanel>

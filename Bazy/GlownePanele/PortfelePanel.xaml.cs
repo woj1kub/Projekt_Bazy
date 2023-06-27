@@ -135,7 +135,7 @@ namespace Bazy
 
         private void btDodajPortfelGotowkowy_Click(object sender, RoutedEventArgs e)
         {
-            if (portfel_wew.PortfeleId == null || Fundusze.Text==string.Empty || !portfele_dane.Contains(portfel_wew)) return;
+            if (portfel_wew.PortfeleId == null || PortfelGotowkowy.Text==string.Empty || !portfele_dane.Contains(portfel_wew)) return;
             using var conn = new NpgsqlConnection(Registration.ConnString());
             conn.Open();
             NpgsqlCommand cmd;
@@ -143,7 +143,7 @@ namespace Bazy
             cmd = new NpgsqlCommand("INSERT INTO \"Portfel Gotówkowy\" (\"Id_Porfelu\" , \"Kwota\") " +
                 "VALUES ((SELECT \"Id_Portfelu\" FROM \"Portfele\" WHERE \"Id_Portfelu\" = @Id_portfel ) , @kwotaPortfela)" +
                 "RETURNING \"Id_Portfela_Gotówkowego\" ");
-            cmd.Parameters.AddWithValue("@kwotaPortfela", decimal.Parse(Fundusze.Text));
+            cmd.Parameters.AddWithValue("@kwotaPortfela", decimal.Parse(PortfelGotowkowy.Text));
             cmd.Parameters.AddWithValue("Id_portfel", portfel_wew.PortfeleId);
             cmd.Connection = conn;
             var id_portfel_gotowkowy = cmd.ExecuteScalar();
@@ -154,7 +154,7 @@ namespace Bazy
                 cmd = new NpgsqlCommand("INSERT INTO \"Historia Transakcji Portfelu\" " +
                     "(\"Id_Portfela_Gotówkowego\" , \"Kwota\" , \"Data_Transakcji\", \"Opis_Transakcji\") " +
                     "VALUES ((SELECT \"Id_Portfela_Gotówkowego\" FROM \"Portfel Gotówkowy\" WHERE \"Id_Portfela_Gotówkowego\" = @Id_portfel ) , @kwotaPortfela, @data,@opis)");
-                cmd.Parameters.AddWithValue("@kwotaPortfela", decimal.Parse(Fundusze.Text));
+                cmd.Parameters.AddWithValue("@kwotaPortfela", decimal.Parse(PortfelGotowkowy.Text));
                 cmd.Parameters.AddWithValue("Id_portfel", id_portfel_gotowkowy);
                 cmd.Parameters.AddWithValue("@data", DateTime.Now);
                 cmd.Parameters.AddWithValue("@opis", "Utworzenie portfela gotówkowego");
@@ -163,11 +163,11 @@ namespace Bazy
             }
             var selectedIndex = portfele_dane.IndexOf(portfel_wew);
             var selectedPortfel = portfele_dane[selectedIndex];
-            selectedPortfel.Wartosc += decimal.Parse(Fundusze.Text);
+            selectedPortfel.Wartosc += decimal.Parse(PortfelGotowkowy.Text);
             portfele_dane[selectedIndex] =new(selectedPortfel);
             lbiPortfele.SelectedIndex = selectedIndex;
 
-            Fundusze.Clear();
+            PortfelGotowkowy.Clear();
             conn.Close();
             portfele_dane = new ObservableCollection<Portfel>(portfele_dane.OrderByDescending(item => item.Wartosc));
             lbiPortfele.ItemsSource = portfele_dane;
@@ -183,7 +183,7 @@ namespace Bazy
             {
                 e.Handled = true; 
             }
-            string newText = Fundusze.Text + e.Text;
+            string newText = PortfelGotowkowy.Text + e.Text;
             Regex regex = new(@"^\d+(,\d{0,2})?$");
             if (!regex.IsMatch(newText))
             {
