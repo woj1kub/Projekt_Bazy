@@ -8,7 +8,7 @@ namespace Bazy
 {
     public class Lokaty
     {
-        public Int64? Id_Lokaty { get; set; }
+        public long? Id_Lokaty { get; set; }
         public double Oprocentowanie { get; set; }
         public int Czas { get; set; }
         public int Skala { get; set; }

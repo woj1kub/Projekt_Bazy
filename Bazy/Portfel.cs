@@ -12,7 +12,7 @@ namespace Bazy
 {
     public class PortfelGotówkowy : INotifyPropertyChanged
     {
-        private Int64? idPorfelGotowkowy;
+        private long? idPorfelGotowkowy;
         private decimal wartosc;
 
         public PortfelGotówkowy() { }
@@ -27,7 +27,7 @@ namespace Bazy
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public Int64? IdPortfelGotowkowy { 
+        public long? IdPortfelGotowkowy { 
             get {  return idPorfelGotowkowy; } 
             set
             {
@@ -42,18 +42,22 @@ namespace Bazy
                 OnPropertyChanged(nameof(wartosc));
             }        
         }
+        public override string ToString()
+        {
+            return wartosc.ToString();
+        }
     }
 
     public class Portfel : INotifyPropertyChanged
     {
-        private Int64? portfeleId;
+        private long? portfeleId;
         private string? nazwa;
         private decimal wartosc;
         public ObservableCollection<Lokaty>? Lokaties { get; set; }
         public ObservableCollection<Obligacje>? Obligacjes { get; set; }
         public ObservableCollection<KontoOszczędnościowe>? KontoOszczędnościowes { get; set; }
         public ObservableCollection<Akcje>? Akcjes { get; set; }
-        public ObservableCollection<PortfelGotówkowy>? PortfeleGotówkowe { get; set; }
+        public ObservableCollection<PortfelGotówkowy>? portfeleGotówkowe;
 
         public Portfel(Portfel portfel)
         {
@@ -64,11 +68,20 @@ namespace Bazy
             this.Obligacjes = portfel.Obligacjes;
             this.KontoOszczędnościowes = portfel.KontoOszczędnościowes;
             this.Akcjes = portfel.Akcjes;
-            this.PortfeleGotówkowe = portfel.PortfeleGotówkowe;
+            this.portfeleGotówkowe = portfel.portfeleGotówkowe;
         }
         public Portfel() { }
-
-        public Int64? PortfeleId
+        public ObservableCollection<PortfelGotówkowy>? PortfeleGotówkowe
+        {
+            get { return portfeleGotówkowe; }
+            set 
+            {
+                portfeleGotówkowe= value;
+                wartosc = portfeleGotówkowe?.Sum(portfel => portfel.Wartosc) ?? 0;
+                OnPropertyChanged(nameof(portfeleGotówkowe));
+            }
+        }
+        public long? PortfeleId
         {
             get { return portfeleId; }
             set { 
@@ -121,7 +134,7 @@ namespace Bazy
                         Oprocentowanie = reader.GetDouble(2),
                         Czas = reader.GetInt32(3),
                         Skala = reader.GetInt32(4),
-                        Kwota = reader.GetDecimal(5),
+                        Kwota = reader.GetDecimal(5), 
                         Podatek = reader.GetDouble(6),
                         Data_zakupu = reader.GetDateTime(7).Date,
                         Nazwa=reader.GetString(8)
@@ -238,7 +251,7 @@ namespace Bazy
                 NpgsqlCommand cmd = new($"SELECT * FROM \"Portfel Gotówkowy\" WHERE \"Id_Porfelu\" = @idportfel");
                 cmd.Parameters.AddWithValue("@idportfel", this.portfeleId);
                 cmd.Connection = conn;
-                PortfeleGotówkowe = new();
+                portfeleGotówkowe = new();
                 NpgsqlDataReader reader = cmd.ExecuteReader();
                 PortfelGotówkowy portfelGotówkowy;
                 while (reader.Read())
@@ -247,11 +260,12 @@ namespace Bazy
                     portfelGotówkowy.IdPortfelGotowkowy= reader.GetInt64(0);
                     portfelGotówkowy.Wartosc = reader.GetDecimal(2);
                         
-                    PortfeleGotówkowe.Add(portfelGotówkowy);
+                    portfeleGotówkowe.Add(portfelGotówkowy);
                 }
                 conn.Close();
             }
-            wartosc = PortfeleGotówkowe?.Sum(portfel => portfel.Wartosc) ?? 0;
+            wartosc = portfeleGotówkowe?.Sum(portfel => portfel.Wartosc) ?? 0;
+
         }
 
         public void DanePortfela()

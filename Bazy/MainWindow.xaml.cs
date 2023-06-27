@@ -17,6 +17,7 @@ namespace Bazy
             
             InitializeComponent();
             testConnect();
+            //addEnum();
             //alterTable();
             //checker();
         }
@@ -140,12 +141,20 @@ namespace Bazy
         }
 
         //AlterTable
+        void addEnum()
+        {
+            var conn = new NpgsqlConnection(Registration.ConnString());
+            conn.Open();
+            NpgsqlCommand cmd = new("CREATE TYPE KapitalizacjaOdsetek AS ENUM (\'Jednorazowa\',\'Roczna\',\'Miesięczna\',\'Dzienna\') ", conn);
+            int ss = cmd.ExecuteNonQuery();
+            conn.Close();
+            MessageBox.Show(ss.ToString());
+        }
         void alterTable()
         {
             var conn = new NpgsqlConnection(Registration.ConnString());
             conn.Open();
-            NpgsqlCommand cmd = new("ALTER TABLE \"Akcje\" ADD COLUMN IF NOT EXISTS " +
-                "\"Nazwa\" STRING ", conn);
+            NpgsqlCommand cmd = new("ALTER TABLE \"Lokaty\" ADD COLUMN \"Kapitalizacja\" KapitalizacjaOdsetek", conn);
             int ss= cmd.ExecuteNonQuery();
             conn.Close();
             MessageBox.Show(ss.ToString());
@@ -159,7 +168,7 @@ namespace Bazy
             List<string> list = new List<string>();
             while (reader.Read())
             {
-                list.Add(reader.GetString(0));
+                list.Add(reader.GetString(0) + " " + reader.GetString(1));
             }
             conn.Close();
         }

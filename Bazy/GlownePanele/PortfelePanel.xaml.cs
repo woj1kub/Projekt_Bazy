@@ -23,6 +23,7 @@ namespace Bazy
             this.ActiveUser = ActiveUser;
             this.ActivePortfel += ActivePortfel;
             ListyPortfeli();
+
         }
 
         private void lbiPortfele_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -44,11 +45,7 @@ namespace Bazy
             ActivePortfel.Invoke(portfele_dane[chosen]);
             portfel_wew = portfele_dane[chosen];
             lbiPortfele.SelectedIndex = chosen;
-            lvLokaty.ItemsSource = portfele_dane[chosen].Lokaties;
-            lvKontoO.ItemsSource = portfele_dane[chosen].KontoOszczędnościowes;
-            lvObligacje.ItemsSource = portfele_dane[chosen].Obligacjes;
-            lvAkcje.ItemsSource = portfele_dane[chosen].Akcjes;
-            
+            lbPortfeleGotówkowe.ItemsSource = portfel_wew.portfeleGotówkowe;
         }
 
         private void ListyPortfeli()
@@ -136,10 +133,10 @@ namespace Bazy
             lbiPortfele.SelectedIndex = 0;
         }
 
-        private void btDodajFundusze_Click(object sender, RoutedEventArgs e)
+        private void btDodajPortfelGotowkowy_Click(object sender, RoutedEventArgs e)
         {
             if (portfel_wew.PortfeleId == null || Fundusze.Text==string.Empty || !portfele_dane.Contains(portfel_wew)) return;
-            var conn = new NpgsqlConnection(Registration.ConnString());
+            using var conn = new NpgsqlConnection(Registration.ConnString());
             conn.Open();
             NpgsqlCommand cmd;
             //Dodanie nowego portfelu gotówkowego
@@ -153,7 +150,7 @@ namespace Bazy
 
             if (id_portfel_gotowkowy != null)
             {
-                //Dodanie w histroii transakcji informacje o stworzeniu nowej histrorii
+                //Dodanie w histroii transakcji informacje o stworzeniu nowej histrorii portfela
                 cmd = new NpgsqlCommand("INSERT INTO \"Historia Transakcji Portfelu\" " +
                     "(\"Id_Portfela_Gotówkowego\" , \"Kwota\" , \"Data_Transakcji\", \"Opis_Transakcji\") " +
                     "VALUES ((SELECT \"Id_Portfela_Gotówkowego\" FROM \"Portfel Gotówkowy\" WHERE \"Id_Portfela_Gotówkowego\" = @Id_portfel ) , @kwotaPortfela, @data,@opis)");
@@ -174,8 +171,12 @@ namespace Bazy
             conn.Close();
             portfele_dane = new ObservableCollection<Portfel>(portfele_dane.OrderByDescending(item => item.Wartosc));
             lbiPortfele.ItemsSource = portfele_dane;
+        
         }
+        private void btDodajFundusze_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
         private void Fundusze_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
             if (!char.IsDigit(e.Text, e.Text.Length - 1) && e.Text != ",")
@@ -190,5 +191,9 @@ namespace Bazy
             }
         }
 
+        private void DeletePG_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
