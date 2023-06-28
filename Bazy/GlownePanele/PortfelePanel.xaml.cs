@@ -18,6 +18,7 @@ namespace Bazy
 
         public PortfelePanel(string ActiveUser, Action<Portfel> ActivePortfel)
         {
+            portfele_dane = new();
             portfel_wew = new();
             InitializeComponent();
             this.ActiveUser = ActiveUser;
@@ -76,15 +77,16 @@ namespace Bazy
             }
 
             conn.Close();
+
             portfele_dane = new ObservableCollection<Portfel>(portfele_dane.OrderByDescending(item => item.Wartosc));
             lbiPortfele.ItemsSource = portfele_dane;
-
         }
         
         private void btDodaj_Click(object sender, RoutedEventArgs e)
         {
             if (NewPortfelName.Text == string.Empty)
                 return;
+            
             var conn = new NpgsqlConnection(Registration.ConnString());
             conn.Open();
             NpgsqlCommand cmd;
@@ -101,6 +103,7 @@ namespace Bazy
                 return;
 
             conn.Close();
+
             //uzupełnienie danych w tablicy portfeli
             Portfel portfel = new()
             {
@@ -118,7 +121,7 @@ namespace Bazy
 
         private void btUsuń_Click(object sender, RoutedEventArgs e)
         {
-            if (portfel_wew == null || !portfele_dane.Contains(portfel_wew)) return;
+            if (portfel_wew == null || !portfele_dane.Contains(portfel_wew) ) return;
             var conn = new NpgsqlConnection(Registration.ConnString());
             conn.Open();
             NpgsqlCommand cmd;
@@ -130,60 +133,31 @@ namespace Bazy
             conn.Close();
             portfele_dane.RemoveAt(portfele_dane.IndexOf(portfel_wew));
             ActivePortfel.Invoke(new Portfel());
-            lbiPortfele.SelectedIndex = 0;
+            lbiPortfele.SelectedIndex = -1;
+            lbPortfeleGotówkowe.ItemsSource=null;
         }
 
         private void btDodajPortfelGotowkowy_Click(object sender, RoutedEventArgs e)
         {
-            if (portfel_wew.PortfeleId == null || PortfelGotowkowy.Text==string.Empty || !portfele_dane.Contains(portfel_wew)) return;
-            using var conn = new NpgsqlConnection(Registration.ConnString());
-            conn.Open();
-            NpgsqlCommand cmd;
-            //Dodanie nowego portfelu gotówkowego
-            cmd = new NpgsqlCommand("INSERT INTO \"Portfel Gotówkowy\" (\"Id_Porfelu\" , \"Kwota\") " +
-                "VALUES ((SELECT \"Id_Portfelu\" FROM \"Portfele\" WHERE \"Id_Portfelu\" = @Id_portfel ) , @kwotaPortfela)" +
-                "RETURNING \"Id_Portfela_Gotówkowego\" ");
-            cmd.Parameters.AddWithValue("@kwotaPortfela", decimal.Parse(PortfelGotowkowy.Text));
-            cmd.Parameters.AddWithValue("Id_portfel", portfel_wew.PortfeleId);
-            cmd.Connection = conn;
-            var id_portfel_gotowkowy = cmd.ExecuteScalar();
+            if (portfel_wew == null || PortfelGotowkowy.Text==string.Empty || !portfele_dane.Contains(portfel_wew)) return;
 
-            if (id_portfel_gotowkowy != null)
-            {
-                //Dodanie w histroii transakcji informacje o stworzeniu nowej histrorii portfela
-                cmd = new NpgsqlCommand("INSERT INTO \"Historia Transakcji Portfelu\" " +
-                    "(\"Id_Portfela_Gotówkowego\" , \"Kwota\" , \"Data_Transakcji\", \"Opis_Transakcji\") " +
-                    "VALUES ((SELECT \"Id_Portfela_Gotówkowego\" FROM \"Portfel Gotówkowy\" WHERE \"Id_Portfela_Gotówkowego\" = @Id_portfel ) , @kwotaPortfela, @data,@opis)");
-                cmd.Parameters.AddWithValue("@kwotaPortfela", decimal.Parse(PortfelGotowkowy.Text));
-                cmd.Parameters.AddWithValue("Id_portfel", id_portfel_gotowkowy);
-                cmd.Parameters.AddWithValue("@data", DateTime.Now);
-                cmd.Parameters.AddWithValue("@opis", "Utworzenie portfela gotówkowego");
-                cmd.Connection = conn;
-                cmd.ExecuteNonQuery();
-            }
-            var selectedIndex = portfele_dane.IndexOf(portfel_wew);
-            var selectedPortfel = portfele_dane[selectedIndex];
-            selectedPortfel.Wartosc += decimal.Parse(PortfelGotowkowy.Text);
-            portfele_dane[selectedIndex] =new(selectedPortfel);
-            lbiPortfele.SelectedIndex = selectedIndex;
+            decimal wartosc = decimal.Parse(PortfelGotowkowy.Text);
 
-            PortfelGotowkowy.Clear();
-            conn.Close();
+            RestartPortfela();
             portfele_dane = new ObservableCollection<Portfel>(portfele_dane.OrderByDescending(item => item.Wartosc));
             lbiPortfele.ItemsSource = portfele_dane;
-        
-        }
-        private void btDodajFundusze_Click(object sender, RoutedEventArgs e)
-        {
+            portfel_wew.portfeleGotówkowe.Add(new PortfelGotówkowy(wartosc: wartosc , idPorfela:(long) portfel_wew.PortfeleId));
+            PortfelGotowkowy.Clear();
 
         }
-        private void Fundusze_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+
+        private void _PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
             if (!char.IsDigit(e.Text, e.Text.Length - 1) && e.Text != ",")
             {
                 e.Handled = true; 
             }
-            string newText = PortfelGotowkowy.Text + e.Text;
+            string newText = ((TextBox) sender).Text + e.Text;
             Regex regex = new(@"^\d+(,\d{0,2})?$");
             if (!regex.IsMatch(newText))
             {
@@ -193,7 +167,41 @@ namespace Bazy
 
         private void DeletePG_Click(object sender, RoutedEventArgs e)
         {
+            if (lbPortfeleGotówkowe.SelectedIndex == -1 || portfel_wew.portfeleGotówkowe==null || portfel_wew == null || UsuFundusze.Text == string.Empty || !portfele_dane.Contains(portfel_wew)) return;
+            decimal wartosc =decimal.Parse(DodFundusze.Text);
+            portfel_wew.portfeleGotówkowe[lbPortfeleGotówkowe.SelectedIndex].ZmianaWartości(-wartosc, "Pobranie z portfela gotówkowego");
+            
+            var selectedPortfel = portfel_wew.portfeleGotówkowe[lbPortfeleGotówkowe.SelectedIndex];
+            portfel_wew.portfeleGotówkowe[lbPortfeleGotówkowe.SelectedIndex] = new(selectedPortfel);
+            portfel_wew.Wartosc -= wartosc;
+            UsuFundusze.Text = "";
+
+            RestartPortfela();
 
         }
+
+        private void btDodajFundusze_Click(object sender, RoutedEventArgs e)
+        {
+            if (lbPortfeleGotówkowe.SelectedIndex==-1 || portfel_wew.portfeleGotówkowe == null || portfel_wew == null || DodFundusze.Text == string.Empty || !portfele_dane.Contains(portfel_wew)) return;
+            decimal wartosc = decimal.Parse(DodFundusze.Text);
+            portfel_wew.portfeleGotówkowe[lbPortfeleGotówkowe.SelectedIndex].ZmianaWartości(wartosc, "Wpłacenie do portfela gotówkowego");
+            
+            var selectedPortfel = portfel_wew.portfeleGotówkowe[lbPortfeleGotówkowe.SelectedIndex];
+            portfel_wew.portfeleGotówkowe[lbPortfeleGotówkowe.SelectedIndex] = new(selectedPortfel);
+            portfel_wew.Wartosc += wartosc;
+            DodFundusze.Text = "";
+
+            RestartPortfela();
+        }
+
+        void RestartPortfela() 
+        {
+            var selectedIndex = portfele_dane.IndexOf(portfel_wew);
+            var selectedPortfel = portfele_dane[selectedIndex];
+            selectedPortfel.Wartosc += decimal.Parse(PortfelGotowkowy.Text);
+            portfele_dane[selectedIndex] = new(selectedPortfel);
+            lbiPortfele.SelectedIndex = selectedIndex;
+        }
+        
     }
 }

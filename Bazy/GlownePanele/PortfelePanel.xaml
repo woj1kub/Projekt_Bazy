@@ -21,8 +21,8 @@
                           VerticalAlignment="Top" SelectionMode="Single" Height="auto" d:ItemsSource="{d:SampleData ItemCount=3}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Nazwa" DisplayMemberBinding="{Binding Nazwa}"/>
-                            <GridViewColumn Header="Fundusze" DisplayMemberBinding="{Binding Wartosc}"/>
+                            <GridViewColumn Width="100" Header="Nazwa" DisplayMemberBinding="{Binding Nazwa}"/>
+                            <GridViewColumn  Width="100" Header="Fundusze" DisplayMemberBinding="{Binding Wartosc}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -34,8 +34,8 @@
                 <TextBox Margin="25,10" x:Name="NewPortfelName"/>
 
                 <Button Background="AliceBlue" x:Name="btDodaj" Content="Dodaj"  Width="75" Height="30" FontSize="15" FontWeight="Bold" Click="btDodaj_Click"/>
-                <Label Content="Portfel gotówkowy" HorizontalAlignment="Center"/>
-                <TextBox Margin="25,10" x:Name="PortfelGotowkowy" PreviewTextInput="Fundusze_PreviewTextInput"/>
+                <Label Content="Portfel gotówkowy" HorizontalAlignment="Center" Margin="0 15 0 0"/>
+                <TextBox Margin="25,10" x:Name="PortfelGotowkowy" PreviewTextInput="_PreviewTextInput"/>
                 <Button Background="AliceBlue" x:Name="btDodajPortfelGotowkowy" Content="Dodaj"  Width="75" Height="30" FontSize="15" FontWeight="Bold" Click="btDodajPortfelGotowkowy_Click"/>
 
             </StackPanel>
@@ -52,12 +52,12 @@
             
             <StackPanel Grid.Column="1" VerticalAlignment="Center">
                
-                <Label Content="Dodanie funduszy" HorizontalAlignment="Center" Margin="0 0 0 0"/>
-                <TextBox Margin="25,10" x:Name="DodFundusze"/>
+                <Label Content="Wpłacanie funduszy" HorizontalAlignment="Center" Margin="0 0 0 0"/>
+                <TextBox Margin="25,10" x:Name="DodFundusze" PreviewTextInput="_PreviewTextInput"/>
                 <Button Background="AliceBlue" x:Name="btDodajFundusze" Content="Wpłać"  Width="75" Height="30" FontSize="15" FontWeight="Bold" Click="btDodajFundusze_Click"/>
                 
-                <Label Content="Usuwanie funduszy" HorizontalAlignment="Center" Margin="0 15 0 0"/>
-                <TextBox Margin="25,10" x:Name="UsuFundusze"/>
+                <Label Content="Pobieranie funduszy" HorizontalAlignment="Center" Margin="0 15 0 0"/>
+                <TextBox Margin="25,10" x:Name="UsuFundusze" PreviewTextInput="_PreviewTextInput"/>
                 <Button Background="AliceBlue" x:Name="btUsunFundusze" Content="Pobierz"  Width="75" Height="30" FontSize="15" FontWeight="Bold" Click="btDodajFundusze_Click"/>
 
             </StackPanel>

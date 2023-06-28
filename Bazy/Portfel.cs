@@ -10,47 +10,10 @@ using System.Threading.Tasks;
 
 namespace Bazy
 {
-    public class PortfelGotówkowy : INotifyPropertyChanged
-    {
-        private long? idPorfelGotowkowy;
-        private decimal wartosc;
-
-        public PortfelGotówkowy() { }
-        public PortfelGotówkowy(int idPorfelGotowkowy, decimal wartosc)
-        {
-            this.idPorfelGotowkowy = idPorfelGotowkowy;
-            this.wartosc = wartosc;
-        }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        public long? IdPortfelGotowkowy { 
-            get {  return idPorfelGotowkowy; } 
-            set
-            {
-                idPorfelGotowkowy = value;
-                OnPropertyChanged(nameof(idPorfelGotowkowy));
-            }
-        }
-        public decimal Wartosc { get {return wartosc ; }
-            set
-            {
-                wartosc = value;
-                OnPropertyChanged(nameof(wartosc));
-            }        
-        }
-        public override string ToString()
-        {
-            return wartosc.ToString();
-        }
-    }
-
+    
     public class Portfel : INotifyPropertyChanged
     {
-        private long? portfeleId;
+        private long portfeleId=new();
         private string? nazwa;
         private decimal wartosc;
         public ObservableCollection<Lokaty>? Lokaties { get; set; }
@@ -81,7 +44,7 @@ namespace Bazy
                 OnPropertyChanged(nameof(portfeleGotówkowe));
             }
         }
-        public long? PortfeleId
+        public long PortfeleId
         {
             get { return portfeleId; }
             set { 
@@ -114,7 +77,7 @@ namespace Bazy
 
         void DataLokaty()
         {
-            if (this.PortfeleId == null)
+            if (this.PortfeleId == new long())
                 return;
 
             using (var conn = new NpgsqlConnection(Registration.ConnString()))
@@ -147,7 +110,7 @@ namespace Bazy
         }
         void DataObligacje()
         {
-            if (this.PortfeleId == null)
+            if (this.PortfeleId == new long())
                 return;
 
             using (var conn = new NpgsqlConnection(Registration.ConnString()))
@@ -181,7 +144,7 @@ namespace Bazy
         }
         void DataKontoOszczednosciowe()
         {
-            if (this.PortfeleId == null)
+            if (this.PortfeleId == new long())
                 return;
 
             using (var conn = new NpgsqlConnection(Registration.ConnString()))
@@ -213,7 +176,7 @@ namespace Bazy
         }
         void DataAkcje()
         {
-            if (this.PortfeleId == null)
+            if (this.PortfeleId == new long())
                 return;
 
             using (var conn = new NpgsqlConnection(Registration.ConnString()))
@@ -242,7 +205,7 @@ namespace Bazy
         }
         void DataPortfelGotówkowy()
         {
-            if (this.PortfeleId == null)
+            if (this.PortfeleId == new long())
                 return;
 
             using (var conn = new NpgsqlConnection(Registration.ConnString()))
