@@ -20,9 +20,11 @@ namespace Bazy
     /// </summary>
     public partial class InwestycjePanel : UserControl
     {
-        public InwestycjePanel()
+        private readonly string ActiveUser;
+        public InwestycjePanel(string activeUser)
         {
             InitializeComponent();
+            ActiveUser = activeUser;
         }
 
         private void btnLokaty_Click(object sender, RoutedEventArgs e)
@@ -33,7 +35,7 @@ namespace Bazy
 
         private void btnKontoOszczednosciowe_Click(object sender, RoutedEventArgs e)
         {
-            KontoOszczednosciowePanel kontoOszczednosciowe = new();
+            KontoOszczednosciowePanel kontoOszczednosciowe = new(ActiveUser);
             oknoInwestycje.Content = kontoOszczednosciowe;
         }
 

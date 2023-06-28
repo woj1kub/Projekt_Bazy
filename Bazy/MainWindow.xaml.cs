@@ -14,7 +14,7 @@ namespace Bazy
     {
         public MainWindow()
         {
-            
+
             InitializeComponent();
             testConnect();
             //addEnum();

@@ -160,7 +160,7 @@ namespace Bazy
                 {
                     kontoOszczędnościowe = new()
                     {
-                        Id_KontaOszczędnościowego = reader.GetInt32(0),
+                        Id_KontaOszczędnościowego = reader.GetInt64(0),
                         Data_Założenia = reader.GetDateTime(2),
                         Kwota = reader.GetDecimal(3),
                         Oprecentowanie = reader.GetDouble(4),

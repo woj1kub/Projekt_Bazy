@@ -198,7 +198,7 @@ namespace Bazy
         {
             var selectedIndex = portfele_dane.IndexOf(portfel_wew);
             var selectedPortfel = portfele_dane[selectedIndex];
-            selectedPortfel.Wartosc += decimal.Parse(PortfelGotowkowy.Text);
+            //selectedPortfel.Wartosc += decimal.Parse(PortfelGotowkowy.Text);
             portfele_dane[selectedIndex] = new(selectedPortfel);
             lbiPortfele.SelectedIndex = selectedIndex;
         }
