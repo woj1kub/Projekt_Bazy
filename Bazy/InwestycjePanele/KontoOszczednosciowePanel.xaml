@@ -9,11 +9,11 @@
     <Grid>
         <Button x:Name="btDodajKonto" Content="Dodaj konto" HorizontalAlignment="Left" Margin="18,22,0,0" VerticalAlignment="Top" Click="btDodajKonto_Click"/>
         <ComboBox x:Name="cbWybierzKonto" HorizontalAlignment="Left" Margin="163,218,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cbWybierzKonto_SelectionChanged"/>
-        <Label Content="Tutaj ma być piechart pokazujący poszczególne wartości z danego konta" HorizontalAlignment="Left" Margin="10,250,0,0" VerticalAlignment="Top" Height="240" Width="273" BorderBrush="Black" BorderThickness="1,1,1,1"/>
+        <Label x:Name="lblTymczasoweSzczegoly" Content="Tutaj ma być piechart pokazujący poszczególne wartości z danego konta" HorizontalAlignment="Center" Margin="0,361,0,0" VerticalAlignment="Top" Height="129" Width="480" BorderBrush="Black" BorderThickness="1,1,1,1"/>
         <Label Content="Wybierz konto" HorizontalAlignment="Left" Margin="10,218,0,0" VerticalAlignment="Top" Width="86"/>
-        <Button x:Name="btnUsun" Content="Zamknij konto" HorizontalAlignment="Left" Margin="288,250,0,0" VerticalAlignment="Top" Click="btnUsun_Click"/>
-        <ComboBox x:Name="cbPortfele" HorizontalAlignment="Left" Margin="169,56,0,0" VerticalAlignment="Top" Width="120" FontFamily="Segoe UI"/>
-        <Label Content="Portfel" HorizontalAlignment="Left" Margin="23,56,0,0" VerticalAlignment="Top" Width="73"/>
+        <Button x:Name="btnUsun" Content="Zamknij konto" HorizontalAlignment="Left" Margin="126,22,0,0" VerticalAlignment="Top" Click="btnUsun_Click"/>
+        <ComboBox x:Name="cbPortfele" HorizontalAlignment="Left" Margin="117,60,0,0" VerticalAlignment="Top" Width="120" FontFamily="Segoe UI" SelectionChanged="cbPortfele_SelectionChanged"/>
+        <Label Content="Portfel" HorizontalAlignment="Left" Margin="29,56,0,0" VerticalAlignment="Top" Width="73"/>
         <Label Content="Kwota" HorizontalAlignment="Left" Margin="23,87,0,0" VerticalAlignment="Top" Width="73"/>
         <Label Content="Oprocentowanie" HorizontalAlignment="Left" Margin="23,118,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtKwota" HorizontalAlignment="Left" Margin="169,91,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
@@ -22,7 +22,7 @@
         <DatePicker x:Name="dpDataWyplatyOdsetek" HorizontalAlignment="Left" Margin="169,160,0,0" VerticalAlignment="Top" Width="120"/>
         <Label Content="Podatek" HorizontalAlignment="Left" Margin="315,54,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtPodatek" HorizontalAlignment="Left" Margin="373,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Margin="380,340,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110" RenderTransformOrigin="0.5,0.5">
+        <TextBox HorizontalAlignment="Left" Margin="349,18,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110" RenderTransformOrigin="0.5,0.5">
             <TextBox.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -32,10 +32,12 @@
                 </TransformGroup>
             </TextBox.RenderTransform>
         </TextBox>
-        <Label Content="kwota dodanie" HorizontalAlignment="Left" Margin="283,335,0,0" VerticalAlignment="Top" Width="98"/>
-        <Button Content="Dodaj środki" HorizontalAlignment="Left" Margin="380,370,0,0" VerticalAlignment="Top" Width="75"/>
+        <Label Content="kwota dodanie" HorizontalAlignment="Left" Margin="250,16,0,0" VerticalAlignment="Top" Width="98"/>
+        <Button Content="Dodaj środki" HorizontalAlignment="Left" Margin="358,157,0,0" VerticalAlignment="Top" Width="75"/>
         <TextBox x:Name="txtNazwa" HorizontalAlignment="Left" Margin="373,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label Content="Nazwa" HorizontalAlignment="Left" Margin="315,91,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cbPortfeleGotowkowe" HorizontalAlignment="Left" Margin="223,279,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="PortfeleGtówkowe" HorizontalAlignment="Left" Margin="87,279,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </UserControl>

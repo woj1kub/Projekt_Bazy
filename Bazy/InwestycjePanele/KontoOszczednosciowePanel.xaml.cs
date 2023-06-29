@@ -30,40 +30,23 @@ namespace Bazy
         {
             ActiveUser = activeUser;
             InitializeComponent();
-            refreshDataPortfele();
+            PobierzPortfele();
         }
         private void btDodajKonto_Click(object sender, RoutedEventArgs e)
         {
             //napisać sprawdzanie czy pola mają poprawne wartości
-            var conn = new NpgsqlConnection(Registration.ConnString());
-            conn.Open();
-            NpgsqlCommand cmd = new("INSERT INTO \"Konto oszczędnościowe\" (\"Id_Portfelu\", \"Data_Założenia\"" +
-                ", \"Kwota\", \"Oprocentowanie\", \"Data_Wypłaty_Odsetek\", \"Podatek\",\"Nazwa\") " +
-                "VALUES (@Idportfelu, @DataAktualna, @Kwota, @Oprocentowanie, @DataWypłaty, @Podatek, @Nazwa)"
-                + "RETURNING \"Id_Konta_Oszczędnościowego\"");
 
             int index = cbPortfele.SelectedIndex;
             Portfel p = portfele[index];
 
-            cmd.Parameters.AddWithValue("@Idportfelu", p.PortfeleId);
-            cmd.Parameters.AddWithValue("@DataAktualna", DateTime.Now);
-            cmd.Parameters.AddWithValue("@Kwota", decimal.Parse(txtKwota.Text));
-            cmd.Parameters.AddWithValue("@Oprocentowanie", double.Parse(txtOprocentowanie.Text));
-            cmd.Parameters.AddWithValue("@DataWypłaty", dpDataWyplatyOdsetek.SelectedDate);
-            cmd.Parameters.AddWithValue("@Podatek", double.Parse(txtPodatek.Text));
-            cmd.Parameters.AddWithValue("@Nazwa", txtNazwa.Text);
-            cmd.Connection = conn;
-            cmd.ExecuteNonQuery();
-            conn.Close();
+            KontoOszczędnościowe k = new(DateTime.Now, decimal.Parse(txtKwota.Text), double.Parse(txtOprocentowanie.Text),
+                dpDataWyplatyOdsetek.SelectedDate, double.Parse(txtPodatek.Text), txtNazwa.Text);
+
+            k.AddToDatabase(p);
             refreshDataKonta();
         }
 
-        private void cbWybierzKonto_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            refreshDataKonta();
-        }
-
-        private void refreshDataPortfele()
+        private void PobierzPortfele()
         {
             var conn = new NpgsqlConnection(Registration.ConnString());
             conn.Open();
@@ -85,14 +68,15 @@ namespace Bazy
                 };
                 portfele.Add(portfel);
                 cbPortfele.Items.Add(portfel.Nazwa);
+
             }
             conn.Close();
-
         }
 
         private void refreshDataKonta()
         {
             cbWybierzKonto.Items.Clear();
+            konta = null;
             var conn = new NpgsqlConnection(Registration.ConnString());
             conn.Open();
             NpgsqlCommand cmd = new($"SELECT * FROM \"Konto oszczędnościowe\" WHERE \"Id_Portfelu\" = @idportfel");
@@ -125,11 +109,51 @@ namespace Bazy
         {
             var conn = new NpgsqlConnection(Registration.ConnString());
             conn.Open();
-            NpgsqlCommand cmd = new("DELETE FROM \"Konto oszczędnościowe\"");
+            NpgsqlCommand cmd = new("DELETE FROM \"Konto oszczędnościowe\" WHERE \"Id_Konta_Oszczędnościowego\" = @idkonta");
+            int index = cbWybierzKonto.SelectedIndex;
+            KontoOszczędnościowe k = konta[index];
+            cmd.Parameters.AddWithValue("@idkonta",k.Id_KontaOszczędnościowego);
             cmd.Connection = conn;
             cmd.ExecuteNonQuery();
             conn.Close();
+            refreshDataKonta();
+        }
 
+        private void cbPortfele_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            cbPortfeleGotowkowe.Items.Clear();
+            refreshDataKonta();
+            int index = cbPortfele.SelectedIndex;
+            Portfel p = portfele[index];
+            var conn = new NpgsqlConnection(Registration.ConnString());
+            conn.Open();
+            NpgsqlCommand cmd = new($"SELECT * FROM \"Portfel Gotówkowy\" WHERE \"Id_Porfelu\" = @idportfel");
+            cmd.Parameters.AddWithValue("@idportfel", p.PortfeleId);
+            cmd.Connection = conn;
+            NpgsqlDataReader reader = cmd.ExecuteReader();
+            PortfelGotówkowy pg;
+            while (reader.Read())
+            {
+                pg = new()
+                {
+                    IdPortfelGotowkowy = reader.GetInt64(0),
+                    Wartosc = reader.GetDecimal(2)
+                };
+                cbPortfeleGotowkowe.Items.Add(pg);
+            }
+            conn.Close();
+            cbPortfeleGotowkowe.SelectedIndex = 0;
+        }
+
+        private void cbWybierzKonto_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbWybierzKonto.HasItems)
+            {
+                lblTymczasoweSzczegoly.Content = "";
+                int index = cbWybierzKonto.SelectedIndex;
+                KontoOszczędnościowe k = konta[index];
+                lblTymczasoweSzczegoly.Content=k.ToString();
+            }
         }
     }
 }
