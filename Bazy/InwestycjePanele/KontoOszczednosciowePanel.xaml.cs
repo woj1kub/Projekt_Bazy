@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -34,14 +35,19 @@ namespace Bazy
         }
         private void btDodajKonto_Click(object sender, RoutedEventArgs e)
         {
-            //napisać sprawdzanie czy pola mają poprawne wartości
-
+            if (cbPortfele.SelectedIndex == -1 || cbPortfeleGotowkowe.SelectedIndex == -1) return;
+            
             int index = cbPortfele.SelectedIndex;
             Portfel p = portfele[index];
-            decimal kwotaDodawana = decimal.Parse(txtKwota.Text);
-
-            KontoOszczędnościowe k = new(DateTime.Now, kwotaDodawana, double.Parse(txtOprocentowanie.Text),
-                dpDataWyplatyOdsetek.SelectedDate, double.Parse(txtPodatek.Text), txtNazwa.Text);
+            decimal kwotaDodawana = 0;
+            KontoOszczędnościowe k=null;
+            try
+            {
+               kwotaDodawana = decimal.Parse(txtKwota.Text);
+               k = new(DateTime.Now, kwotaDodawana, double.Parse(txtOprocentowanie.Text),
+               dpDataWyplatyOdsetek.SelectedDate, double.Parse(txtPodatek.Text), txtNazwa.Text, dpDataWyplatyOdsetek.SelectedDate);
+            }
+            catch { MessageBox.Show("Input not in correct format"); return; }
 
             k.AddToDatabase(p);
             PrzelewanieSrodkowPortfelGotowkowy(kwotaDodawana,false);
@@ -50,6 +56,8 @@ namespace Bazy
 
         private void btnUsun_Click(object sender, RoutedEventArgs e)
         {
+            if (cbWybierzKonto.SelectedIndex == -1) return;
+
             var conn = new NpgsqlConnection(Registration.ConnString());
             conn.Open();
             NpgsqlCommand cmd = new("DELETE FROM \"Konto oszczędnościowe\" WHERE \"Id_Konta_Oszczędnościowego\" = @idkonta");
@@ -65,13 +73,16 @@ namespace Bazy
 
         private void btnWplataDodanie_Click(object sender, RoutedEventArgs e)
         {
-            decimal kwotaZmieniana=decimal.Parse(txtWplataDodanie.Text);
+            if (cbWybierzKonto.SelectedIndex == -1) return;
+            decimal kwotaZmieniana = 0;
+            try { kwotaZmieniana = decimal.Parse(txtWplataDodanie.Text); }
+            catch { MessageBox.Show("Input not in correct format");return; }
             var conn = new NpgsqlConnection(Registration.ConnString());
             conn.Open();
             NpgsqlCommand cmd = new($"SELECT * FROM \"Konto oszczędnościowe\" WHERE \"Id_Konta_Oszczędnościowego\" = @idkonta");
             int index = cbWybierzKonto.SelectedIndex;
             KontoOszczędnościowe k = konta[index];
-            cmd.Parameters.AddWithValue("@idkonta",k.Id_KontaOszczędnościowego);
+            cmd.Parameters.AddWithValue("@idkonta", k.Id_KontaOszczędnościowego);
             cmd.Connection = conn;
             NpgsqlDataReader reader = cmd.ExecuteReader();
             decimal kwotaStara = 0, kwotaNowa = 0;
@@ -92,7 +103,7 @@ namespace Bazy
             conn2.Close();
             PrzelewanieSrodkowPortfelGotowkowy(kwotaZmieniana, false);
             refreshDataKonta();
-        }
+            }
 
         private void PrzelewanieSrodkowPortfelGotowkowy(decimal kwotaZmieniana,bool plus)
         {

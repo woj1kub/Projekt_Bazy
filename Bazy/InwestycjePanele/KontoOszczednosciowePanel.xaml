@@ -18,7 +18,7 @@
         <Label Content="Oprocentowanie" HorizontalAlignment="Left" Margin="50,37,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtKwota" HorizontalAlignment="Left" Margin="153,15,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="txtOprocentowanie" HorizontalAlignment="Left" Margin="153,42,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Data Wypłaty Odsetek" HorizontalAlignment="Left" Margin="20,68,0,0" VerticalAlignment="Top"/>
+        <Label Content="Data następnej kapitalizacji" HorizontalAlignment="Left" Margin="0,70,0,0" VerticalAlignment="Top"/>
         <DatePicker x:Name="dpDataWyplatyOdsetek" HorizontalAlignment="Left" Margin="153,70,0,0" VerticalAlignment="Top" Width="120"/>
         <Label Content="Podatek" HorizontalAlignment="Left" Margin="96,96,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtPodatek" HorizontalAlignment="Left" Margin="153,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>

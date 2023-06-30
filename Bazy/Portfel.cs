@@ -167,6 +167,7 @@ namespace Bazy
                         Data_Wypłaty_Odsetek = reader.GetDateTime(5),
                         Podatek = reader.GetDouble(6),
                         Nazwa = reader.GetString(7),
+                        Kapitalizacja=reader.GetDateTime(8)
                     };
                     KontoOszczędnościowes.Add(kontoOszczędnościowe);
                 }
