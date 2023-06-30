@@ -8,23 +8,12 @@ namespace Bazy
     {
         private long idPortfelGotowkowy;
         private decimal wartosc;
-        public PortfelGotówkowy(long idPortfelGotowkowy, decimal wartosc)
-        {
-            IdPortfelGotowkowy = idPortfelGotowkowy;
-            Wartosc = wartosc;
-        }
         public PortfelGotówkowy(PortfelGotówkowy portfelGotówkowy)
         {
             this.IdPortfelGotowkowy = portfelGotówkowy.IdPortfelGotowkowy;
             this.Wartosc = portfelGotówkowy.Wartosc;
         }
         public PortfelGotówkowy() { }
-        public PortfelGotówkowy(int idPorfelGotowkowy, decimal wartosc)
-        {
-            this.IdPortfelGotowkowy = idPorfelGotowkowy;
-            this.Wartosc = wartosc;
-
-        }
         public PortfelGotówkowy(decimal wartosc, long idPorfela)
         {
             using var conn = new NpgsqlConnection(Registration.ConnString());
@@ -71,7 +60,8 @@ namespace Bazy
         {
             return wartosc.ToString();
         }
-        //Jeżeli chciecie wprowadzić jakośc informacje w historie portfeli gotówkowych, podajesz wartosc i opis
+        //Jeżeli chciecie wprowadzić jakieś informacje w historie portfeli gotówkowych, podajesz wartosc i opis
+        //oczywiście dla portfela, którego wywołujesz
         public void TworzenieHistori(decimal wartosc, string opis)
         {
             using var conn = new NpgsqlConnection(Registration.ConnString());

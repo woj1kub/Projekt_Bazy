@@ -24,14 +24,14 @@ namespace Bazy
 
         public Portfel(Portfel portfel)
         {
-            this.portfeleId = portfel.portfeleId;
-            this.nazwa = portfel.nazwa;
-            this.wartosc= portfel.wartosc;
+            this.PortfeleId = portfel.portfeleId;
+            this.Nazwa = portfel.nazwa;
+            this.Wartosc= portfel.wartosc;
             this.Lokaties= portfel.Lokaties;
             this.Obligacjes = portfel.Obligacjes;
             this.KontoOszczędnościowes = portfel.KontoOszczędnościowes;
             this.Akcjes = portfel.Akcjes;
-            this.portfeleGotówkowe = portfel.portfeleGotówkowe;
+            this.PortfeleGotówkowe = portfel.portfeleGotówkowe;
         }
         public Portfel() { }
         public ObservableCollection<PortfelGotówkowy>? PortfeleGotówkowe
@@ -68,6 +68,9 @@ namespace Bazy
                 wartosc = value; OnPropertyChanged(nameof(Wartosc));
             }
         }
+
+
+
         public event PropertyChangedEventHandler? PropertyChanged;
        
         protected virtual void OnPropertyChanged(string propertyName)
