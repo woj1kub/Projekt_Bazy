@@ -1,4 +1,5 @@
 ﻿
+using Bazy.GlownePanele;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -81,7 +82,14 @@ namespace Bazy
         private void btHistoria_Click(object sender, RoutedEventArgs e)
         {
             HistoriePanel historie = new();
+            historie.UzupelnijHistorie();
             contentControl.Content = historie;
+        }
+
+        private void btRaport_Click(object sender, RoutedEventArgs e)
+        {
+            RaportPanel raport = new();
+            contentControl.Content = raport;
         }
 
     }

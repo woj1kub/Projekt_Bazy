@@ -14,7 +14,7 @@
         </Grid.ColumnDefinitions>
 
         <Image Source="/Obrazy/shutdown.png" Grid.Column="2" Panel.ZIndex="1" MouseDown="Image_MouseDown" Style="{StaticResource imgClose}" Height="30" Width="30"/>
-        
+
         <Border CornerRadius="10 0 0 10">
             <Border.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -22,9 +22,9 @@
                     <GradientStop Color="#3AA9AD" Offset="1"/>
                 </LinearGradientBrush>
             </Border.Background>
-            
+
             <Grid>
-                
+
                 <Canvas Margin="0,0,10,0">
                     <Polygon Points="0,20 230,140 0,270" Fill="#4EB1B6"/>
                     <Polygon Points="80,400 200,370 180,470" Fill="#4EB1B6"/>
@@ -32,10 +32,10 @@
                     <Ellipse Margin="220 450 0 0" Width="30" Height="30" Fill="#4EB1B6"/>
                 </Canvas>
                 <StackPanel VerticalAlignment="Bottom">
-                    
-                    <Label x:Name="lbUser" HorizontalAlignment="Center" Foreground="White" FontSize="16" Margin="0 0 0 80"
+
+                    <Label x:Name="lbUser" HorizontalAlignment="Left" Foreground="White" FontSize="16" Margin="0 0 0 45"
                            VerticalAlignment="Top"/>
-                    <Label x:Name="lbPortfel" HorizontalAlignment="Center" Foreground="White" FontSize="16" Margin="0 0 0 20"
+                    <Label x:Name="lbPortfel" HorizontalAlignment="Center" Foreground="White" FontSize="16" Margin="0 0 0 15"
                            VerticalAlignment="Top"/>
                     <DockPanel   Margin="15 0 0 75 " VerticalAlignment="Top">
                         <Label x:Name="lbTextFundusze" HorizontalAlignment="Center" Foreground="White" FontSize="16"
@@ -48,6 +48,7 @@
                     <Button x:Name="btInwestycje" Content="Inwestycje" Style="{StaticResource buttonRejestracja}"  Margin="10 -30 10 10" Click="btInwestycje_Click"/>
                     <Button x:Name="btPortfele" Content="Moje porfele" Style="{StaticResource buttonRejestracja}"  Margin="10" Click="btPortfele_Click"/>
                     <Button x:Name="btHistoria" Content="Historie" Style="{StaticResource buttonRejestracja}"  Margin="10" Click="btHistoria_Click"/>
+                    <Button x:Name="btRaport" Content="Raport" Style="{StaticResource buttonRejestracja}"  Margin="10" Click="btRaport_Click" />
                     <Button x:Name="btUstawienia" Content="Ustawienia" Style="{StaticResource buttonRejestracja}"  Margin="10" Click="btUstawienia_Click"/>
                     <Button x:Name="btWyloguj" Content="Wyloguj" Style="{StaticResource buttonRejestracja}" VerticalAlignment="Bottom" Margin="10 10 10 100" Click="btWyloguj_Click"/>
 
@@ -56,10 +57,10 @@
         </Border>
 
 
-        <Border x:Name="borderOknoAplikacji" Background="#ffffff" Grid.Column="2" CornerRadius="0 10 10 0">
+        <Border Background="#ffffff" Grid.Column="2" CornerRadius="0 10 10 0">
             <!--   <StackPanel VerticalAlignment="Center"> -->
             <!-- Tutaj np pola tekstowe do dodoawania inwestycji itd-->
-            
+
 
             <!-- 
             </StackPanel>-->

@@ -29,7 +29,7 @@ namespace Bazy
 
         private void btnLokaty_Click(object sender, RoutedEventArgs e)
         {
-            LokatyPanel lokaty = new();
+            LokatyPanel lokaty = new(ActiveUser);
             oknoInwestycje.Content = lokaty;
         }
 

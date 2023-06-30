@@ -7,8 +7,17 @@
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="700">
     <Grid>
-        <ListBox x:Name="lbxHistorie" d:ItemsSource="{d:SampleData ItemCount=5}" Width="650" Height="450" Margin="25,41,25,59"/>
+
         <Label Content="Historia konta" HorizontalAlignment="Left" Margin="297,10,0,0" VerticalAlignment="Top"/>
+        <ListView x:Name="ltvHistoria" d:ItemsSource="{d:SampleData ItemCount=5}" Height="400">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Opis" Width="390" DisplayMemberBinding="{Binding Opis}"/>
+                    <GridViewColumn Header="Kwota" Width="150" DisplayMemberBinding="{Binding Kwota}"/>
+                    <GridViewColumn Header="Data" Width="160" DisplayMemberBinding="{Binding Data}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
 
     </Grid>
 </UserControl>
