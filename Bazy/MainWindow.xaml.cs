@@ -20,6 +20,7 @@ namespace Bazy
             //addEnum();
             //alterTable();
             //checker();
+            //deleteTableWithWrongStuffInside();
         }
         private void testConnect()
         {
@@ -154,10 +155,10 @@ namespace Bazy
         {
             var conn = new NpgsqlConnection(Registration.ConnString());
             conn.Open();
-            NpgsqlCommand cmd = new("ALTER TABLE \"Lokaty\" ADD COLUMN \"Kapitalizacja\" KapitalizacjaOdsetek", conn);
-            int ss= cmd.ExecuteNonQuery();
+            NpgsqlCommand cmd = new("ALTER TABLE \"Konto oszczędnościowe\" ADD COLUMN \"Kapitalizacja\" DATE");
+            cmd.Connection=conn;
+            cmd.ExecuteNonQuery();
             conn.Close();
-            MessageBox.Show(ss.ToString());
         }
         void checker()
         {
@@ -170,6 +171,15 @@ namespace Bazy
             {
                 list.Add(reader.GetString(0) + " " + reader.GetString(1));
             }
+            conn.Close();
+        }
+        void deleteTableWithWrongStuffInside() 
+        {
+            var conn = new NpgsqlConnection(Registration.ConnString());
+            conn.Open();
+            NpgsqlCommand cmd = new("DELETE FROM \"Konto oszczędnościowe\"");
+            cmd.Connection = conn;
+            cmd.ExecuteNonQuery();
             conn.Close();
         }
     }

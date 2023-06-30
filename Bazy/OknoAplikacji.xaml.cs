@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Bazy
 {
@@ -17,10 +18,10 @@ namespace Bazy
         private Portfel ActivePortfel { get; set; }
 
         public OknoAplikacji(string ActiveUser)
-        {  
-            
+        {
             this.ActiveUser = ActiveUser;
             InitializeComponent();
+            KontoOszczędnościowe.KapitalizacjaOdsetekKontaOszczędnościowe();
             lbUser.Content = "Witaj, "+this.ActiveUser+"!";
             DataContext = this;
             lbFundusze.DataContext = ActivePortfel;
@@ -31,7 +32,7 @@ namespace Bazy
                 Nazwa = "Brak portfela",
                 PortfeleId = 0
             };
-            PortfelePanel portfele = new(ActiveUser, ChildWindow_VariableChanged);
+            PortfelePanel portfele = new(ActiveUser, ChildWindow_VariableChanged);        
             contentControl.Content = portfele;
         }
         private void Image_MouseDown(object sender, MouseButtonEventArgs e)
@@ -82,5 +83,6 @@ namespace Bazy
             HistoriePanel historie = new();
             contentControl.Content = historie;
         }
+
     }
 }

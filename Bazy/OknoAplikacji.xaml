@@ -56,7 +56,7 @@
         </Border>
 
 
-        <Border Background="#ffffff" Grid.Column="2" CornerRadius="0 10 10 0">
+        <Border x:Name="borderOknoAplikacji" Background="#ffffff" Grid.Column="2" CornerRadius="0 10 10 0">
             <!--   <StackPanel VerticalAlignment="Center"> -->
             <!-- Tutaj np pola tekstowe do dodoawania inwestycji itd-->
             
