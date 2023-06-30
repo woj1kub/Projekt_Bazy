@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -19,7 +20,7 @@ namespace Bazy
             testConnect();
             //addEnum();
             //alterTable();
-            //checker();
+            checker();
             //deleteTableWithWrongStuffInside();
         }
         private void testConnect()
@@ -164,12 +165,15 @@ namespace Bazy
         {
             var conn = new NpgsqlConnection(Registration.ConnString());
             conn.Open();
-            NpgsqlCommand cmd = new("SHOW COLUMNS FROM \"Lokaty\"", conn);
+            NpgsqlCommand cmd = new("SHOW ENUMS", conn);
             NpgsqlDataReader reader = cmd.ExecuteReader();
             List<string> list = new List<string>();
             while (reader.Read())
             {
-                list.Add(reader.GetString(0) + " " + reader.GetString(1));
+                var asa = reader.GetValue(2);
+                Console.WriteLine(asa);
+                asa = null;
+
             }
             conn.Close();
         }

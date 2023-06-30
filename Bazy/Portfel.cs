@@ -98,12 +98,12 @@ namespace Bazy
                     {
                         Id_Lokaty = reader.GetInt64(0),
                         Oprocentowanie = reader.GetDouble(2),
-                        Czas = reader.GetInt32(3),
-                        Skala = reader.GetInt32(4),
-                        Kwota = reader.GetDecimal(5), 
-                        Podatek = reader.GetDouble(6),
-                        Data_zakupu = reader.GetDateTime(7).Date,
-                        Nazwa=reader.GetString(8)
+                        Kwota = reader.GetDecimal(3), 
+                        Podatek = reader.GetDouble(4),
+                        Data_zakupu = reader.GetDateTime(5),
+                        Nazwa=reader.GetString(6),
+                        Data_Zakończenia=reader.GetDateTime(7),
+                        Kapitalizacjaodesetek = (kapitalizacjaodesetek)reader.GetValue(8)
                     };
                     Lokaties.Add(lokaty);
                 }
