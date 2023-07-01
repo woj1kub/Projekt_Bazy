@@ -33,7 +33,33 @@ namespace Bazy
             this.Akcjes = portfel.Akcjes;
             this.PortfeleGotówkowe = portfel.portfeleGotówkowe;
         }
+        public Portfel(string ActiveUser , string nazwa) : this()
+        {
+            var conn = new NpgsqlConnection(Registration.ConnString());
+            conn.Open();
+            NpgsqlCommand cmd;
+            //Dodanie nowego portfelu i pobranie jego id
+            cmd = new("INSERT INTO \"Portfele\" (\"Użykownik\", \"Nazwa_Portfelu\") " +
+                "VALUES ( (SELECT \"Login\" FROM \"Użytkownicy\" WHERE \"Login\" = @user) , @name )" +
+                "RETURNING \"Id_Portfelu\"");
+            cmd.Parameters.AddWithValue("@user", ActiveUser);
+            cmd.Parameters.AddWithValue("@name", nazwa);
+            cmd.Connection = conn;
+            var id_portfelea = cmd.ExecuteScalar();
+
+            if (id_portfelea == null)
+                return;
+
+            PortfeleId = (long)id_portfelea;
+            Wartosc = 0;
+            Nazwa = nazwa;
+            conn.Close();
+        }
         public Portfel() { }
+        public override string ToString()
+        {
+            return Nazwa;
+        }
         public ObservableCollection<PortfelGotówkowy>? PortfeleGotówkowe
         {
             get { return portfeleGotówkowe; }

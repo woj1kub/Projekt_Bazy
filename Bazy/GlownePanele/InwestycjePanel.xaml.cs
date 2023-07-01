@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,16 +21,25 @@ namespace Bazy
     /// </summary>
     public partial class InwestycjePanel : UserControl
     {
-        private readonly string ActiveUser;
-        public InwestycjePanel(string activeUser)
-        {
-            InitializeComponent();
-            ActiveUser = activeUser;
-        }
+        ObservableCollection<Portfel> portfels = new();
+        Action<ObservableCollection<Portfel>> ActivePortfel;
 
+        private readonly string ActiveUser="";
+        
+        public InwestycjePanel(ObservableCollection<Portfel> portfels, Action<ObservableCollection<Portfel>> ActivePortfel) 
+        {
+            this.portfels= portfels;
+            this.ActivePortfel += ActivePortfel;
+            InitializeComponent();
+        }
+        ~InwestycjePanel()
+        {
+            ActivePortfel.Invoke(portfels);
+            GC.Collect();
+        }
         private void btnLokaty_Click(object sender, RoutedEventArgs e)
         {
-            LokatyPanel lokaty = new(ActiveUser);
+            LokatyPanel lokaty = new(portfels, ActivePortfel);
             oknoInwestycje.Content = lokaty;
         }
 

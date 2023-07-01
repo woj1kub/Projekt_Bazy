@@ -8,7 +8,9 @@
              d:DesignHeight="550" d:DesignWidth="600">
     <Grid>
         <Button x:Name="btDodajLokate" Content="Dodaj lokate" HorizontalAlignment="Left" Margin="392,128,0,0" VerticalAlignment="Top" Click="btDodajLokate_Click" Height="23"/>
-        <ComboBox x:Name="cbWybierzPortfel" HorizontalAlignment="Left" Margin="59,31,0,0" VerticalAlignment="Top" Width="101" SelectionChanged="cbWybierzPortfel_SelectionChanged"/>
+        <ComboBox x:Name="cbWybierzPortfel" HorizontalAlignment="Left" Margin="59,31,0,0" VerticalAlignment="Top" Width="101" SelectionChanged="cbWybierzPortfel_SelectionChanged" DisplayMemberPath="Nazwa" />
+        
+
         <Label Content="Tutaj ma być piechart pokazujący poszczególne wartości z danje lokaty" HorizontalAlignment="Left" Margin="10,218,0,0" VerticalAlignment="Top" Height="260" Width="273" BorderBrush="Black" BorderThickness="1,1,1,1"/>
         <Label Content="Kwota lokaty:" HorizontalAlignment="Left" Margin="300,230,0,0" VerticalAlignment="Top" Width="86"/>
         <Label Content="Data rozpoczęcia lokaty:" HorizontalAlignment="Left" Margin="300,275,0,0" VerticalAlignment="Top"/>

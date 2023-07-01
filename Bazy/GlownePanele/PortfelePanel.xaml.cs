@@ -1,6 +1,5 @@
 ﻿using Npgsql;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -13,20 +12,23 @@ namespace Bazy
     {
         private readonly string ActiveUser;
         ObservableCollection<Portfel> portfele_dane = new();
-        public event Action<Portfel> ActivePortfel;
-        Portfel portfel_wew;
+        public event Action<ObservableCollection<Portfel>> ActivePortfel;
+        Portfel portfel_wew=new();
 
-        public PortfelePanel(string ActiveUser, Action<Portfel> ActivePortfel)
+        public PortfelePanel(string ActiveUser, ObservableCollection<Portfel> portfels, Action<ObservableCollection<Portfel>> ActivePortfel)
         {
-            portfele_dane = new();
-            portfel_wew = new();
+            portfele_dane = portfels;
             InitializeComponent();
             this.ActiveUser = ActiveUser;
             this.ActivePortfel += ActivePortfel;
-            ListyPortfeli();
-
+            lbiPortfele.ItemsSource = portfele_dane;
         }
 
+        ~PortfelePanel()
+        {
+            ActivePortfel.Invoke(portfele_dane);
+            GC.Collect();
+        }
         private void lbiPortfele_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int chosen = lbiPortfele.SelectedIndex;
@@ -43,12 +45,11 @@ namespace Bazy
                 }
             }
 
-            ActivePortfel.Invoke(portfele_dane[chosen]);
             portfel_wew = portfele_dane[chosen];
             lbiPortfele.SelectedIndex = chosen;
             lbPortfeleGotówkowe.ItemsSource = portfel_wew.portfeleGotówkowe;
         }
-
+        /*
         private void ListyPortfeli()
         {
             var conn = new NpgsqlConnection(Registration.ConnString());
@@ -81,40 +82,20 @@ namespace Bazy
             portfele_dane = new ObservableCollection<Portfel>(portfele_dane.OrderByDescending(item => item.Wartosc));
             lbiPortfele.ItemsSource = portfele_dane;
         }
-        
+        */
         private void btDodaj_Click(object sender, RoutedEventArgs e)
         {
             if (NewPortfelName.Text == string.Empty)
                 return;
-            
-            var conn = new NpgsqlConnection(Registration.ConnString());
-            conn.Open();
-            NpgsqlCommand cmd;
-            //Dodanie nowego portfelu i pobranie jego id
-            cmd = new("INSERT INTO \"Portfele\" (\"Użykownik\", \"Nazwa_Portfelu\") " +
-                "VALUES ( (SELECT \"Login\" FROM \"Użytkownicy\" WHERE \"Login\" = @user) , @name )" +
-                "RETURNING \"Id_Portfelu\"");
-            cmd.Parameters.AddWithValue("@user", ActiveUser);
-            cmd.Parameters.AddWithValue("@name", NewPortfelName.Text);
-            cmd.Connection = conn;
-            var id_portfelea = cmd.ExecuteScalar();
-
-            if (id_portfelea == null)
-                return;
-
-            conn.Close();
 
             //uzupełnienie danych w tablicy portfeli
-            Portfel portfel = new()
-            {
-                PortfeleId = (Int64)id_portfelea,
-                Nazwa = NewPortfelName.Text,
-                Wartosc = 0
-            };
+            Portfel portfel = new(ActiveUser, NewPortfelName.Text);
+
             portfele_dane.Add(portfel);
 
             //Czyszczenie
             NewPortfelName.Clear();
+            //Sortowanie
             portfele_dane = new ObservableCollection<Portfel>(portfele_dane.OrderByDescending(item => item.Wartosc));
             lbiPortfele.ItemsSource = portfele_dane;
         }
@@ -122,6 +103,7 @@ namespace Bazy
         private void btUsuń_Click(object sender, RoutedEventArgs e)
         {
             if (portfel_wew == null || !portfele_dane.Contains(portfel_wew) ) return;
+            
             var conn = new NpgsqlConnection(Registration.ConnString());
             conn.Open();
             NpgsqlCommand cmd;
@@ -132,7 +114,8 @@ namespace Bazy
             cmd.ExecuteNonQuery();
             conn.Close();
             portfele_dane.RemoveAt(portfele_dane.IndexOf(portfel_wew));
-            ActivePortfel.Invoke(new Portfel());
+
+
             lbiPortfele.SelectedIndex = -1;
             lbPortfeleGotówkowe.ItemsSource=null;
         }
@@ -190,7 +173,6 @@ namespace Bazy
             portfel_wew.portfeleGotówkowe[lbPortfeleGotówkowe.SelectedIndex] = new(selectedPortfel);
             portfel_wew.Wartosc += wartosc;
             DodFundusze.Text = "";
-
             RestartPortfela();
         }
 
@@ -198,7 +180,6 @@ namespace Bazy
         {
             var selectedIndex = portfele_dane.IndexOf(portfel_wew);
             var selectedPortfel = portfele_dane[selectedIndex];
-            //selectedPortfel.Wartosc += decimal.Parse(PortfelGotowkowy.Text);
             portfele_dane[selectedIndex] = new(selectedPortfel);
             lbiPortfele.SelectedIndex = selectedIndex;
         }

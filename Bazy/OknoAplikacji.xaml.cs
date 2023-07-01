@@ -3,6 +3,8 @@ using Bazy.GlownePanele;
 using Npgsql;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -13,11 +15,13 @@ namespace Bazy
     /// <summary>
     /// Logika interakcji dla klasy OknoAplikacji.xaml
     /// </summary>
+
+
     public partial class OknoAplikacji : Window
     {
         private readonly string ActiveUser;
-        private Portfel ActivePortfel { get; set; }
-
+        ObservableCollection<Portfel> portfele_dane=new();
+        
         public OknoAplikacji(string ActiveUser)
         {
             this.ActiveUser = ActiveUser;
@@ -25,17 +29,42 @@ namespace Bazy
             KontoOszczędnościowe.KapitalizacjaOdsetekKontaOszczędnościowe();
             lbUser.Content = "Witaj, "+this.ActiveUser+"!";
             DataContext = this;
-            lbFundusze.DataContext = ActivePortfel;
-            lbPortfel.DataContext = ActivePortfel;
-            ActivePortfel = new Portfel
-            {
-                Wartosc = 0,
-                Nazwa = "Brak portfela",
-                PortfeleId = 0
-            };
-            PortfelePanel portfele = new(ActiveUser, ChildWindow_VariableChanged);        
+            ListyPortfeli();
+            PortfelePanel portfele = new(ActiveUser, portfele_dane, ChildWindow_VariableChanged);        
             contentControl.Content = portfele;
         }
+        private void ListyPortfeli()
+        {
+            var conn = new NpgsqlConnection(Registration.ConnString());
+            conn.Open();
+            NpgsqlCommand cmd = new("SELECT \"Id_Portfelu\", \"Nazwa_Portfelu\" " +
+            "FROM \"Portfele\" " +
+            "LEFT JOIN \"Portfel Gotówkowy\" ON \"Id_Porfelu\" = \"Id_Portfelu\" " +
+            "WHERE \"Użykownik\" = @login " +
+             "GROUP BY \"Id_Portfelu\", \"Nazwa_Portfelu\"");
+            cmd.Parameters.AddWithValue("@login", ActiveUser);
+
+            cmd.Connection = conn;
+            NpgsqlDataReader reader = cmd.ExecuteReader();
+            Portfel portfel;
+
+            while (reader.Read())
+            {
+                portfel = new()
+                {
+                    Nazwa = reader.GetString(1),
+                    PortfeleId = reader.GetInt64(0)
+                };
+                portfel.DanePortfela();
+
+                portfele_dane.Add(portfel);
+            }
+
+            conn.Close();
+            portfele_dane = new ObservableCollection<Portfel>(portfele_dane.OrderByDescending(item => item.Wartosc));
+        }
+
+
         private void Image_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Application.Current.Shutdown();
@@ -48,7 +77,7 @@ namespace Bazy
       
         private void btInwestycje_Click(object sender, RoutedEventArgs e)
         {
-            InwestycjePanel inwestycje = new(ActiveUser);
+            InwestycjePanel inwestycje = new(portfele_dane, ChildWindow_VariableChanged);
             contentControl.Content = inwestycje;
         }
         private void btWyloguj_Click(object sender, RoutedEventArgs e)
@@ -60,17 +89,13 @@ namespace Bazy
 
         private void btPortfele_Click(object sender, RoutedEventArgs e)
         {
-            PortfelePanel portfele = new(ActiveUser,ChildWindow_VariableChanged);
+            PortfelePanel portfele = new(ActiveUser, portfele_dane, ChildWindow_VariableChanged);
             contentControl.Content=portfele;
             
         }
-        private void ChildWindow_VariableChanged(Portfel newValue)
+        private void ChildWindow_VariableChanged(ObservableCollection<Portfel> newValue)
         {
-            ActivePortfel = newValue;
-            lbFundusze.Content = ActivePortfel.Wartosc;
-            lbPortfel.Content = ActivePortfel.Nazwa;
-            //lbFundusze.DataContext = ActivePortfel;
-            //lbPortfel.DataContext= ActivePortfel;
+            portfele_dane = newValue;
         }
 
         private void btUstawienia_Click(object sender, RoutedEventArgs e)
@@ -91,6 +116,7 @@ namespace Bazy
             RaportPanel raport = new();
             contentControl.Content = raport;
         }
+
 
     }
 }
