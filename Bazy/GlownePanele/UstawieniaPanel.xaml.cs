@@ -1,5 +1,6 @@
 ﻿using Npgsql;
 using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -40,6 +41,17 @@ namespace Bazy
             }
             txtNoweHaslo.Clear();
             txtPotwierdzNoweHaslo.Clear();
+        }
+
+        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        {
+            string url = e.Uri.AbsoluteUri;
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = url,
+                UseShellExecute = true
+            });
+            e.Handled = true;
         }
     }
 }
