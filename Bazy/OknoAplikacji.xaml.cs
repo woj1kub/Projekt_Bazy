@@ -106,8 +106,7 @@ namespace Bazy
 
         private void btHistoria_Click(object sender, RoutedEventArgs e)
         {
-            HistoriePanel historie = new();
-            historie.UzupelnijHistorie();
+            HistoriePanel historie = new(portfele_dane);
             contentControl.Content = historie;
         }
 

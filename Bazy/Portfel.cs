@@ -14,13 +14,13 @@ namespace Bazy
     public class Portfel : INotifyPropertyChanged
     {
         private long portfeleId=new();
-        private string? nazwa;
-        private decimal wartosc;
-        public ObservableCollection<Lokaty>? Lokaties { get; set; }
-        public ObservableCollection<Obligacje>? Obligacjes { get; set; }
-        public ObservableCollection<KontoOszczędnościowe>? KontoOszczędnościowes { get; set; }
-        public ObservableCollection<Akcje>? Akcjes { get; set; }
-        public ObservableCollection<PortfelGotówkowy>? portfeleGotówkowe;
+        private string? nazwa ;
+        private decimal wartosc = new();
+        public ObservableCollection<Lokaty>? Lokaties { get; set; } = new();
+        public ObservableCollection<Obligacje>? Obligacjes { get; set; } = new();
+        public ObservableCollection<KontoOszczędnościowe>? KontoOszczędnościowes { get; set; } = new();
+        public ObservableCollection<Akcje>? Akcjes { get; set; } = new();
+        public ObservableCollection<PortfelGotówkowy>? portfeleGotówkowe = new();
 
         public Portfel(Portfel portfel)
         {

@@ -25,7 +25,6 @@ namespace Bazy
         {
             this.portfels = portfels;
             this.ActivePortfel += ActivePortfel;
-
             InitializeComponent();
             cbWybierzPortfel.ItemsSource = portfels;
 

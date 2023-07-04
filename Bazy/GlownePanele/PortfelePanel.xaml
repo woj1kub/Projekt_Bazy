@@ -58,7 +58,7 @@
                 
                 <Label Content="Pobieranie funduszy" HorizontalAlignment="Center" Margin="0 15 0 0"/>
                 <TextBox Margin="25,10" x:Name="UsuFundusze" PreviewTextInput="_PreviewTextInput"/>
-                <Button Background="AliceBlue" x:Name="btUsunFundusze" Content="Pobierz"  Width="75" Height="30" FontSize="15" FontWeight="Bold" Click="btDodajFundusze_Click"/>
+                <Button Background="AliceBlue" x:Name="btUsunFundusze" Content="Pobierz"  Width="75" Height="30" FontSize="15" FontWeight="Bold" Click="btUsunFundusze_Click"/>
 
             </StackPanel>
         </Grid>        

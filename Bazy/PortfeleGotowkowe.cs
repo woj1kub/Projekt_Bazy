@@ -92,7 +92,7 @@ namespace Bazy
             cmd.ExecuteNonQuery();
             conn.Close();
             this.Wartosc += wartosc;
-            TworzenieHistori(Math.Abs(wartosc), opis);
+            TworzenieHistori(wartosc, opis);
         }
     }
 
