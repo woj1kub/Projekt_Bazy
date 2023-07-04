@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bazy"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Background="Transparent"
-        Title="OknoAplikacji" Height="700" Width="1100" MouseDown="Window_MouseDown">
+        Title="Inwestycje personalne" Height="700" Width="1100" MouseDown="Window_MouseDown"
+        Icon = "Obrazy/ikona.ico">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -33,7 +34,7 @@
                 </Canvas>
                 <StackPanel VerticalAlignment="Bottom">
 
-                    <Label x:Name="lbUser" HorizontalAlignment="Center" Foreground="White" FontSize="16" Margin="0 0 0 100"
+                    <Label x:Name="lbUser" HorizontalAlignment="Center" Foreground="White" FontSize="24" Margin="0 0 0 100"
                            VerticalAlignment="Top"/>
                     
                     <!-- Tutaj dodać przyciski np. dodaj inwestycje itd-->
