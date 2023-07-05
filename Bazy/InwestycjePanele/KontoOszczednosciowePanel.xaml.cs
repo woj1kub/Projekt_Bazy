@@ -159,7 +159,8 @@ namespace Bazy
             cmd2.Connection = conn2;
             cmd2.ExecuteNonQuery();
             conn2.Close();
-
+            if (plus) pg.TworzenieHistori(kwotaZmieniana, "Operacja na koncie oszczędnościowym");
+            else pg.TworzenieHistori(-kwotaZmieniana, "Operacja na koncie oszczędnościowym");
             object semafor=null;
             SelectionChangedEventArgs a=null;
             cbPortfele_SelectionChanged(semafor,a);
