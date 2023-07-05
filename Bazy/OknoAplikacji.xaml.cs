@@ -77,7 +77,7 @@ namespace Bazy
       
         private void btInwestycje_Click(object sender, RoutedEventArgs e)
         {
-            InwestycjePanel inwestycje = new(portfele_dane, ChildWindow_VariableChanged);
+            InwestycjePanel inwestycje = new(portfele_dane, ChildWindow_VariableChanged, ActiveUser);
             contentControl.Content = inwestycje;
         }
         private void btWyloguj_Click(object sender, RoutedEventArgs e)

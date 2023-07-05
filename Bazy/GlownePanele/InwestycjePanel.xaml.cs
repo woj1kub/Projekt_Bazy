@@ -26,8 +26,9 @@ namespace Bazy
 
         private readonly string ActiveUser="";
         
-        public InwestycjePanel(ObservableCollection<Portfel> portfels, Action<ObservableCollection<Portfel>> ActivePortfel) 
+        public InwestycjePanel(ObservableCollection<Portfel> portfels, Action<ObservableCollection<Portfel>> ActivePortfel, string ActiveUser) 
         {
+            this.ActiveUser = ActiveUser;
             this.portfels= portfels;
             this.ActivePortfel += ActivePortfel;
             InitializeComponent();
