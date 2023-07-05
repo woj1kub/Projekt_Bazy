@@ -112,7 +112,7 @@ namespace Bazy
 
         private void btRaport_Click(object sender, RoutedEventArgs e)
         {
-            RaportPanel raport = new();
+            RaportPanel raport = new(portfele_dane, ActiveUser);
             contentControl.Content = raport;
         }
 

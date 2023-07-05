@@ -21,6 +21,7 @@
   <ItemGroup>
     <PackageReference Include="Npgsql" Version="7.0.2" />
     <PackageReference Include="OxyPlot.Wpf" Version="2.1.2" />
+    <PackageReference Include="PDFsharp-MigraDoc-WPF" Version="1.50.5147" />
   </ItemGroup>
 
   <ItemGroup>
