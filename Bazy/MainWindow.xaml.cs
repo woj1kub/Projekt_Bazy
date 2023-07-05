@@ -181,7 +181,7 @@ namespace Bazy
         {
             var conn = new NpgsqlConnection(Registration.ConnString());
             conn.Open();
-            NpgsqlCommand cmd = new("DELETE FROM \"Konto oszczędnościowe\"");
+            NpgsqlCommand cmd = new("DELETE FROM \"Lokaty\"");
             cmd.Connection = conn;
             cmd.ExecuteNonQuery();
             conn.Close();

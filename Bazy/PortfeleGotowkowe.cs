@@ -14,7 +14,7 @@ namespace Bazy
             this.Wartosc = portfelGotówkowy.Wartosc;
         }
         public PortfelGotówkowy() { }
-        public PortfelGotówkowy(decimal wartosc, long idPorfela)
+        public PortfelGotówkowy(decimal wartosc, long idPorfela, string portfelname)
         {
             using var conn = new NpgsqlConnection(Registration.ConnString());
             conn.Open();
@@ -30,7 +30,7 @@ namespace Bazy
             IdPortfelGotowkowy = (long) cmd.ExecuteScalar();
             this.Wartosc=wartosc;
             conn.Close();
-            TworzenieHistori(wartosc, "Utworzenie portfela gotówkowego");
+            TworzenieHistori(wartosc, "Utworzenie portfela gotówkowego dla "+ portfelname);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

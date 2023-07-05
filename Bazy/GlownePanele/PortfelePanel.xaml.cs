@@ -95,7 +95,7 @@ namespace Bazy
 
             portfele_dane = new ObservableCollection<Portfel>(portfele_dane.OrderByDescending(item => item.Wartosc));
             lbiPortfele.ItemsSource = portfele_dane;
-            portfel_wew.portfeleGotówkowe.Add(new PortfelGotówkowy(wartosc: wartosc , idPorfela:(long) portfel_wew.PortfeleId));
+            portfel_wew.portfeleGotówkowe.Add(new PortfelGotówkowy(wartosc: wartosc , idPorfela:(long) portfel_wew.PortfeleId, portfel_wew.Nazwa));
             PortfelGotowkowy.Clear();
             RestartPortfela();
 
