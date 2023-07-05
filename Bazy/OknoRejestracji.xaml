@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bazy"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Background="Transparent"
-        Title="OknoRejestracji" Height="500" Width="800">
+        Title="Inwestycje personalne" Height="500" Width="800"
+        Icon = "Obrazy/ikona.ico">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>

@@ -128,8 +128,8 @@ namespace Bazy
                         Podatek = reader.GetDouble(4),
                         Data_zakupu = reader.GetDateTime(5),
                         Nazwa=reader.GetString(6),
-                        Data_Zakończenia=reader.GetDateTime(7),
-                        Kapitalizacjaodesetek = (kapitalizacjaodesetek)reader.GetValue(8)
+                        Data_zakończenia=reader.GetDateTime(7),
+                        Kapitalizacjaodesetek = (kapitalizacjaOdsetek)reader.GetValue(8)
                     };
                     Lokaties.Add(lokaty);
                 }

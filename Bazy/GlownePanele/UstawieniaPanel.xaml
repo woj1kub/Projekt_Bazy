@@ -12,7 +12,9 @@
         <PasswordBox x:Name="txtPotwierdzNoweHaslo" HorizontalAlignment="Left" Margin="203,120,0,0" VerticalAlignment="Top" Width="120" BorderBrush="#3AB19B"/>
         <Button Content="Zmień hasło" HorizontalAlignment="Left" Margin="194,163,0,0" VerticalAlignment="Top" Style="{StaticResource buttonZaloguj}" Width="138" Click="Button_Click"/>
         <Label Content="Nowe hasło:" HorizontalAlignment="Left" Margin="67,83,0,0" VerticalAlignment="Top"/>
-        <Label Content="Podwierdz nowe hasło:" HorizontalAlignment="Left" Margin="67,116,0,0" VerticalAlignment="Top"/>
-
+        <Label Content="Podwierdz nowe hasło:" HorizontalAlignment="Left" Margin="197,241,0,0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="urlKawa" HorizontalAlignment="left" Margin="197,300,0,0" VerticalAlignment="Top" FontSize="16">
+            <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://www.buymeacoffee.com/">Kup nam kawe😁</Hyperlink>
+        </TextBlock>
     </Grid>
 </UserControl>
