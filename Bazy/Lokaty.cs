@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Bazy
 {
      public enum kapitalizacjaOdsetek
-    { Jednorazowa, Roczna, Miesieczna, Dzienna }
+    { Jednorazowa=0, Roczna=1, Miesieczna=2, Dzienna=3 }
 
     public class Lokaty
     {
