@@ -129,7 +129,7 @@ namespace Bazy
                         Data_zakupu = reader.GetDateTime(5),
                         Nazwa=reader.GetString(6),
                         Data_zakończenia=reader.GetDateTime(7),
-                        Kapitalizacjaodesetek = (kapitalizacjaOdsetek)reader.GetValue(8)
+                        Kapitalizacjaodesetek = (kapitalizacjaOdsetek)reader.GetInt16(8)
                     };
                     Lokaties.Add(lokaty);
                 }
