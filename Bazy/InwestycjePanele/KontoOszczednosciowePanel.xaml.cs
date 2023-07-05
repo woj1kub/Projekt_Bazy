@@ -26,6 +26,14 @@ namespace Bazy
         private readonly string ActiveUser;
         ObservableCollection<Portfel> portfele = new();
         ObservableCollection<KontoOszczędnościowe> konta = new();
+        ObservableCollection<HistoriaKonta> historia = new();
+
+        public class HistoriaKonta
+        {
+            public string Opis   { get; set; }
+            public DateTime Data { get; set; }
+            public decimal Kwota { get; set; }
+        }
 
         public KontoOszczednosciowePanel(string activeUser)
         {
@@ -50,6 +58,7 @@ namespace Bazy
             catch { MessageBox.Show("Input not in correct format"); return; }
 
             k.AddToDatabase(p);
+            DodajTransakcjeDoHistorii(k.Id_KontaOszczędnościowego, DateTime.Now, k.Kwota);
             PrzelewanieSrodkowPortfelGotowkowy(kwotaDodawana,false);
             refreshDataKonta();
         }
@@ -67,6 +76,7 @@ namespace Bazy
             cmd.Connection = conn;
             cmd.ExecuteNonQuery();
             conn.Close();
+
             PrzelewanieSrodkowPortfelGotowkowy(k.Kwota,true);
             refreshDataKonta();
         }
@@ -92,7 +102,6 @@ namespace Bazy
             }
             conn.Close();
             kwotaNowa = kwotaStara + kwotaZmieniana;
-
             var conn2 = new NpgsqlConnection(Registration.ConnString());
             conn2.Open();
             NpgsqlCommand cmd2 = new($"UPDATE \"Konto oszczędnościowe\" SET \"Kwota\" = @kwota WHERE \"Id_Konta_Oszczędnościowego\" = @idkonta");
@@ -101,9 +110,25 @@ namespace Bazy
             cmd2.Connection = conn2;
             cmd2.ExecuteNonQuery();
             conn2.Close();
+
+            DodajTransakcjeDoHistorii(k.Id_KontaOszczędnościowego, DateTime.Now, kwotaZmieniana);
             PrzelewanieSrodkowPortfelGotowkowy(kwotaZmieniana, false);
             refreshDataKonta();
-            }
+        }
+
+        private void DodajTransakcjeDoHistorii(long id,DateTime czas,decimal kwota)
+        {
+            var conn = new NpgsqlConnection(Registration.ConnString());
+            conn.Open();
+            NpgsqlCommand cmd = new("INSERT INTO \"Historia Konta Oszczędnościowego\" (\"Id_Konta_Oszczędnościowego\", \"Data_Transakcji\", \"Kwota\" )" 
+                + "VALUES (@Idkonta, @data, @kwota)");
+            cmd.Parameters.AddWithValue("@Idkonta", id);
+            cmd.Parameters.AddWithValue("@data", czas);
+            cmd.Parameters.AddWithValue("@kwota", kwota);
+            cmd.Connection = conn;
+            cmd.ExecuteNonQuery();
+            conn.Close();
+        }
 
         private void PrzelewanieSrodkowPortfelGotowkowy(decimal kwotaZmieniana,bool plus)
         {
@@ -229,12 +254,33 @@ namespace Bazy
         {
             if (cbWybierzKonto.HasItems)
             {
-                lblTymczasoweSzczegoly.Content = "";
+                lblSzczegolyKonta.Content = "";
+                lvHistoriaKonta.ItemsSource = null;
+                historia = new();
+
                 int index = cbWybierzKonto.SelectedIndex;
                 KontoOszczędnościowe k = konta[index];
-                lblTymczasoweSzczegoly.Content=k.ToString();
+                lblSzczegolyKonta.Content += k.Nazwa + " Procent: " + k.Oprecentowanie +" Podatek: "+k.Podatek+" Środki: "+k.Kwota;
+
+                var conn = new NpgsqlConnection(Registration.ConnString());
+                conn.Open();
+                NpgsqlCommand cmd = new($"SELECT * FROM \"Historia Konta Oszczędnościowego\" WHERE \"Id_Konta_Oszczędnościowego\" = @IdKonta"
+                    + " ORDER BY \"Data_Transakcji\" DESC");
+                cmd.Parameters.AddWithValue("@idKonta", k.Id_KontaOszczędnościowego);
+                cmd.Connection = conn;
+                NpgsqlDataReader reader = cmd.ExecuteReader();
+                while(reader.Read()) 
+                {
+                    HistoriaKonta hk = new HistoriaKonta { Opis = "", Data = reader.GetDateTime(1), Kwota = reader.GetDecimal(2) };
+                    if (hk.Kwota > 0) hk.Opis = "Dodanie środków";
+                    else hk.Opis = "Obciążenie konta";
+                    historia.Add(hk);
+                }
+                lvHistoriaKonta.ItemsSource = historia;
             }
         }
+
+        
 
         private void cbPortfeleGotowkowe_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

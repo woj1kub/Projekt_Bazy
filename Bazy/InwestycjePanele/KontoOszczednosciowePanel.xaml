@@ -9,7 +9,7 @@
     <Grid>
         <Button x:Name="btDodajKonto" Content="Dodaj konto" HorizontalAlignment="Left" Margin="153,158,0,0" VerticalAlignment="Top" Click="btDodajKonto_Click" Width="120"/>
         <ComboBox x:Name="cbWybierzKonto" HorizontalAlignment="Left" Margin="290,334,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cbWybierzKonto_SelectionChanged"/>
-        <Label x:Name="lblTymczasoweSzczegoly" Content="Tutaj ma być piechart pokazujący poszczególne wartości z danego konta" HorizontalAlignment="Center" Margin="0,361,0,0" VerticalAlignment="Top" Height="129" Width="480" BorderBrush="Black" BorderThickness="1,1,1,1"/>
+        <Label x:Name="lblSzczegolyKonta" Content="Konto Oszczędnościowe" HorizontalAlignment="Left" Margin="10,372,0,0" VerticalAlignment="Top" Height="26" Width="410" BorderBrush="Black" BorderThickness="1,1,1,1"/>
         <Label Content="Wybierz konto" HorizontalAlignment="Left" Margin="290,303,0,0" VerticalAlignment="Top" Width="86"/>
         <Button x:Name="btnUsun" Content="Zamknij konto" HorizontalAlignment="Left" Margin="290,288,0,0" VerticalAlignment="Top" Click="btnUsun_Click" Width="86"/>
         <ComboBox x:Name="cbPortfele" HorizontalAlignment="Left" Margin="10,334,0,0" VerticalAlignment="Top" Width="120" FontFamily="Segoe UI" SelectionChanged="cbPortfele_SelectionChanged"/>
@@ -17,7 +17,7 @@
         <Label Content="Kwota" HorizontalAlignment="Left" Margin="99,11,0,0" VerticalAlignment="Top" Width="43"/>
         <Label Content="Oprocentowanie" HorizontalAlignment="Left" Margin="50,37,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtKwota" HorizontalAlignment="Left" Margin="153,15,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="txtOprocentowanie" HorizontalAlignment="Left" Margin="153,42,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtOprocentowanie" HorizontalAlignment="Left" Margin="153,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label Content="Data następnej kapitalizacji" HorizontalAlignment="Left" Margin="0,70,0,0" VerticalAlignment="Top"/>
         <DatePicker x:Name="dpDataWyplatyOdsetek" HorizontalAlignment="Left" Margin="153,70,0,0" VerticalAlignment="Top" Width="120"/>
         <Label Content="Podatek" HorizontalAlignment="Left" Margin="96,96,0,0" VerticalAlignment="Top"/>
@@ -30,6 +30,15 @@
         <Label Content="Nazwa" HorizontalAlignment="Left" Margin="102,123,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="cbPortfeleGotowkowe" HorizontalAlignment="Left" Margin="154,334,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cbPortfeleGotowkowe_SelectionChanged"/>
         <Label Content="PortfeleGtówkowe" HorizontalAlignment="Left" Margin="154,303,0,0" VerticalAlignment="Top"/>
+        <ListView x:Name="lvHistoriaKonta" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,403,80,10">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Opis" Width="200" DisplayMemberBinding="{Binding Opis}"/>
+                    <GridViewColumn Header="Kwota" Width="50" DisplayMemberBinding="{Binding Kwota}"/>
+                    <GridViewColumn Header="Data" Width="150" DisplayMemberBinding="{Binding Data}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
 
     </Grid>
 </UserControl>

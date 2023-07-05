@@ -55,9 +55,8 @@ namespace Bazy
             cmd.Parameters.AddWithValue("@Nazwa", this.Nazwa);
             cmd.Parameters.AddWithValue("@Kapitalizacja", this.Kapitalizacja);
             cmd.Connection = conn;
-            cmd.ExecuteNonQuery();
+            Id_KontaOszczędnościowego = (long)cmd.ExecuteScalar();
             conn.Close();
-
         }
 
         public static void KapitalizacjaOdsetekKontaOszczędnościowe()
@@ -113,6 +112,18 @@ namespace Bazy
                     cmd2.Connection = conn2;
                     cmd2.ExecuteNonQuery();
                     conn2.Close();
+
+                    //dodanie do histori 
+                    var conn3 = new NpgsqlConnection(Registration.ConnString());
+                    conn.Open();
+                    NpgsqlCommand cmd3 = new("INSERT INTO \"Historia Konta Oszczędnościowego\" (\"Id_Konta_Oszczędnościowego\", \"Data_Transakcji\", \"Kwota\" )"
+                        + "VALUES (@Idkonta, @data, @kwota)");
+                    cmd3.Parameters.AddWithValue("@Idkonta", kontaKapitalizacja[i].Id_KontaOszczędnościowego);
+                    cmd3.Parameters.AddWithValue("@data", DateTime.Now);
+                    cmd3.Parameters.AddWithValue("@kwota", zysk);
+                    cmd3.Connection = conn3;
+                    cmd3.ExecuteNonQuery();
+                    conn3.Close();
                 }
             }
         }
