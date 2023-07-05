@@ -125,7 +125,7 @@ namespace Bazy
         {
             if (lbPortfeleGotówkowe.SelectedIndex==-1 || portfel_wew.portfeleGotówkowe == null || portfel_wew == null || DodFundusze.Text == string.Empty || !portfele_dane.Contains(portfel_wew)) return;
             decimal wartosc = decimal.Parse(DodFundusze.Text);
-            portfel_wew.portfeleGotówkowe[lbPortfeleGotówkowe.SelectedIndex].ZmianaWartości(wartosc, "Wpłacenie do portfela gotówkowego");
+            portfel_wew.portfeleGotówkowe[lbPortfeleGotówkowe.SelectedIndex].ZmianaWartości(wartosc, "Wpłacenie do portfela gotówkowegoz dla" + portfel_wew.Nazwa);
             
             var selectedPortfel = portfel_wew.portfeleGotówkowe[lbPortfeleGotówkowe.SelectedIndex];
             portfel_wew.portfeleGotówkowe[lbPortfeleGotówkowe.SelectedIndex] = new(selectedPortfel);
@@ -146,7 +146,7 @@ namespace Bazy
         {
             if (lbPortfeleGotówkowe.SelectedIndex == -1 || portfel_wew.portfeleGotówkowe == null || portfel_wew == null || UsuFundusze.Text == string.Empty || !portfele_dane.Contains(portfel_wew)) return;
             decimal wartosc = decimal.Parse(UsuFundusze.Text);
-            portfel_wew.portfeleGotówkowe[lbPortfeleGotówkowe.SelectedIndex].ZmianaWartości(-wartosc, "Pobranie z portfela gotówkowego");
+            portfel_wew.portfeleGotówkowe[lbPortfeleGotówkowe.SelectedIndex].ZmianaWartości(-wartosc, "Pobranie z portfela gotówkowego z " + portfel_wew.Nazwa);
 
             var selectedPortfel = portfel_wew.portfeleGotówkowe[lbPortfeleGotówkowe.SelectedIndex];
             portfel_wew.portfeleGotówkowe[lbPortfeleGotówkowe.SelectedIndex] = new(selectedPortfel);
