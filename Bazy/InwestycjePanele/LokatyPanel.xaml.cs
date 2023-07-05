@@ -28,10 +28,10 @@ namespace Bazy
             InitializeComponent();
             cbWybierzPortfel.ItemsSource = portfels;
             cbPortfel.ItemsSource = portfels;
-            cbKapitalizacja.Items.Add(kapitalizacjaOdsetek.Jednorazowa);
-            cbKapitalizacja.Items.Add(kapitalizacjaOdsetek.Roczna);
-            cbKapitalizacja.Items.Add(kapitalizacjaOdsetek.Miesieczna);
-            cbKapitalizacja.Items.Add(kapitalizacjaOdsetek.Dzienna);
+            //cbKapitalizacja.Items.Add(kapitalizacjaOdsetek.Jednorazowa);
+            //cbKapitalizacja.Items.Add(kapitalizacjaOdsetek.Roczna);
+            //cbKapitalizacja.Items.Add(kapitalizacjaOdsetek.Miesieczna);
+            //cbKapitalizacja.Items.Add(kapitalizacjaOdsetek.Dzienna);
             dbDataZalozenia.SelectedDate = DateTime.Now;
             dbDataZakonczenia.SelectedDate = DateTime.Now.AddDays(7);
         }
@@ -48,7 +48,7 @@ namespace Bazy
                 Data_zakupu = dbDataZalozenia.SelectedDate.Value,
                 Nazwa = txtNazwaLokaty.Text,
                 Data_zakończenia = dbDataZakonczenia.SelectedDate.Value,
-                Kapitalizacjaodesetek = (kapitalizacjaOdsetek)cbKapitalizacja.SelectedIndex
+                //Kapitalizacjaodesetek = (kapitalizacjaOdsetek)cbKapitalizacja.SelectedIndex
             };
 
             using (var conn = new NpgsqlConnection(Registration.ConnString()))
